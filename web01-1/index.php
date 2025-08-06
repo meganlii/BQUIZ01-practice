@@ -7,7 +7,7 @@
 
 	<title>卓越科技大學校園資訊系統</title>
 
-	<!-- 更新路徑 -->
+	<!-- 步驟1 更新路徑 -->
 	<link href="./css/css.css" rel="stylesheet" type="text/css">
 	<script src="./js/jquery-3.4.1.js"></script>
 	<script src="./js/js.js"></script>
@@ -20,7 +20,10 @@
 			<div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:9898;"></div>
 		</div>
 	</div>
-	<iframe style="display:none;" name="back" id="back"></iframe>
+
+	<!-- 步驟2 刪除iframe -->
+	<!-- <iframe style="display:none;" name="back" id="back"></iframe> -->
+
 	<div id="main">
 		<a title="" href="./home_files/home.htm">
 			<div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div><!--標題-->

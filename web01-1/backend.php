@@ -93,6 +93,10 @@
 						</tr>
 					</tbody>
 				</table>
+
+				<!-- 步驟5 分離中間需要變動區塊 -->
+				<?php include ' ./backend/title'  ?>
+
 				<div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
 					<p class="t cent botli">網站標題管理</p>
 					<form method="post" target="back" action="?do=tii">
@@ -118,10 +122,12 @@
 
 					</form>
 				</div>
+				<!-- 步驟5 分離中間需要變動區塊 end -->
+
 			</div>
 			<div id="alt" style="position: absolute; width: 350px; min-height: 100px; word-break:break-all; text-align:justify;  background-color: rgb(255, 255, 204); top: 50px; left: 400px; z-index: 99; display: none; padding: 5px; border: 3px double rgb(255, 153, 0); background-position: initial initial; background-repeat: initial initial;"></div>
-			
-			
+
+
 			<script>
 				$(".sswww").hover(
 					function() {

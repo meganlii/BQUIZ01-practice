@@ -83,8 +83,11 @@
 						1 </span>
 				</div>
 			</div>
+
+			
 			<div class="di" style="height:540px; border:#999 1px solid; width:76.5%; margin:2px 0px 0px 0px; float:left; position:relative; left:20px;">
-				<!--正中央-->
+			
+			<!--正中央-->
 				<table width="100%">
 					<tbody>
 						<tr>
@@ -93,6 +96,8 @@
 						</tr>
 					</tbody>
 				</table>
+
+				<!-- 步驟5 分離右半部區域 -->
 				<div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
 					<p class="t cent botli">網站標題管理</p>
 					<form method="post" target="back" action="?do=tii">
@@ -118,7 +123,12 @@
 
 					</form>
 				</div>
+				<!-- 步驟5 分離右半部區域 end -->
+
+
 			</div>
+
+			
 			<div id="alt" style="position: absolute; width: 350px; min-height: 100px; word-break:break-all; text-align:justify;  background-color: rgb(255, 255, 204); top: 50px; left: 400px; z-index: 99; display: none; padding: 5px; border: 3px double rgb(255, 153, 0); background-position: initial initial; background-repeat: initial initial;"></div>
 			
 			

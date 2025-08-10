@@ -1,6 +1,8 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
 
-<!-- 更名為 動態文字廣告管理 -->
+<!-- 步驟1 更名為 動態文字廣告管理 -->
+<!-- 先不複製其他7個頁面 每頁互動方式不同要改變 避免混淆 -->
+<!-- 總共9個 7個差不多 另外2個有異動 -->
 <p class="t cent botli">動態文字廣告管理</p>
   <form method="post" target="back" action="?do=tii">
     <table width="100%">

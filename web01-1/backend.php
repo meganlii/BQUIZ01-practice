@@ -101,6 +101,7 @@
       </tr>
      </tbody>
     </table>
+    <!-- <?php include './backend/title.php'; ?> -->
 
     <!-- 步驟5 分離右半部區域 -->
     <!-- 左方選取不同選單 如何載入對應頁面 ?do=title -->
@@ -111,18 +112,20 @@
     <!-- 步驟6 網頁傳值到後端方式 get/$_GET 網址參數傳值 -->
     <?php 
     $do = $_GET['do'] ?? 'title';
+    
     // 如果有do=ad，載入 $do = 'ad'
     // 如果沒有do參數  載入 $do = 'title'
 
-    $file = "./backend $do .php ";
-    // $file = "./backedn" . $do . ".php"; 可改成~前後雙引號，中間加空格不須點
+    $file = "./backend/" . $do . ".php";
+    // ./backend 少/ 要留意
+    // $file = "./backend/ $do .php "; 加空格失效
     // 如果有do=ad，載入 $do = 'ad' 載入ad.php
     // 如果沒有do參數，載入 $do = 'title' 載入title.php
     
     // 步驟7 內建函數 file_exists() 
     // 先打完if(file_exists($file)) 再加T/F { }else{ }
     // ad.php 還不存在  先載入 title.php
-    if(file_exists($file)){
+    if (file_exists($file)) {
       include $file;  // 選取變數：游標移到變數前方 alt+shift 
       
     }else{
@@ -134,13 +137,7 @@
 
     ?>
 
-
-
-
-
-    
     <!-- 步驟5 分離右半部區域 end -->
-
 
    </div>
 

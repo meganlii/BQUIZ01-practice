@@ -107,9 +107,32 @@
     <!-- // 網址：example.com?do=admin
             $do = $_GET['do'] ?? 'title';  // 輸出 $do = 'admin' -->
 
-    <?php include './backend/title.php' ?>
+            
+    <!-- 步驟6 網頁傳值到後端方式 get/$_GET 網址參數傳值 -->
+    <?php 
+    $do = $_GET['do'] ?? 'title';
+    // 如果有do=ad，載入 $do = 'ad'
+    // 如果沒有do參數  載入 $do = 'title'
+
+    $file = "./backend $do .php ";
+    // $file = "./backedn" . $do . ".php"; 可改成~前後雙引號，中間加空格不須點
+    // 如果有do=ad，載入 $do = 'ad' 載入ad.php
+    // 如果沒有do參數，載入 $do = 'title' 載入title.php
     
-    <!-- 步驟6* 網頁傳值到後端方式 get/$_GET 網址參數傳值 -->
+    // 步驟7 內建函數 file_exists() 
+    // 先打完if(file_exists($file)) 再加T/F { }else{ }
+    // ad.php 還不存在  先載入 title.php
+    if(file_exists($file)){
+      include $file;  // 選取變數：游標移到變數前方 alt+shift 
+      
+    }else{
+      include './backend/title.php';
+      
+    }
+
+    // 步驟8* 複製title.php 更名為ad.php
+
+    ?>
 
 
 

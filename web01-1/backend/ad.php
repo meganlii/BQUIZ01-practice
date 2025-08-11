@@ -19,7 +19,7 @@
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
-          <td width="200px"><input type="button" onclick="op(&#39;#cover&#39;,&#39;#cvr&#39;,&#39;view.php?do=title&#39;)"
+          <td width="200px"><input type="button" onclick="op(&#39;#cover&#39;,&#39;#cvr&#39;,&#39;view.php?do=ad&#39;)"
               value="新增網站標題圖片"></td>
           <td class="cent"><input type="submit" value="修改確定"><input type="reset" value="重置"></td>
         </tr>
@@ -28,3 +28,7 @@
 
   </form>
 </div>
+
+<script>
+// 步驟2 第22行 view.php?do=title 改成 view.php?do=ad
+</script>

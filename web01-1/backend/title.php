@@ -14,15 +14,6 @@
       </tbody>
     </table>
 
-<script>
-// 步驟1 onclick="op  op = open
-// 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  cover/cvr/view.php?do=title 
-// 對照js檔案 function op(x, y, url)
-// ajax用法 點下後 產生xhr請求  
-// 此頁是include 回上一層找cover
-// &#39 
-</script>
-
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
@@ -43,3 +34,19 @@
 
   </form>
 </div>
+
+<script>
+// 步驟1 onclick="op  op = open
+// 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
+// 來自上一層backend.php <div id="cover
+// 對照js檔案 function op(x, y, url)
+// ajax用法 點下後 產生xhr請求  
+// 此頁是include 回上一層找cover
+// &#39 
+</script>
+
+<?php
+// 此頁是include 回上一層找cover 加上註解畫面跑掉
+// 用 PHP 註解或放在 footer 比較安全
+// 盡量避免在<form> <table> → <tr> 中間直接加 HTML 註解，尤其是多層 include 的情況
+?>

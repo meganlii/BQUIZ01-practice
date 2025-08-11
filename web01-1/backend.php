@@ -16,13 +16,19 @@
 
 <body>
   <!-- 步驟9 檢查參數cover  之前引入title.php頁面 onclick="op 執行淡入淡出-->
+  <!-- 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title -->
+  <!-- 參數1 #cover 共3個 -->
   <div id="cover" style="display:none; ">
     <div id="coverr">
 
       <!-- 步驟10 cl 代表close -->
       <a style="position:absolute; right:3px; top:4px; cursor:pointer; z-index:9999;" 
       onclick="cl(&#39;#cover&#39;)">X</a>
-      <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:9898;"></div>
+      
+      <!-- 參數2 #cvr -->
+      <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:9898;">
+      </div>
+
     </div>
   </div>
 
@@ -136,6 +142,7 @@
           include './backend/title.php';
         }
         // 步驟8 複製title.php 更名為ad.php
+        // 步驟9 之前引入title.php頁面 onclick="op 執行淡入淡出 參數3-url #view.php?do=title
         ?>
 
         <!-- 步驟5 分離右半部區域 end -->

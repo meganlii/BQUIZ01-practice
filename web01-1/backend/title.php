@@ -54,6 +54,6 @@
 
 // 步驟2 更改 onclick 路徑
 // onclick="op('#cover','#cvr','view.php?do=title')"
-// onclick="op('#cover','#cvr','view.php?do=title')"
+// onclick="op('#cover','#cvr','./modal/title.php')"
 
 ?>

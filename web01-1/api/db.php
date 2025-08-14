@@ -123,7 +123,7 @@ private function arraytosql($array){
 
 }
 
-
+// 類似 宣告$pdo= new DB($dsn,'root','')
 $Title=new DB('title');
 $Ad=new DB('ad');
 $Mvim=new DB('mvim');

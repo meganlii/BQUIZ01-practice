@@ -19,8 +19,10 @@
 
 <body>
   <!-- 步驟9-1 檢查參數cover  之前引入title.php頁面 onclick="op 執行淡入淡出-->
-  <!-- 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title -->
   <!-- 參數1 #cover 共3個 -->
+  
+  <!-- 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title -->
+  <!-- 由JS觸發在後台顯示 獨立存在 所以沒有共用到db.php函數檔 容易混淆 -->
   <div id="cover" style="display:none; ">
     <div id="coverr">
 
@@ -129,11 +131,11 @@
         // 如果有do=ad，載入 $do = 'ad'
         // 如果沒有do參數  載入 $do = 'title'
 
-        $file = "./backend/" . $do . ".php";
+        $file = "./backend/{$do}.php";
+        // $file = "./backend/" . $do . ".php";  改成合併寫法 雙引號內字串連接+大括號
         // ./backend 少/ 要留意  可用echo $file; 除錯
-        // $file = "./backend/$do.php"; 不加空格才會生效
-        // 如果有do=ad，載入 $do = 'ad' 載入ad.php
-        // 如果沒有do參數，載入 $do = 'title' 載入title.php
+        // 如果有do=ad，載入 $do=ad 載入檔案 ad.php
+        // 如果沒有do參數，載入 $do=title 載入檔案 title.php
 
         // 步驟7 內建函數 file_exists() 
         // 先打完if(file_exists($file)) 再加T/F { }else{ }

@@ -15,7 +15,8 @@ function q($sql){
 }
 
 function to($url){
-    header("location:".$url);
+    // header("location:".$url);
+    header("location: $url");
 }
 
 class DB{

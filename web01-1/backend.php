@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html
+﻿<!-- 步驟11 在此載入 include_once 不在title.php -->
+<?php include_once "./api/db.php"; ?>
+
+<!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0068)?do=admin&redo=title -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,7 +18,7 @@
 </head>
 
 <body>
-  <!-- 步驟9 檢查參數cover  之前引入title.php頁面 onclick="op 執行淡入淡出-->
+  <!-- 步驟9-1 檢查參數cover  之前引入title.php頁面 onclick="op 執行淡入淡出-->
   <!-- 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title -->
   <!-- 參數1 #cover 共3個 -->
   <div id="cover" style="display:none; ">
@@ -142,7 +145,7 @@
           include './backend/title.php';
         }
         // 步驟8 複製title.php 更名為ad.php
-        // 步驟9 之前引入title.php頁面 onclick="op 執行淡入淡出 參數3-url #view.php?do=title
+        // 步驟9-2 之前引入title.php頁面 onclick="op 執行淡入淡出 參數3-url #view.php?do=title
         ?>
 
         <!-- 步驟5 分離右半部區域 end -->

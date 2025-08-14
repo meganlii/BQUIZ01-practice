@@ -19,7 +19,7 @@
         <tr>
           <td width="200px">
             <input type="button" 
-            onclick="op('#cover','#cvr','view.php?do=title')" 
+            onclick="op('#cover','#cvr','./modal/title.php')" 
             value="新增網站標題圖片">
           </td>
 
@@ -51,4 +51,9 @@
 // 盡量避免在<form> <table> → <tr> 中間直接加 HTML 註解，尤其是多層 include 的情況
 // 第22行 移除&#39 --> 單引號' ' 標籤內有單雙引號時使用 html_entities
 // https://www.w3schools.com/html/html_entities.asp
+
+// 步驟2 更改 onclick 路徑
+// onclick="op('#cover','#cvr','view.php?do=title')"
+// onclick="op('#cover','#cvr','view.php?do=title')"
+
 ?>

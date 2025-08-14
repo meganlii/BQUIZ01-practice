@@ -38,7 +38,8 @@ switch ($_GET['do'] ?? 'title') {
     </form>
 
     <!-- 步驟5-2 <h3><form>整段移到 ./madal/title.php -->
-    <!-- 步驟6 之後會刪除 view2.php -->
+        
+    <!-- 步驟6 之後會刪除此頁 view2.php -->
 
 
 <?php

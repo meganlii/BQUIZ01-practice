@@ -1,6 +1,6 @@
 <?php
     // 6/24-1-1 建立彈出視窗版型-測試頁 提供之後所有需要透過彈出視窗進行的功能使用
-    // 步驟1 先斷開php 接著寫html
+    // 步驟1 先斷開php 接著寫html 才不用一直echo html tag
 switch ($_GET['do'] ?? 'title') {
     case 'title':
 ?>
@@ -43,7 +43,7 @@ switch ($_GET['do'] ?? 'title') {
 
 
 <?php
-        //   echo "title";
+        echo "title";
         break;
 
     case 'ad':

@@ -36,24 +36,27 @@
 </div>
 
 <script>
-// 步驟1 onclick="op  op = open
-// 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
-// 來自上一層backend.php <div id="cover
-// 對照js檔案 function op(x, y, url)
-// ajax用法 點下後 產生xhr請求  
-// 此頁是include 回上一層找cover
+// 此頁include 到後台backend.php-149行 
+
+// 第22行 
+// 步驟1 onclick="op  op = open  彈出視窗
+// 由js函式op() 觸發 彈出視窗  並載入 ./modal/title.php 內容 (原為view.php)
+// 三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
+// 來自上一層backend.php <div id="cover  對照js檔案 function op(x, y, url)
+// 打開F12 查看ajax用法 點下後產生xhr請求 
+
+// 步驟2 更改 onclick路徑 ./當前目錄  以backend.php角度來看
+// onclick="op('#cover','#cvr','view.php?do=title')"
+// onclick="op('#cover','#cvr','./modal/title.php')"
+
+
 
 </script>
 
 <?php
-// 此頁是include 回上一層找cover 加上註解畫面跑掉
-// 用 PHP 註解或放在 footer 比較安全
+// 用 PHP 註解或放在 footer 比較安全  此頁回上一層找cover 加上註解畫面會跑掉
 // 盡量避免在<form> <table> → <tr> 中間直接加 HTML 註解，尤其是多層 include 的情況
-// 第22行 移除&#39 --> 單引號' ' 標籤內有單雙引號時使用 html_entities
+// 移除&#39 --> 單引號' ' 標籤內有單雙引號時使用 html_entities
 // https://www.w3schools.com/html/html_entities.asp
-
-// 步驟2 更改 onclick 路徑
-// onclick="op('#cover','#cvr','view.php?do=title')"
-// onclick="op('#cover','#cvr','./modal/title.php')"
 
 ?>

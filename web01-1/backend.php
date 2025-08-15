@@ -141,13 +141,13 @@
         // 先打完if(file_exists($file)) 再加T/F { }else{ }
         // ad.php 還不存在  先載入 title.php
 
+        // 步驟8 複製title.php 更名為ad.php
+        // 步驟9-2 此頁引入 title.php頁面 onclick="op 由js函式 op() 觸發 彈出視窗
         if (file_exists($file)) {
           include $file;  // 選取變數：游標移到變數前方 alt+shift 
         } else {
           include './backend/title.php';
         }
-        // 步驟8 複製title.php 更名為ad.php
-        // 步驟9-2 之前引入title.php頁面 onclick="op 執行淡入淡出 參數3-url #view.php?do=title
         ?>
 
         <!-- 步驟5 分離右半部區域 end -->

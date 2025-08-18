@@ -1,4 +1,4 @@
-<!-- 負責收./madal/title.php 送來的表單資料  寫到資料庫 -->
+<!-- 負責收 後台./madal/title.php 送來的表單資料  寫到資料庫 -->
 <?php
 
 include_once "db.php";
@@ -25,18 +25,25 @@ if (!empty($_FILES['img']['tmp_name'])) {
     // 合併寫法不知是否可行 "../images/{$_FILES['img']['name']}"
     move_uploaded_file($_FILES['img']['tmp_name'], "../images/".$_FILES['img']['name']);
     
-    // 步驟3 記錄 / 記錄檔案名稱 $_POST 同$_FILES 屬於 陣列變數
-    // 把右方檔案名稱 存到 $_POST['img'] 變數中 之後送到資料庫
+    // 步驟3 記錄 / 記錄檔案名稱 $_POST同$_FILES 皆為 陣列變數
+    // 把右方檔案名稱 存到 $_POST['img'] 變數中  之後要送到資料庫
     // $_POST['img'] 鍵值來自 <input type="file" name="img">
-    // $_POST 一維陣列儲存表單欄位鍵值  鍵值是 欄位名稱['img']['text']
+    // $_POST 一維陣列-儲存 表單欄位/鍵值  鍵值是 欄位名稱['img']['text']
     // 補齊$_POST資料  對應資料表titles 欄位 ['img'] ['sh']
+    // 郵差 接收表單資料 準備 投遞送到資料庫
     $_POST['img']=$_FILES['img']['name'];
+
+    // 預設所有上傳照片 預設不顯示 之後再手動調整
     $_POST['sh']=0;
 }
 
 // 步驟4 DB::save()
 // 資料表目前是空的 需要先判斷資料表狀況 決定第一筆上傳資料開或關
 // 要寫太多行程式 檢定不適合 改用最大可能性寫法
+// 引入db.php共用函式 透過DB:: 彙整常用程式 看不到sql跟pdo 程式碼短更好閱讀
+// 不用加一堆中文註解  但能看懂程式碼用法
 $Title->save($_POST);
 
-// 步驟5 回到後台do=title
+// 步驟5 回到後台 ?do=title 注意?
+// 因為後台./madal/title.php發請求到api 需再將頁面導回後台
+to('../backend.php?do=title');

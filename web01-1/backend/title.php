@@ -48,9 +48,6 @@
 // 步驟2 更改 onclick路徑 ./當前目錄  以backend.php角度來看
 // onclick="op('#cover','#cvr','view.php?do=title')"
 // onclick="op('#cover','#cvr','./modal/title.php')"
-
-
-
 </script>
 
 <?php

@@ -1,7 +1,7 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
   <p class="t cent botli">網站標題管理</p>
-  
-  <form method="post" target="back" action="?do=tii">
+
+  <form method="post" action="./api/edit_title.php">
     <table width="100%">
       <tbody>
         <tr class="yel">
@@ -11,9 +11,18 @@
           <td width="7%">刪除</td>
           <td></td>
         </tr>
+
+        <tr class="yel">
+          <td width="45%">網站標題</td>
+          <td width="23%">替代文字</td>
+          <td width="7%">顯示</td>
+          <td width="7%">刪除</td>
+          <td></td>
+        </tr>
+        
       </tbody>
     </table>
-
+    
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
@@ -36,18 +45,39 @@
 </div>
 
 <script>
-// 此頁include 到後台backend.php-149行 
+// 路徑 ./當前目錄  以backend.php角度來看
+// 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
+// 位置 ./backend/title.php 後台右半部版型區 
 
-// 第22行 
 // 步驟1 onclick="op  op = open  彈出視窗
-// 由js函式op() 觸發 彈出視窗  並載入 ./modal/title.php 內容 (原為view.php)
-// 三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
-// 來自上一層backend.php <div id="cover  對照js檔案 function op(x, y, url)
-// 打開F12 查看ajax用法 點下後產生xhr請求 
+/*
+* 第22行
+* 由js函式op() 觸發 彈出視窗  並載入 ./modal/title.php 內容(原為view.php)
+* 三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
+* 來自上一層backend.php <div id="cover  對照js檔案 functionop(x, y, url)
+* 打開F12 查看ajax用法 點下後產生xhr請求
 
 // 步驟2 更改 onclick路徑 ./當前目錄  以backend.php角度來看
-// onclick="op('#cover','#cvr','view.php?do=title')"
-// onclick="op('#cover','#cvr','./modal/title.php')"
+* onclick="op('#cover','#cvr','view.php?do=title')"
+* onclick="op('#cover','#cvr','./modal/title.php')"
+*/
+
+
+// 步驟3 整理<form>參數
+// 第4行 <form method="post" target="back" action="?do=tii">
+/* 
+1. 不會特別寫<tbody>
+2. 要在<tbody> 輸出上傳圖片資料 放第二段<tr class="yel">
+3. 移除 target="back"  之前iframe使用
+4. 更改 action="?do=tii" 表單資料post送到api處理 不要塞在一個檔案處理
+單一頁面多功能：原指reload後 繼續在當前頁處理新增修改
+表單送出後，會重新載入當前頁面，但加上 ?do=tii 參數 (留在當前頁，加上參數)
+網址變成 ./backend/title.php?do=tii
+加上參數 讓程式知道要處理 tii 功能 "正在處理標題設定..."
+PHP 接收到 $_GET['do'] = 'tii'; // 從網址參數來的 
+$_POST['title'] = '用戶輸入的內容';  // 從表單來的
+AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
+ */
 </script>
 
 <?php

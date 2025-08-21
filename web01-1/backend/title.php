@@ -12,13 +12,21 @@
           <td></td>
         </tr>
 
-        <tr class="yel">
-          <td width="45%">網站標題</td>
-          <td width="23%">替代文字</td>
-          <td width="7%">顯示</td>
-          <td width="7%">刪除</td>
+        <?php
+        $rows=$Title->all();
+        foreach ($rows as $row) :
+        ?>
+        <tr>
+          <td width="45%"></td>
+          <td width="23%"></td>
+          <td width="7%"></td>
+          <td width="7%"></td>
           <td></td>
         </tr>
+
+        <?php
+        endforeach;
+        ?>
         
       </tbody>
     </table>
@@ -51,10 +59,10 @@
 
 // 步驟1 onclick="op  op = open  彈出視窗
 /*
-* 第22行
+* onclick="op('#cover','#cvr','./modal/title.php')"
 * 由js函式op() 觸發 彈出視窗  並載入 ./modal/title.php 內容(原為view.php)
-* 三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title 
 * 來自上一層backend.php <div id="cover  對照js檔案 functionop(x, y, url)
+* 對照三個參數(x, y, url)  #cover / #cvr / #view.php?do=title 
 * 打開F12 查看ajax用法 點下後產生xhr請求
 
 // 步驟2 更改 onclick路徑 ./當前目錄  以backend.php角度來看
@@ -64,7 +72,7 @@
 
 
 // 步驟3 整理<form>參數
-// 第4行 <form method="post" target="back" action="?do=tii">
+// <form method="post" target="back" action="?do=tii">
 /* 
 1. 不會特別寫<tbody>
 2. 要在<tbody> 輸出上傳圖片資料 放第二段<tr class="yel">
@@ -77,7 +85,14 @@
 PHP 接收到 $_GET['do'] = 'tii'; // 從網址參數來的 
 $_POST['title'] = '用戶輸入的內容';  // 從表單來的
 AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
- */
+*/
+
+// 步驟4 <tr>前後 加上迴圈<?php  ?> 在<tr>每列逐筆顯示資料
+// <tr class="yel">
+/** 
+1. 移除背景圖 class="yel"
+
+*/
 </script>
 
 <?php

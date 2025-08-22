@@ -17,11 +17,19 @@
         foreach ($rows as $row) :
         ?>
         <tr>
-          <td width="45%"></td>
-          <td width="23%"></td>
+          <td width="45%">
+            <img src="./images/<?=$row['img'];?>" style="width:300px;height:30px">
+          </td>
+          <td width="23%">
+            <input type="text" name="text" value="<?= $row['text'];?>">
+          </td>
+          <td width="7%">
+            <input type="radio" name="sh" value="<?$row['id'];?>">
+          </td>
           <td width="7%"></td>
-          <td width="7%"></td>
-          <td></td>
+          <td>
+            <input type="checkbox" name="del" id="<?$row['id'];?>">
+          </td>
         </tr>
 
         <?php
@@ -91,6 +99,16 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 // <tr class="yel">
 /** 
 1. 移除背景圖 class="yel"
+2. 這兩段php程式碼，特別用$rows命名有特別意義
+$rows = $Title->all();  // 取得所有「列」資料
+foreach ($rows as $row) :  // 遍歷每一「列」
+3. 欄位1-圖片：<img src="./images/<?=$row['img'];?>" style="width:300px;height:30px">
+題目沒要求置中
+4. 欄位2-替代文字: 加上input:text 可編輯欄位 直接輸入文字修改
+id改成 預設值value= <?= $row['text'];?>
+5. 欄位3-顯示 新增單選框 input:radio
+6. 欄位4-刪除 新增多選框 input:checkbox
+7. 欄位5-刪除
 
 */
 </script>

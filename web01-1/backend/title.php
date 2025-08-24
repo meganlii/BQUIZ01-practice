@@ -24,11 +24,16 @@
             <input type="text" name="text" value="<?= $row['text'];?>">
           </td>
           <td width="7%">
-            <input type="radio" name="sh" value="<?$row['id'];?>">
+            <input type="radio" name="sh" value="<?=$row['id'];?>"
+            <?= ($row['sh']==1)?"checked":"" ;?>
+            >
           </td>
-          <td width="7%"></td>
+          <td width="7%">
+            <input type="checkbox" name="del" value="<?=$row['id'];?>">
+          </td>
+          
           <td>
-            <input type="checkbox" name="del" id="<?$row['id'];?>">
+            <input type="button" value="更新圖片">
           </td>
         </tr>
 
@@ -95,22 +100,24 @@ $_POST['title'] = '用戶輸入的內容';  // 從表單來的
 AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 */
 
-// 步驟4 <tr>前後 加上迴圈<?php  ?> 在<tr>每列逐筆顯示資料
+// 步驟4 <tr>前後 加上迴圈指令在<tr>每列逐筆顯示資料
 // <tr class="yel">
-/** 
+/* 
 1. 移除背景圖 class="yel"
 2. 這兩段php程式碼，特別用$rows命名有特別意義
 從資料庫取得所有標題資料，存到$rows陣列中
 $rows = $Title->all();  // 取得所有「列」資料
 foreach ($rows as $row) :  // 遍歷每一「列」
-3. 欄位1-圖片：<img src="./images/<?=$row['img'];?>" style="width:300px;height:30px">
+3. 欄位加上變數  id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
+欄位1-圖片：<img>
 題目沒要求置中
-4. 欄位2-替代文字: 加上input:text 可編輯欄位 直接輸入文字修改
-id改成 預設值value= <?= $row['text'];?>
-5. 欄位3-顯示 新增單選框 input:radio
-6. 欄位4-刪除 新增多選框 input:checkbox
-7. 欄位5-刪除
-
+欄位2-替代文字: 加上input:text 可編輯欄位 直接輸入文字修改
+欄位3-顯示 新增單選圓框 input:radio
+欄位4-刪除 新增多選方框 input:checkbox
+欄位5-更新圖片  新增按鈕 input:button 先寫value="更新圖片" 顯示按鈕文字即可
+4. F12確認欄位value值
+5. 新增另外三張圖片
+6. 欄位3-顯示sh  加上 checked判斷式 三元運算式 
 */
 </script>
 

@@ -21,15 +21,15 @@
             <img src="./images/<?=$row['img'];?>" style="width:300px;height:30px">
           </td>
           <td width="23%">
-            <input type="text" name="text" value="<?= $row['text'];?>">
+            <input type="text" name="text[]" value="<?= $row['text'];?>">
           </td>
           <td width="7%">
-            <input type="radio" name="sh" value="<?=$row['id'];?>"
+            <input type="radio" name="sh[]" value="<?=$row['id'];?>"
             <?= ($row['sh']==1)?"checked":"" ;?>
             >
           </td>
           <td width="7%">
-            <input type="checkbox" name="del" value="<?=$row['id'];?>">
+            <input type="checkbox" name="del[]" value="<?=$row['id'];?>">
           </td>
           
           <td>
@@ -85,7 +85,7 @@
 
 
 // 步驟3 整理<form>參數
-// <form method="post" target="back" action="?do=tii">
+// 第4行 <form method="post" target="back" action="?do=tii">
 /* 
 1. 不會特別寫<tbody>
 2. 要在<tbody> 輸出上傳圖片資料 放第二段<tr class="yel">
@@ -101,23 +101,24 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 */
 
 // 步驟4 <tr>前後 加上迴圈指令在<tr>每列逐筆顯示資料
-// <tr class="yel">
+// 第19行 <tr class="yel">
 /* 
 1. 移除背景圖 class="yel"
 2. 這兩段php程式碼，特別用$rows命名有特別意義
 從資料庫取得所有標題資料，存到$rows陣列中
 $rows = $Title->all();  // 取得所有「列」資料
 foreach ($rows as $row) :  // 遍歷每一「列」
-3. 欄位加上變數  id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
-欄位1-圖片：<img>
-題目沒要求置中
-欄位2-替代文字: 加上input:text 可編輯欄位 直接輸入文字修改
-欄位3-顯示 新增單選圓框 input:radio
-欄位4-刪除 新增多選方框 input:checkbox
+3. <input>屬性 加上變數  id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
+欄位1-圖片  <img> 題目沒要求置中
+欄位2-替代文字  加上input:text 可編輯欄位 直接輸入文字修改
+欄位3-顯示  新增單選圓框 input:radio
+欄位4-刪除  新增多選方框 input:checkbox
 欄位5-更新圖片  新增按鈕 input:button 先寫value="更新圖片" 顯示按鈕文字即可
-4. F12確認欄位value值
-5. 新增另外三張圖片
+4. F12 確認欄位value值
+5. 新增 另外三張圖片
 6. 欄位3-顯示sh  加上 checked判斷式 三元運算式 
+7. post送到api處理 編輯./api/edit_title.php
+8. 三個<input>屬性 name改成空陣列寫法 裝多筆資料 name="text[]" "sh[]" "del[]"
 */
 </script>
 

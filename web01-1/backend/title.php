@@ -100,6 +100,7 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 /** 
 1. 移除背景圖 class="yel"
 2. 這兩段php程式碼，特別用$rows命名有特別意義
+從資料庫取得所有標題資料，存到$rows陣列中
 $rows = $Title->all();  // 取得所有「列」資料
 foreach ($rows as $row) :  // 遍歷每一「列」
 3. 欄位1-圖片：<img src="./images/<?=$row['img'];?>" style="width:300px;height:30px">

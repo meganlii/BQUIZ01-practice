@@ -37,6 +37,8 @@
           </td>
         </tr>
 
+        <input type="hidden" name="id[]" value="<?=$row['id'];?>" >
+
         <?php
         endforeach;
         ?>
@@ -119,6 +121,11 @@ foreach ($rows as $row) :  // 遍歷每一「列」
 6. 欄位3-顯示sh  加上 checked判斷式 三元運算式 
 7. post送到api處理 編輯./api/edit_title.php
 8. 三個<input>屬性 name改成空陣列寫法 裝多筆資料 name="text[]" "sh[]" "del[]"
+sh[]只會有一筆，可以不需要陣列
+
+// 步驟5 迴圈結束前 加上hidden_id  辨識所有異動項目
+// 第40行 input:hidden
+1. 先判斷是否需要刪除  不用考慮更新或其他異動
 */
 </script>
 

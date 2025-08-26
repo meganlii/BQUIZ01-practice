@@ -2,7 +2,7 @@
 include_once './db.php';
 // F12預覽畫面 網址輸入 api/edit_title.php
 // to("../backend.php?do=title");
-// dd($_POST);
+dd($_POST);
 
 foreach ($_POST['id'] as $key => $id) {
  if(isset($_POST['del']) && in_array($id,$_POST['del'])){

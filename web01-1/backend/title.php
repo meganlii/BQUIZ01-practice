@@ -25,8 +25,7 @@
           </td>
           <td width="7%">
             <input type="radio" name="sh[]" value="<?=$row['id'];?>"
-            <?= ($row['sh']==1)?"checked":"" ;?>
-            >
+            <?=($row['sh']==1)?"checked":"";?> >
           </td>
           <td width="7%">
             <input type="checkbox" name="del[]" value="<?=$row['id'];?>">
@@ -106,9 +105,9 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 // 第19行 <tr class="yel">
 /* 
 1. 移除背景圖 class="yel"
-2. 這兩段php程式碼，特別用$rows命名有特別意義
+2. 這兩段php程式碼，特別用$rows命名 有特別意義
 從資料庫取得所有標題資料，存到$rows陣列中
-$rows = $Title->all();  // 取得所有「列」資料
+$rows = $Title->all();     // 取得所有「列」資料
 foreach ($rows as $row) :  // 遍歷每一「列」
 3. <input>屬性 加上變數  id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
 欄位1-圖片  <img> 題目沒要求置中

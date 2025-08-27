@@ -24,34 +24,31 @@
             <input type="text" name="text[]" value="<?= $row['text'];?>">
           </td>
           <td width="7%">
-            <input type="radio" name="sh[]" value="<?=$row['id'];?>"
-            <?=($row['sh']==1)?"checked":"";?> >
+            <input type="radio" name="sh" value="<?=$row['id'];?>" <?=($row['sh']==1)?"checked":"";?>>
           </td>
           <td width="7%">
             <input type="checkbox" name="del[]" value="<?=$row['id'];?>">
           </td>
-          
+
           <td>
             <input type="button" value="更新圖片">
           </td>
         </tr>
 
-        <input type="hidden" name="id[]" value="<?=$row['id'];?>" >
+        <input type="hidden" name="id[]" value="<?=$row['id'];?>">
 
         <?php
         endforeach;
         ?>
-        
+
       </tbody>
     </table>
-    
+
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
           <td width="200px">
-            <input type="button" 
-            onclick="op('#cover','#cvr','./modal/title.php')" 
-            value="新增網站標題圖片">
+            <input type="button" onclick="op('#cover','#cvr','./modal/title.php')" value="新增網站標題圖片">
           </td>
 
           <td class="cent">

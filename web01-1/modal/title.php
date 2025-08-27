@@ -1,7 +1,7 @@
 <!-- 此功能搭配筆記 11401-FILE-mynote\upload\01-upload.php -->
 <!-- 步驟1 新增 資料夾madal跟title.php ./madal/title.php -->
 <!-- ./view2 <h3><form> 移到此頁 -->
-<h3 style='text-align:center'>新增標題區</h3>
+<h3 style='text-align:center'>新增標題區圖片</h3>
 <hr>
 
 <!-- 步驟2 新增 <form> 參數  表單資料post送到api處理 action="./api/insert_title.php" -->

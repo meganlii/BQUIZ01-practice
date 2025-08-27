@@ -134,6 +134,7 @@
         $file = "./backend/{$do}.php";
         // $file = "./backend/" . $do . ".php";  改成合併寫法 雙引號內字串連接+大括號
         // ./backend 少/ 要留意  可用echo $file; 除錯
+        // ** 可以複製老師寫法貼在下一行比對
         // 如果有do=ad，載入 $do=ad 載入檔案 ad.php
         // 如果沒有do參數，載入 $do=title 載入檔案 title.php
 

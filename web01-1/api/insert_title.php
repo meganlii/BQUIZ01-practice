@@ -1,4 +1,4 @@
-<!-- 負責收 後台./madal/title.php 送來的表單資料  寫到資料庫 -->
+<!-- 收後台./madal/title.php 新增網站標題圖片 送來的表單資料  寫到資料庫 -->
 <?php
 
 include_once "db.php";
@@ -9,7 +9,7 @@ echo "</pre>";
 
 
 // 檔案上傳四步驟：檢查 / 移動 / 紀錄 / 存入資料庫
-// 兩個陣列變數 $_FILES [' '] [' ']  / $_POST
+// 二維陣列變數 $_FILES [' '] [' ']  / $_POST
 
 // 步驟1 檢查 / !empty( ) 檢查是否有檔案上傳 
 // $_FILES['img'] = 上傳的檔案資訊
@@ -25,10 +25,11 @@ if (!empty($_FILES['img']['tmp_name'])) {
     // 合併寫法不知是否可行 "../images/{$_FILES['img']['name']}"
     move_uploaded_file($_FILES['img']['tmp_name'], "../images/".$_FILES['img']['name']);
     
-    // 步驟3 記錄 / 記錄檔案名稱 $_POST同$_FILES 皆為 陣列變數
+    // 步驟3 記錄 / 記錄檔案名稱 $_POST 同$_FILES 都是 陣列變數
     // 把右方檔案名稱 存到 $_POST['img'] 變數中  之後要送到資料庫
     // $_POST['img'] 鍵值來自 <input type="file" name="img">
-    // $_POST 一維陣列-儲存 表單欄位/鍵值  鍵值是 欄位名稱['img']['text']
+    // 一維陣列-儲存 表單欄位/鍵值  鍵值是 欄位名稱['img']['text']
+    
     // 補齊$_POST資料  對應資料表titles 欄位 ['img'] ['sh']
     // 郵差 接收表單資料 準備 投遞送到資料庫
     $_POST['img']=$_FILES['img']['name'];

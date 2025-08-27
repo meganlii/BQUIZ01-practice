@@ -1,3 +1,5 @@
+<!-- 收後台 .\backend\title.php 表單 編輯/顯示/刪除 -->
+<!-- <form method="post" action="./api/edit_title.php"> -->
 <?php
 include_once './db.php';
 // F12預覽畫面 網址輸入 api/edit_title.php

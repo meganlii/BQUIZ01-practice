@@ -69,10 +69,11 @@
 // 位置 ./backend/title.php 後台右半部版型區 
 
 // 步驟1 onclick="op  op = open  彈出視窗
+// 第50行
 /*
 * onclick="op('#cover','#cvr','./modal/title.php')"
 * 由js函式op() 觸發 彈出視窗  並載入 ./modal/title.php 內容(原為view.php)
-* 來自上一層backend.php <div id="cover  對照js檔案 functionop(x, y, url)
+* 來自上一層backend.php <div id="cover  對照js檔案 function op(x, y, url)
 * 對照三個參數(x, y, url)  #cover / #cvr / #view.php?do=title 
 * 打開F12 查看ajax用法 點下後產生xhr請求
 
@@ -116,12 +117,27 @@ foreach ($rows as $row) :  // 遍歷每一「列」
 5. 新增 另外三張圖片
 6. 欄位3-顯示sh  加上 checked判斷式 三元運算式 
 7. post送到api處理 編輯./api/edit_title.php
+
 8. 三個<input>屬性 name改成空陣列寫法 裝多筆資料 name="text[]" "sh[]" "del[]"
+可能會同時送出多筆資料，所以欄位屬性加上陣列
 sh[]只會有一筆，可以不需要陣列
 
 // 步驟5 迴圈結束前 加上hidden_id  辨識所有異動項目
 // 第40行 input:hidden
 1. 先判斷是否需要刪除  不用考慮更新或其他異動
+2. 每筆資料都有一個對應的id，後端才知道要編輯那一筆
+
+// 步驟6 新增 更新圖片 彈出視窗
+// 第33行 <input type="button" value="更新圖片">
+1. 彈出視窗的js函式onclick=op() 套用到更新圖片按鈕中 
+2. 複製 ./modal/title.php 更名update_title
+3. 修改表單內容 更新h3、action= 移除替代文字  新增改成更新
+
+// 思考：點選後要知道 更新哪一筆(id)？ 送到api才能處理
+4. 兩個頁面修改 op()路徑+變數 .\backend\title.php   
+./modal/title.php  要用hidden_id 還是 放id在連結？
+5. 在op函式中的路徑加上參數id及參數table，讓載入的頁面可以判別是那一筆資料的請求
+
 */
 </script>
 

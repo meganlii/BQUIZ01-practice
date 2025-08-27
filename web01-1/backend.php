@@ -20,16 +20,16 @@
 <body>
   <!-- 步驟9-1 檢查參數cover  之前引入title.php頁面 onclick="op 執行淡入淡出-->
   <!-- 參數1 #cover 共3個 -->
-  
+
   <!-- 彈出視窗 由js函式 op() 觸發  三個參數對照(x, y, url)  #cover/#cvr/#view.php?do=title -->
-  <!-- 由JS觸發在後台顯示 獨立存在 所以沒有共用到db.php函數檔 容易混淆 -->
+  <!-- 由JS觸發 在後台顯示 獨立存在 所以沒有共用到db.php函數檔 容易混淆 -->
   <div id="cover" style="display:none; ">
     <div id="coverr">
 
       <!-- 步驟10 cl 代表close -->
-      <a style="position:absolute; right:3px; top:4px; cursor:pointer; z-index:9999;" 
-      onclick="cl(&#39;#cover&#39;)">X</a>
-      
+      <a style="position:absolute; right:3px; top:4px; cursor:pointer; z-index:9999;"
+        onclick="cl(&#39;#cover&#39;)">X</a>
+
       <!-- 參數2 #cvr -->
       <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:9898;">
       </div>
@@ -109,8 +109,8 @@
         <table width="100%">
           <tbody>
             <tr>
-              <td style="width:70%;font-weight:800; border:#333 1px solid; border-radius:3px;" class="cent"><a href="?do=admin"
-                  style="color:#000; text-decoration:none;">後台管理區</a></td>
+              <td style="width:70%;font-weight:800; border:#333 1px solid; border-radius:3px;" class="cent"><a
+                  href="?do=admin" style="color:#000; text-decoration:none;">後台管理區</a></td>
               <td><button onclick="document.cookie=&#39;user=&#39;;location.replace(&#39;?&#39;)"
                   style="width:99%; margin-right:2px; height:50px;">管理登出</button></td>
             </tr>
@@ -161,24 +161,25 @@
 
 
       <script>
-        $(".sswww").hover(
-          function() {
-            $("#alt").html("" + $(this).children(".all").html() + "").css({
-              "top": $(this).offset().top - 50
-            })
-            $("#alt").show()
-          }
-        )
-        $(".sswww").mouseout(
-          function() {
-            $("#alt").hide()
-          }
-        )
+      $(".sswww").hover(
+        function() {
+          $("#alt").html("" + $(this).children(".all").html() + "").css({
+            "top": $(this).offset().top - 50
+          })
+          $("#alt").show()
+        }
+      )
+      $(".sswww").mouseout(
+        function() {
+          $("#alt").hide()
+        }
+      )
       </script>
 
     </div>
     <div style="clear:both;"></div>
-    <div style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
+    <div
+      style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
       <span class="t" style="line-height:123px;"></span>
     </div>
   </div>

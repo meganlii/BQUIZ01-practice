@@ -10,10 +10,15 @@ if (!empty($_FILES['img']['tmp_name'])) {
   // 步驟3：檔案移到暫存區
   move_uploaded_file($_FILES['img']['tmp_name'], "../images/" . $_FILES['img']['name']);
 
-  // 步驟4：檔名是否相同
-  // 步驟4：找出資料
+  // 步驟：檔名是否相同
 
-  $_POST['img'] = $_FILES['img']['name'];
+  // 步驟4：拿出原本資料
+  $row=$Title->find($_POST['id']);
+
+  // 步驟5：更改檔名  原檔名 改為 上傳的新檔名
+  // $_POST['img'] = $_FILES['img']['name'];
+  $row['img'] = $_FILES['img']['name'];
+
   $_POST['sh'] = 0;
 
 }

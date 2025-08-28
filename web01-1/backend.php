@@ -1,5 +1,7 @@
-﻿<!-- 步驟11 在此載入 include_once 不在title.php -->
-<?php include_once "./api/db.php"; ?>
+﻿<?php 
+// 步驟11 在此載入 include_once 不在title.php
+include_once "./api/db.php"; 
+?>
 
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

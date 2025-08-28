@@ -1,5 +1,5 @@
-<!-- 收後台./madal/title.php 新增網站標題圖片 送來的表單資料  寫到資料庫 -->
 <?php
+// 收後台./modal/title.php 新增網站標題圖片 送來的表單資料  寫到資料庫
 
 include_once "db.php";
 echo "<pre>";

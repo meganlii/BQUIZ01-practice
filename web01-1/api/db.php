@@ -19,6 +19,7 @@ function to($url){
     header("location: $url");
 }
 
+
 class DB{
 private $dsn="mysql:host=localhost;dbname=db01;charset=utf8";
 private $pdo;   
@@ -29,6 +30,9 @@ function __construct($table){
     $this->pdo=new PDO($this->dsn,"root",'');
 }
 
+
+// 4-1 $Table->all()-查詢 符合條件的 "全部資料" select *
+// 五組變數 $sql  三個if  return
 function all(...$arg){
     $sql="select * from $this->table ";
     if(isset($arg[0])){
@@ -48,6 +52,9 @@ function all(...$arg){
     return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+// 4-5 查詢 資料筆數 select count(*) 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
+// count() SQL內建函式 聚合函式
 function count(...$arg){
     $sql="select count(*) from $this->table ";
     if(isset($arg[0])){
@@ -67,6 +74,9 @@ function count(...$arg){
     return $this->pdo->query($sql)->fetchColumn();
 }
 
+
+// 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料" select *
+// 找某個特定id的資料  回傳資料表 指定id的資料 
 function find($id){
     $sql="select * from $this->table ";
     
@@ -81,6 +91,8 @@ function find($id){
     return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 }
 
+
+// 4-4 儲存資料：update、insert
 function save($array){
     if(isset($array['id'])){
         //update
@@ -97,6 +109,8 @@ function save($array){
     return $this->pdo->exec($sql);
 }
 
+
+// 4-3 刪除資料
 function del($id){
     $sql="delete  from $this->table ";
     
@@ -112,6 +126,7 @@ function del($id){
 }
 
 
+// 4-6 簡稱 a2s()將陣列轉換為SQL字串 
 private function arraytosql($array){
     $tmp=[];
     foreach($array as $key => $value){
@@ -122,6 +137,7 @@ private function arraytosql($array){
 }
 
 }
+
 
 // 類似 宣告$pdo= new DB($dsn,'root','')
 $Title=new DB('title');

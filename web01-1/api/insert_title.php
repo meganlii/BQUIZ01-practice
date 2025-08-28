@@ -48,3 +48,5 @@ $Title->save($_POST);
 // 步驟5 回到後台 ?do=title 注意?
 // 因為後台./madal/title.php發請求到api 需再將頁面導回後台
 to('../backend.php?do=title');
+
+?>

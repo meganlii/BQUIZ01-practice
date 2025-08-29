@@ -16,26 +16,27 @@
         $rows = $Title->all();
         foreach ($rows as $row) :
         ?>
-          <tr>
-            <td width="45%">
-              <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
-            </td>
-            <td width="23%">
-              <input type="text" name="text[]" value="<?= $row['text']; ?>">
-            </td>
-            <td width="7%">
-              <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
-            </td>
-            <td width="7%">
-              <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
-            </td>
+        <tr>
+          <td width="45%">
+            <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
+          </td>
+          <td width="23%">
+            <input type="text" name="text[]" value="<?= $row['text']; ?>">
+          </td>
+          <td width="7%">
+            <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
+          </td>
+          <td width="7%">
+            <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
+          </td>
 
-            <td>
-              <input type="button" value="更新圖片" onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
-            </td>
-          </tr>
+          <td>
+            <input type="button" value="更新圖片"
+              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
+          </td>
+        </tr>
 
-          <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+        <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
 
         <?php
         endforeach;
@@ -67,6 +68,8 @@
 // 路徑 ./當前目錄  以backend.php角度來看
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區 
+// 有兩個<table>
+
 // 步驟1：onclick="op  op = open  彈出視窗
 // 第50行
 /*
@@ -81,13 +84,12 @@
 */
 
 
-// 步驟3：整理<form>參數
+// 步驟3：整理<form>參數  不會特別寫<tbody>
 // 第4行 <form method="post" target="back" action="?do=tii">
 /* 
-1. 不會特別寫<tbody>
-2. 要在<tbody> 輸出上傳圖片資料 放第二段<tr class="yel">
-3. 移除 target="back"  之前iframe使用
-4. 更改 action="?do=tii" 表單資料post送到api處理 不要塞在一個檔案處理
+1. 
+2. 移除 target="back"  之前iframe使用
+3. 更改 action="?do=tii" 表單資料post送到api處理 不要塞在一個檔案處理
 單一頁面多功能：原指reload後 繼續在當前頁處理新增修改
 表單送出後，會重新載入當前頁面，但加上 ?do=tii 參數 (留在當前頁，加上參數)
 網址變成 ./backend/title.php?do=tii
@@ -97,12 +99,16 @@ $_POST['title'] = '用戶輸入的內容';  // 從表單來的
 AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 */
 
-// 步驟4：<tr>前後 加上迴圈指令在<tr>每列逐筆顯示資料
+// 步驟4：迴圈循環動態生成欄位
+// 在第一個<tbody> 輸出上傳圖片資料 複製第一段<tr class="yel">
+
+// 步驟4：加上迴圈
+// 第二段<tr>前後 加上迴圈指令在<tr>每列逐筆顯示資料
 // 第17行 <tr class="yel">
 /* 
 1. 移除背景圖 class="yel"
-
-2. 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
+2. 
+3. 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
 從資料庫取得所有標題資料，存到$rows陣列中
   $rows = $Title->all();     // 取得所有「列」資料  // 取得所有 rows（所有列）
   foreach ($rows as $row) :  // 遍歷每一「列」 // 每個 $row 代表表格中的一列資料
@@ -116,7 +122,7 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
   | 2  | 網站標題2  | 0      |  ← 這是一個 row
   +----+-----------+--------+
 
-3. <input>屬性 加上變數  id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
+3. <input>屬性 加上變數 name=text[]多筆資料加上陣列 id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
   欄位1-圖片檔名img  <img> 題目沒要求置中  變數$row['img']
   欄位2-替代文字text  加上input:text 可編輯欄位 直接輸入文字修改
   欄位3-顯示sh  新增單選圓框 input:radio

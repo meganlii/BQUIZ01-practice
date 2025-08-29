@@ -10,12 +10,12 @@
 <!-- "multipart/form-data" 多媒體格式/表單資料 配合type="file"才會用編碼方式傳送file 一般表單不用加 -->
 <form action="./api/insert_title.php" method="post" enctype="multipart/form-data">
   <div>
-    <label>標題區圖片</label>
+    <label>標題區圖片：</label>
     <input type="file" name="img">
   </div>
 
   <div>
-    <label>標題區替代文字</label>
+    <label>標題區替代文字：</label>
     <input type="text" name="text">
   </div>
 

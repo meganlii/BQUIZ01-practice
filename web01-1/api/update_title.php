@@ -2,7 +2,7 @@
 // 負責收 後台./madal/update_title.php 更新圖片 送來的表單資料  寫到資料庫
 // 收資料 先新增兩個陣列變數 $_FILES['img']  $_POST['id']
 
-// 步驟1：套用 .\api\insert_title.php
+// 步驟1：套用 .\api\insert_title.php  更名 .\api\update_title.php
 include_once './db.php';
 
 // 步驟2：確認檔案是否上傳成功
@@ -30,7 +30,10 @@ if (!empty($_FILES['img']['tmp_name'])) {
   // $_POST['img'] = $_FILES['img']['name'];
   // $_POST['sh'] = 0;
 
-  // 步驟6：測試更新圖片成功  正常實務上資料夾images裡面圖片，應該重新改檔名
+  // 步驟6：測試 更新圖片成功  正常實務上資料夾images圖片，應該重新改檔名
+  // 步驟7：測試 新增1張圖片變成5張  因為使用原檔名，資料夾images圖片沒有新增，只有四個
+  // 如果增加一行刪除程式 沒有更名可能會誤刪別的資料參考到此圖  後台頁面會大亂
+  // network 清cache  聽不懂
   $Title->save($row);
 
 }

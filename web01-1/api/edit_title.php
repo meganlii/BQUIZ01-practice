@@ -18,7 +18,7 @@ foreach ($_POST['id'] as $key => $id) {
 
   // 步驟2：處理刪除
   // isset()確認 刪除是否存在 if如果有存在  else如果不存在刪除，就可編輯
-  // in_array()再確認迴圈的['id']有沒有在['del']陣列裡面
+  // in_array() 確認迴圈['id'] 是否在 $_POST['del']陣列裡面
   // isset()跟in_array()先後順序 不可顛倒
   // 不寫第二個foreach ($_POST['del'] as $id)  
   // (1)程式碼只需跑4次不用跑6次  (2)可能誤刪之前編輯的資料

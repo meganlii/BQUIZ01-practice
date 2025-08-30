@@ -7,7 +7,7 @@
 
   <p class="t cent botli">動態文字廣告管理</p>
 
-  <form method="post" action="./api/edit_title.php">
+  <form method="post" action="./api/edit_ad.php">
     <table width="100%">
       <tbody>
         <tr class="yel">
@@ -23,7 +23,7 @@
         ?>
         <tr>
           <td>
-            <input type="text" name="text[]" value="<?=$row['text'];?>" style="width=90%">
+            <input type="text" name="text[]" value="<?=$row['text'];?>" style="width:90%">
           </td>
           <td>
             <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
@@ -95,8 +95,9 @@
 // 第26行
 1. name=text[]多筆資料加上陣列
 2. name="sh"加上陣列[]  改成checkbox
-3. <input> 本身有寬度 要另設style="width=90%"固定(沒有全部對齊th)  沒改會變成一半
-
+3. <input> 本身有寬度 要另設style="width=90%"固定(沒有全部對齊th)  沒改會變成一半4
+width=90%打錯  應為半形冒號 width:90%
+style="text-align:center" 失效
 
 // 步驟5：修改第二個table onclick=op()
 1. 路徑改成 ./modal/ad.php
@@ -104,6 +105,12 @@
 
 
 // 步驟6：彈出視窗
+新增.\modal\ad.php
+
+// 步驟7：測試可新增動態文字廣告 處理編輯功能
+1. 之前複製title.php 已經帶hidden_id  aip就可進行編輯
+2. action="./api/edit_title.php" 改為 edit_ad.php
+3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
 
  */
 </script>

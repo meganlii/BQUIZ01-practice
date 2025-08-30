@@ -63,43 +63,49 @@
 </div>
 
 <script>
-/** 
+/**
 // 路徑 ./當前目錄  以backend.php角度來看
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
+
 
 // 步驟2：由上而下修改
 // 第7行 
 1.<p>標題
 2.<tbody> 表單只有三個欄位 移除替代文字
 3.修改欄位寬度 剩下60% 改成 80-10-10
- */
+
 
 // 步驟3：迴圈循環動態生成欄位資料 
 // 第23行
-/**
 1. 複製第一段<tr class="yel"> 貼到第二段<tr>
 不需要寬度比例  會以第一段為主
 2. 選取整個<tr>後ctrl+c 再選取第二段ctrl+v 比較不會亂掉
 3. 移除 class="yel"
 4. 更改foreach參數 $Ad->all() db.php增加$Ad=new DB('ad');
-5. 資料庫新增資料表 複製titles >操作>copy table > 
-勾選僅結構 不要資料  刪除img
+
+// 步驟4：資料庫新增資料表
+複製titles >操作>copy table > 
+1. 勾選第一個/僅結構  不要第二個/結構和資料  
+2. 刪除img
+3. 修改備註為 動態文字廣告
+
 
 // 步驟4：修改foreach資料 <input> 
 // 第26行
 1. name=text[]多筆資料加上陣列
 2. name="sh"加上陣列[]  改成checkbox
 3. <input> 本身有寬度 要另設style="width=90%"固定(沒有全部對齊th)  沒改會變成一半
- */
+
 
 // 步驟5：修改第二個table onclick=op()
-/**
 1. 路徑改成 ./modal/ad.php
 2. value= 改成 "新增動態文字廣告"
- */
+
 
 // 步驟6：彈出視窗
+
+ */
 </script>
 
 <?php

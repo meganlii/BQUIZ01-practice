@@ -1,5 +1,5 @@
 <?php
-// 負責收 後台./madal/update_title.php 更新圖片 送來的表單資料  寫到資料庫
+// 負責收 後台./modal/update_title.php 更新圖片 送來的表單資料  寫到資料庫
 // 收資料 先新增兩個陣列變數 $_FILES['img']  $_POST['id']
 
 // 步驟1：套用 .\api\insert_title.php  更名 .\api\update_title.php

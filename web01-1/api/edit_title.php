@@ -5,8 +5,8 @@
 // 之前有加hidden id，辨識異動項目  api就可編輯
 // F12預覽畫面 網址輸入 api/edit_title.php
 
-// 資料夾api內的檔案跟backend.php關係 回上一層  用../  
-// 其他資料夾modal、backend  以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
+// 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
+// api處理完了，資料夾api內的檔案跟backend.php關係 則是回上一層  用../  回到後台
 // to("../backend.php?do=title");
 
 include_once './db.php';

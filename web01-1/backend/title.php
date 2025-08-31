@@ -68,7 +68,8 @@
 /*
 // 路徑 屬於./當前目錄  web01-1目錄  以backend.php角度來看  
 // 所以<form> action="./api/edit_title.php"  用./  不是../
-// 資料夾modal、backend  以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
+// 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
+// api處理完了，資料夾api內的檔案跟backend.php關係 則是回上一層  用../  回到後台
 
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區 
@@ -104,16 +105,13 @@ $_POST['title'] = '用戶輸入的內容';  // 從表單來的
 AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 
 
-// 步驟4：迴圈循環動態生成欄位
-// 在第一個<tbody> 輸出上傳圖片資料 複製第一段<tr class="yel">
+// 步驟4：第17行 <tr class="yel">  移除背景圖 class="yel"
+// 迴圈循環 動態生成欄位 列表
+1. 在第一個<tbody> 輸出上傳圖片資料 複製第一段<tr class="yel">
 
-// 步驟4：第二段<tr>前後
-// 加上迴圈
-// 第二段<tr>前後 加上迴圈指令在<tr>每列逐筆顯示資料
-// 第17行 <tr class="yel">
-1. 移除背景圖 class="yel"
+2. 第二段<tr>前後 加上迴圈  在<tr>每列逐筆顯示資料
 
-2. 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
+** 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
 從資料庫取得所有標題資料，存到$rows陣列中
 $rows = $Title->all();     // 取得所有「列」資料  // 取得所有 rows（所有列）
 foreach ($rows as $row) :  // 遍歷每一「列」 // 每個 $row 代表表格中的一列資料

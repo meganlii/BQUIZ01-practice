@@ -17,10 +17,15 @@ dd($_POST);
 foreach ($_POST['id'] as $key => $id) {
 
   // 步驟2：處理刪除
-  // isset()確認 刪除是否存在 if如果有存在  else如果不存在刪除，就可編輯
+  // * isset()確認 刪除是否存在 if如果有存在  else如果不存在刪除，就可編輯
   // in_array() 確認迴圈['id'] 是否在 $_POST['del']陣列裡面
-  // isset()跟in_array()先後順序 不可顛倒
-  // 不寫第二個foreach ($_POST['del'] as $id)  
+
+  // * isset()跟in_array() 搭配使用 
+  // 先判斷是否存在 再確認 是否在陣列裡面 ~ 先後順序 不可顛倒
+  // * edit_ad.php有同樣用法
+  // $row['sh']=(isset($_POST['sh']) && in_array($id,$_POST['sh']))?1:0; 
+
+  // * 不寫第二個foreach ($_POST['del'] as $id)  
   // (1)程式碼只需跑4次不用跑6次  (2)可能誤刪之前編輯的資料
   if(isset($_POST['del']) && in_array($id,$_POST['del'])) {
 

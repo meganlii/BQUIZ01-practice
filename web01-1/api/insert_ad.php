@@ -1,7 +1,7 @@
 <?php
 // 收後台./modal/ad.php 新增動態文字廣告 送來的表單資料  寫到資料庫
 
-// 步驟1：
+// 步驟1
 // 複製 .\api\insert_title.php 更名為 .\api\insert_ad.php
 // 保留$_POST[sh]=1 先移出if判斷式  預設全部顯示  不要再刪除
 // 刪除 上傳圖片if判斷式

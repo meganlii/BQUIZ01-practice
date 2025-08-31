@@ -15,16 +15,16 @@ dd($_POST);
 
 foreach ($_POST['id'] as $key => $id) {
   
-  
+  // isset()跟in_array() 搭配使用 
   if(isset($_POST['del']) && in_array($id,$_POST['del'])) {
     
   // 步驟1：將所有 $Title 改成 $Ad
-  $AD->del($id);
+  $Ad->del($id);
 
   }else{
 
   // 步驟：
-  $row=$AD->find($id);
+  $row=$Ad->find($id);
   
   // 印出 從資料表拿出的$row
   dd($row);
@@ -33,13 +33,23 @@ foreach ($_POST['id'] as $key => $id) {
   $row['text']=$_POST['text'][$key];
 
 
-  // *****從這邊開始
   // 步驟2：修改$row['sh'] 可多選  之前sh不是陣列sh[]
-  // in_array() 確認迴圈['id'] 是否在  $_POST['sh']陣列裡面
-  $row['sh']=($_POST['sh']==$id)?1:0;
+  // 修改三元運算式
+  
+  // 寫法1：$row['sh']=($_POST['sh']==$id)?1:0;
+  // 要加上in_array() 確認迴圈['id'] 是否在$_POST['sh']陣列裡面 ~ 還要搭派isset()是否存在 一起使用
+
+  // 寫法2：$row['sh']=($in_array($id,$_POST['sh']))?1:0; 
+  // (1)還是有問題，如果全部都不勾選 值沒有送出去$_POST['sh']會變成undefined
+  // (2)要加上isset()判斷，同上方寫法if($_POST['del']
+
+  // 寫法3：先判斷 顯示是否存在 if如果有存在且有id才設為1 不存在則為0。如果全部都沒勾選 沒有資料送出->全部不存在->全部不顯示
+
+  $row['sh']=(isset($_POST['sh']) && in_array($id,$_POST['sh']))?1:0; 
+
 
   // 步驟6：如何知道新增或更新？因為有id
-  $AD->save($row);
+  $Ad->save($row);
 
   // 印出 存到資料表的$row
   dd($row);

@@ -65,6 +65,7 @@
 <script>
 /**
 // 路徑 ./當前目錄  以backend.php角度來看
+// 所以<form> action="./api/edit_ad.php"  ./不是  ../
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
 

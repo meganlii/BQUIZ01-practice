@@ -4,7 +4,7 @@
 <hr>
 
 <!-- 步驟0 新增 <form> 參數  表單資料post送到api處理 action="./api/insert_ad.php" -->
-<!-- 路徑不是../api  因為彈出視窗點開網址在 backend.php -->
+<!-- 路徑不是../api  因為彈出視窗點開  網址在 backend.php  屬於./當前目錄 web01-1目錄  -->
 <!-- 使用ajax另外取得  傳到後端title.php  title.php再被引入到backend.php -->
 <!-- "multipart/form-data" 多媒體格式/表單資料 配合type="file"才會用編碼方式傳送file 一般表單不用加 -->
 

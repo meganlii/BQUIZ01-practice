@@ -66,7 +66,10 @@
 
 <script>
 /*
-// 路徑 ./當前目錄  以backend.php角度來看
+// 路徑 屬於./當前目錄  web01-1目錄  以backend.php角度來看  
+// 所以<form> action="./api/edit_title.php"  用./  不是../
+// 資料夾modal、backend  以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
+
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區 
 // 有兩個<table>

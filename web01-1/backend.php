@@ -1,5 +1,5 @@
 ﻿<?php 
-// 步驟11 在此載入 include_once 不在title.php
+// 步驟11 在此載入 include_once 不在.\backend\title.php
 include_once "./api/db.php"; 
 ?>
 

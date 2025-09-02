@@ -16,27 +16,27 @@
         $rows = $Title->all();
         foreach ($rows as $row) :
         ?>
-        <tr>
-          <td width="45%">
-            <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
-          </td>
-          <td width="23%">
-            <input type="text" name="text[]" value="<?= $row['text']; ?>">
-          </td>
-          <td width="7%">
-            <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
-          </td>
-          <td width="7%">
-            <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
-          </td>
+          <tr>
+            <td width="45%">
+              <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
+            </td>
+            <td width="23%">
+              <input type="text" name="text[]" value="<?= $row['text']; ?>">
+            </td>
+            <td width="7%">
+              <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
+            </td>
+            <td width="7%">
+              <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
+            </td>
 
-          <td>
-            <input type="button" value="更新圖片"
-              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
-          </td>
-        </tr>
+            <td>
+              <input type="button" value="更新圖片"
+                onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
+            </td>
+          </tr>
 
-        <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+          <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
 
         <?php
         endforeach;
@@ -65,7 +65,7 @@
 </div>
 
 <script>
-/*
+  /*
 // 路徑 屬於./當前目錄  web01-1目錄  以backend.php角度來看  
 // 所以<form> action="./api/edit_title.php"  用./  不是../
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
@@ -134,7 +134,11 @@ $row：單數形式，表示單筆資料（單個資料列）
 
 4. F12 確認欄位value值
 5. 新增 另外三張圖片
+
+// 第27行
 6. 欄位3-顯示sh  加上 checked判斷式 三元運算式 
+if判斷式要用 兩個等號 比較運算式 = =   
+
 7. post送到api處理 編輯./api/edit_title.php
 8. 三個<input>屬性 name改成空陣列寫法 裝多筆資料 name="text[]" "sh[]" "del[]"
 可能會同時送出多筆資料，所以欄位屬性加上陣列

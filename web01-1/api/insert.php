@@ -23,6 +23,10 @@ if (!empty($_FILES['img']['tmp_name'])) {
 
 // 步驟2
 // 更改.\modal\title.php <form action=
+
+// 步驟5
+// 獨立拿出$table兩段式處理
+
 $db = ${ucfirst($_POST['table'])};
 
 
@@ -38,6 +42,11 @@ if ($_POST['table'] == 'title') {
 
 // 步驟4
 // 此寫法 儲存會失敗 資料表沒有table
+// table已經在前面步驟功能處理完畢 需要移除 用unset
+// 會影響to() $table  獨立拿出$table兩段式處理 回到步驟2
+
+unset($_POST['table']);
+
 $db->save($_POST);
 
 

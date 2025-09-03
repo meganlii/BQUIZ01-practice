@@ -1,6 +1,6 @@
-﻿<?php 
+﻿<?php
 // 步驟11 在此載入 include_once 不在.\backend\title.php
-include_once "./api/db.php"; 
+include_once "./api/db.php";
 ?>
 
 <!DOCTYPE html
@@ -55,7 +55,8 @@ include_once "./api/db.php";
 
           <!-- 步驟2 改成 ?do=admin&redo=title -->
           <!-- 步驟3 刪除 9組 admin&redo= -->
-          <!-- <a href="?do=admin&redo=title"> -->
+          <!-- 原設定 <a href="?do=admin&redo=title"> -->
+          <!-- href="?do=title" URL參數語法?key=value  設定選單連結 /backend.php?do=title  -->
           <a style="color:#000; font-size:13px; text-decoration:none;" href="?do=title">
             <div class="mainmu">
               網站標題管理 </div>
@@ -134,13 +135,13 @@ include_once "./api/db.php";
 
 
         // $file = "./backend/" . $do . ".php";  改成合併寫法 雙引號內字串連接+大括號
-        // ./backend 少/ 要留意  可用echo $file; 除錯
+        // ./backend  前後都要加上/   可用echo $file; 除錯
         // **除錯妙招** 複製老師寫法貼在下一行比對
         // 如果有do=ad，載入 $do=ad 載入檔案 ad.php
         // 如果沒有do參數，載入 $do=title 載入檔案 title.php
 
         $file = "./backend/{$do}.php";
-        
+
 
         // 步驟7 內建函數 file_exists() 
         // 先打完if(file_exists($file)) 再加T/F { }else{ }
@@ -148,13 +149,12 @@ include_once "./api/db.php";
         // 選取變數：游標移到變數前方 alt+shift
 
         // 步驟8 複製title.php 更名為ad.php
-        // 每個選單 拆開檔案  用網址帶參數切換
+        // 每個選單  各自拆成獨立一個檔案  用網址帶參數切換
         if (file_exists($file)) {
 
           include $file;
-
         } else {
-          
+
           // 步驟9-2 此頁引入 title.php頁面 onclick="op 由js函式 op() 觸發 彈出視窗
           include './backend/title.php';
         }
@@ -171,19 +171,19 @@ include_once "./api/db.php";
 
 
       <script>
-      $(".sswww").hover(
-        function() {
-          $("#alt").html("" + $(this).children(".all").html() + "").css({
-            "top": $(this).offset().top - 50
-          })
-          $("#alt").show()
-        }
-      )
-      $(".sswww").mouseout(
-        function() {
-          $("#alt").hide()
-        }
-      )
+        $(".sswww").hover(
+          function() {
+            $("#alt").html("" + $(this).children(".all").html() + "").css({
+              "top": $(this).offset().top - 50
+            })
+            $("#alt").show()
+          }
+        )
+        $(".sswww").mouseout(
+          function() {
+            $("#alt").hide()
+          }
+        )
       </script>
 
     </div>

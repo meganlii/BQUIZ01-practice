@@ -4,7 +4,7 @@
 
 // 設定變數
 // 陣列變數 $_POST['img']    key值/資料表欄位
-// 陣列變數 $_POST['table']  key值/資料表  隱藏欄位value值
+// 陣列變數 $_POST['table']  table=title
 // <input type="hidden" name="table" value="title">
 
 include_once "db.php";
@@ -25,9 +25,9 @@ if (!empty($_FILES['img']['tmp_name'])) {
 // 更改.\modal\title.php <form action=
 
 // 步驟5
-// 獨立拿出$table兩段式處理
-
-$db = ${ucfirst($_POST['table'])};
+// 獨立拿出$table兩段式處理 新增區域變數$table
+$table = $_POST['table'];
+$db = ${ucfirst($table)};
 
 
 // 步驟3
@@ -41,19 +41,22 @@ if ($_POST['table'] == 'title') {
 }
 
 // 步驟4
-// 此寫法 儲存會失敗 資料表沒有table
+// 此寫法 儲存會失敗 資料表沒有table欄位
 // table已經在前面步驟功能處理完畢 需要移除 用unset
 // 會影響to() $table  獨立拿出$table兩段式處理 回到步驟2
-
+// 在 save() 時 不想包含 table 欄位
+// 刪除的是 $_POST['table']，不是 $table
 unset($_POST['table']);
+// echo $table;
 
 $db->save($_POST);
 
 
 // 步驟2
 // $table 怎麼來的？ get送來  另外加上
-// 路徑改成參數寫法 對應$table
+// 路徑改成參數寫法 對應$table=title或ab...等
 // to('../backend.php?do=title');  單引號變數會失效 變成字串
+// 這裡不太懂 有兩個變數$table 刪除unset()之後 
 to("../backend.php?do=$table");
 
 ?>

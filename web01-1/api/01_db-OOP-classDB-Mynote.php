@@ -40,13 +40,14 @@ if(!isset($_SESSION['visit'])){...}
  * 有些功能獨立寫到api 而非全部塞到一個檔案處理 後面維護麻煩 如果有錯不容易找到或要改好幾個地方
 ============================================================== */
 
-session_start();
 // 啟用 session：讓網頁可以記錄使用者狀態（如登入、計數等）
 // 每個需要使用 Session 的頁面，都要先呼叫 session_start()
 // 用來在不同網頁間，保存使用者資料的機制
+session_start();
 
-date_default_timezone_set("Asia/Taipei");
+
 // 設定預設時區為台北，避免時間錯誤
+date_default_timezone_set("Asia/Taipei");
 
 
 // 二、撰寫輔助用的全域函式：輔助函式
@@ -59,19 +60,24 @@ date_default_timezone_set("Asia/Taipei");
 // 陣列除錯用/測試用輔助函數，格式化輸出內容，方便開發時檢查資料
 function dd($array)
 {
-    echo "<pre>";     // 格式化輸出
-    print_r($array);  // print_r() 以易讀 保持格式化結構 輸出變數的結構和內容
-    echo "</pre>";    // 關閉格式化輸出
+    // 格式化輸出
+    echo "<pre>";
+    
+    // print_r() 以易讀 保持格式化結構 輸出變數的結構和內容
+    print_r($array);
+    
+    // 關閉格式化輸出
+    echo "</pre>";
 }
 
 
 // classDB函式處理不了 解決聯表查詢或是子查詢 執行複雜 SQL 查詢
 /*
-只有題組三會用到 直接執行SQL語句，並返回結果 不會用到class DB
-$movies = q("select `movie` from `orders` group by `movie`");
-foreach($movies as $movie){
-    echo "<option value='{$movie['movie']}'>{$movie['movie']}</option>";
-}
+* 只有題組三會用到 直接執行SQL語句，並返回結果 不會用到class DB
+* $movies = q("select `movie` from `orders` group by `movie`");
+* foreach($movies as $movie){
+* echo "<option value='{$movie['movie']}'>{$movie['movie']}</option>";
+* }
 */
 // 複雜SQL語法的簡化函式
 function q($sql)
@@ -115,7 +121,7 @@ function q($sql)
     // 將sql句子帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
 
     // 錄製_2025_06_24_09_36_32_40-1300-步驟3 建立共用函式檔
-    // 對照OOP-db.php FN all()寫法
+    // 要更新到 OOP-db.php FN all()檔案
 }
 
 
@@ -163,8 +169,10 @@ class DB
     // host => 主機名稱或是位置IP / charset => 使用的字元集，一般選utf8 / dbname => 使用的資料庫名稱
     private $dsn = "mysql:host=localhost;dbname=db09;charset=utf8";
 
+
     // 2-2 建立PDO物件 連線資料庫
     private $pdo;  // 這裡存放另一個物件（PDO物件)
+
 
     // 2-3 讓每個 DB 物件記住自己要操作哪個資料表！
     private $table;  // $this->table = 資料表名稱
@@ -176,7 +184,8 @@ class DB
     // 物件被實例化(new DB)時 會先執行的方法
     function __construct($table)
     {
-        $this->table = $table;  // $this替換 資料表名稱 帶參數的概念
+        // $this替換 資料表名稱 帶參數的概念
+        $this->table = $table;  
         $this->pdo = new PDO($this->dsn, 'root', '');
     }
 
@@ -212,12 +221,14 @@ class DB
         // 輸出 $sql = "select * from title"
         $sql = "select * from $this->table";
 
+
         // 步驟3：處理第一個參數
         // isset()  檢查是否成立 有傳入資料
         if (isset($arg[0])) {
 
             // 步驟4：is_array() 如果有資料 且 第一個參數是陣列
             if (is_array($arg[0])) {
+
 
                 // 步驟2：arraytosql() 將陣列 轉為SQL字串
                 // 簡稱 a2s()
@@ -290,10 +301,12 @@ class DB
         // isset()  檢查是否成立 有傳入資料
         if (isset($arg[0])) {
 
+
             // is_array() 如果第一個參數是陣列
             if (is_array($arg[0])) {
                 $tmp = $this->arraytosql($arg[0]);
                 $sql = $sql . " where " . join(" AND ", $tmp);
+
 
                 // 如果第一個參數不是陣列，則直接附加到SQL語句後
             } else {
@@ -301,11 +314,13 @@ class DB
             }
         }
 
+
         // 處理第二個參數
         // 如果有第二個參數，則附加到SQL語句where之後
         if (isset($arg[1])) {
             $sql .= $arg[1];
         }
+
 
         // fetchColumn() 只返回第一列的第一個欄位值
         // 例如：如果查詢結果是 10 筆資料，則返回 10
@@ -334,13 +349,16 @@ class DB
         // 如果 $id 是陣列
         if (is_array($id)) {
 
+
             //執行內部方法4-6 a2s()
             // 將陣列轉換為字串
             $tmp = $this->arraytosql($id);
 
+
             //拚接sql語句
             $sql = $sql .
                 " where " . join(" AND ", $tmp);
+
 
             // 如果 $id 不是陣列  是其他類型
         } else {
@@ -348,6 +366,7 @@ class DB
             //拚接sql語句
             $sql .= " WHERE `id`='$id'";
         }
+
 
         //echo $sql;
         //將sql句子帶進pdo的query方法中，並以fetch的方式回傳一筆資料結果
@@ -365,12 +384,12 @@ class DB
      */
 
 
-
     function save($array)
     {
         // 先判斷有沒有id 決定 新增 或 更新
         // 如果 $array 中有 'id' 鍵
         if (isset($array['id'])) {
+
 
             // 步驟1 update set
             // 更新資料的 SQL 語句 UPDATE `table` SET
@@ -385,7 +404,6 @@ class DB
 
             // 如果 $array 中 沒有 'id' 鍵    
         } else {
-
 
             // 步驟2 insert into
             // 新增資料

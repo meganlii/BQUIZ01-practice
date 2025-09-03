@@ -64,69 +64,70 @@ function dd($array)
     echo "</pre>";    // 關閉格式化輸出
 }
 
-// 複雜SQL語法的簡化函式
-//DSN 資料來源/連線名稱 (Data Source Name)
-//PDO (PHP Data Objects)
-// PDO也是一個物件
-// 資料庫設定資料：資料庫位置和名稱
-// 使用者名稱
-// 密碼（空白
-function q($sql)
-{
-    $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
-    $pdo = new PDO($dsn, 'root', '');
-    return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-}
 
 // classDB函式處理不了 解決聯表查詢或是子查詢 執行複雜 SQL 查詢
-/* ==============================================================
+/*
 只有題組三會用到 直接執行SQL語句，並返回結果 不會用到class DB
 $movies = q("select `movie` from `orders` group by `movie`");
 foreach($movies as $movie){
     echo "<option value='{$movie['movie']}'>{$movie['movie']}</option>";
 }
 */
+// 複雜SQL語法的簡化函式
+function q($sql)
+{
+
+    // DSN 資料來源/連線名稱 (Data Source Name)
+    $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
 
 
-// 將sql句子帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
-/*
-執行 SQL 查詢並返回結果
-fetchAll(PDO::FETCH_ASSOC) 取得所有結果，並以關聯陣列形式返回資料
-PDO::FETCH_ASSOC 只返回 關聯陣列(二維)key=value，不返回數字索引
-自訂函式用 return 回傳資料
-共三組參數 pdo  // query($sql) 執行SQL查詢  // fetchAll(PDO::FETCH_ASSOC)取回全部關聯陣列
-*/
+    // PDO (PHP Data Objects)
+    // PDO也是一個物件
+    // 資料庫設定資料：資料庫位置和名稱
+    // 使用者名稱
+    // 密碼（空白
+    $pdo = new PDO($dsn, 'root', '');
 
-// 回傳值 fetchAll()
-/*
-參考 https://mackliu.github.io/php-book/2021/09/21/php-lesson-04/
-PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
-存取 類別常數：存取 PDO 類別中定義的常數
-存取 PDO類別 的 FETCH_ASSOC 常數
-::「進入」一個類別，存取內部的靜態內容（常數、靜態方法、靜態屬性）的符號
-*/
+    /*
+    1. return 自訂函式用 return 回傳資料
 
-// PDO 類別常數
-/*
-PDO::FETCH_ASSOC  回傳 帶欄位 名稱的資料
-關聯陣列 ['name' => 'John', 'age' => 25]
+    2. $pdo->query($sql) 執行 SQL 查詢並返回結果
 
-PDO::FETCH_NUM    回傳 帶欄位 索引的資料
-索引陣列 [0 => 'John', 1 => 25]
-============================================================== */
+    3. 回傳值 fetchAll()
+    fetchAll(PDO::FETCH_ASSOC) 取得所有結果，並以關聯陣列形式返回資料
+    PDO::FETCH_ASSOC 只返回 關聯陣列(二維)key=value，不返回數字索引
 
-// 錄製_2025_06_24_09_36_32_40-1300-步驟3 建立共用函式檔
-// 對照OOP-db.php FN all()寫法
+    參考 https://mackliu.github.io/php-book/2021/09/21/php-lesson-04/
+    PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
+    存取 類別常數：存取 PDO 類別中定義的常數
+    存取 PDO類別 的 FETCH_ASSOC 常數
+    ::「進入」一個類別，存取符號 存取內部靜態內容（常數、靜態方法、靜態屬性）
+
+    4. 類別常數 PDO 
+    PDO::FETCH_ASSOC  回傳 帶欄位 名稱的資料
+    關聯陣列 ['name' => 'John', 'age' => 25]
+
+    PDO::FETCH_NUM   回傳 帶欄位 索引的資料
+    索引陣列 [0 => 'John', 1 => 25]
+    */
+    return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    // 共三組參數 pdo  // query($sql) 執行SQL查詢  // fetchAll(PDO::FETCH_ASSOC)取回全部關聯陣列
+    // 將sql句子帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
+
+    // 錄製_2025_06_24_09_36_32_40-1300-步驟3 建立共用函式檔
+    // 對照OOP-db.php FN all()寫法
+}
+
 
 
 // 接收一個參數 $url（要跳轉的目標網址）
 function to($url)
 {
-    header("location: $url"); 
     // header("location:" . $url); 雙引號內 直接以空格區分不同字串或變數
     // header() 函數發送 HTTP 標頭Location
     // 標頭Location 會告訴瀏覽器 跳轉到指定的網址
     // . $url 將參數中的網址串接到 "location:" 後面
+    header("location: $url");
 }
 
 /* 頁面導(定)向輔助函式：PHP檔頭管理指令-header()
@@ -191,7 +192,7 @@ class DB
 
     // 步驟4 自訂函式-CRUD / CURD
     // 共7個FN：const  all//find(查R)  count(額外加)  save(增C.改U)//del(刪D)  arraytosql
-    
+
     // 4-1 $Table->all()-查詢 符合條件的 "全部資料" select *
     // 五組變數 $sql  三個if  return
     /*
@@ -253,29 +254,30 @@ class DB
 
         // .= 是一個 複合-賦值-運算符：相當在原來的字串後面加上新的內容
         /*
-        * $variable .= $value 等同於 $variable = $variable . $value。
-        * 結合了 字串串接 (string concatenation) 和 賦值 (assignment) 的功能 
-        * "=" 賦值 運算符，用於將一個值賦給一個變數。
-        * "." 字串串接 運算符，用於將兩個字串連接在一起。
-        * 將右邊的值附加到左邊變數的值之後，然後將結果賦值給左邊的變數
-        * $variable .= $value 先將 $variable 的值與 $value 的值串接，然後將結果存回 $variable
-        */
+        1. $variable .= $value 等同於 $variable = $variable . $value。
+        結合 字串串接 (string concatenation) 和 賦值 (assignment) 的功能 
+        "=" 賦值 運算符，用於將一個值賦給一個變數。
+        "." 字串串接 運算符，用於將兩個字串連接在一起。
+        2. 將右邊的值附加到左邊變數的值之後，然後將結果賦值給左邊的變數
+        $variable .= $value 先將 $variable 的值與 $value 的值串接，然後將結果存回 $variable
+        
 
         // 步驟5：處理第二個參數
-        // 如果有第二個參數，則附加到SQL語句 where之後
-        // 例如：$sql .= " order by id desc"
-        // 第二參數 可為條件句-兩者之間BETWEEN  特殊指定IN 
-        // 或 限制句 如 排序ORDER BY 或 限制筆數LIMIT
-        // 
-        // 例如：$arg[1] = " order by id desc"
-        // 例如：$sql = "select * from title order by id desc"
+        1. 如果有第二個參數，則附加到SQL語句 where之後
+        例如：$sql .= " order by id desc"
+        2. 第二參數 可為條件句-兩者之間BETWEEN  特殊指定IN 
+        或 限制句 如 排序ORDER BY 或 限制筆數LIMIT
+        例如：$arg[1] = " order by id desc"
+        例如：$sql = "select * from title order by id desc"
+        */
         if (isset($arg[1])) {
             $sql .= $arg[1];
         }
 
+        // 共三組參數 $this->pdo // query($sql) 執行SQL查詢  
+        // fetchAll 執行sql語句，並返回全部的資料，所有資料會放在一個陣列；
+        // PDO::FETCH_ASSOC 取回關聯陣列 只回傳帶欄位名稱的資料
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        // 共三組參數 $this->pdo // query($sql) 執行 SQL 查詢  // fetchAll(PDO::FETCH_ASSOC)取回全部關聯陣列
-
     }
 
     // 4-5 查詢 資料筆數 select count(*) 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
@@ -283,6 +285,7 @@ class DB
     function count(...$arg)
     {
         $sql = "select count(*) from $this->table ";
+
         // 處理第一個參數 
         // isset()  檢查是否成立 有傳入資料
         if (isset($arg[0])) {
@@ -304,10 +307,10 @@ class DB
             $sql .= $arg[1];
         }
 
-        return $this->pdo->query($sql)->fetchColumn();
         // fetchColumn() 只返回第一列的第一個欄位值
         // 例如：如果查詢結果是 10 筆資料，則返回 10
-
+        // 執行sql語句，並返回該筆資料中指定欄位的資料，$n為欄位的索引值(0,1,2…)
+        return $this->pdo->query($sql)->fetchColumn();
     }
 
     // 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料" select *
@@ -370,7 +373,7 @@ class DB
         if (isset($array['id'])) {
 
             // 步驟1 update set
-            // 建立更新資料的 SQL 語句 UPDATE `table` SET
+            // 更新資料的 SQL 語句 UPDATE `table` SET
             $sql = " update $this->table set ";
 
             $tmp = $this->arraytosql($array);  // 將陣列轉換為字串
@@ -383,7 +386,9 @@ class DB
             // 如果 $array 中 沒有 'id' 鍵    
         } else {
 
+
             // 步驟2 insert into
+            // 新增資料
             $cols = join("`,`", array_keys($array));
             // $cols 取得 欄位名稱
             // array_keys()
@@ -412,6 +417,8 @@ class DB
             $sql = "insert into $this->table (`$cols`) values('$values')";
         }
 
+        // exec($sql) 
+        // 執行sql語句，但不返回資料，而是返回影響的資料筆數，適合使用在"新增/更新"或"刪除"資料時
         return $this->pdo->exec($sql);
     }
 
@@ -429,10 +436,12 @@ class DB
             $sql .= " WHERE `id`='$id'";
         }
         //echo $sql;
+
+        // 查詢query($sql) 刪除fetch() 改成 執行exec($sql) 
+        // 執行sql語句，但不返回資料，而是返回影響的資料筆數，適合使用在"新增，更新"或"刪除"資料時
         return $this->pdo->exec($sql);
     }
-    // 查詢query($sql) 改成 執行exec($sql) 後面刪除fetch()
-    // 執行sql語句，但不返回資料，而是返回影響的資料筆數，適合使用在"新增，更新"或"刪除"資料時
+
 
     // 4-6 簡稱 a2s()將陣列轉換為SQL字串 
     // 將陣列轉換為 SQL 條件字串

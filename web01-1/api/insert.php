@@ -1,5 +1,11 @@
 <?php
 // 收後台./modal/title.php 新增網站標題圖片 送來的表單資料  寫到資料庫
+// <form action="./api/insert.php" method="post">
+
+// 設定變數
+// 陣列變數 $_POST['img']    key值/資料表欄位
+// 陣列變數 $_POST['table']  key值/資料表  隱藏欄位value值
+// <input type="hidden" name="table" value="title">
 
 include_once "db.php";
 echo "<pre>";
@@ -15,36 +21,24 @@ if (!empty($_FILES['img']['tmp_name'])) {
     $_POST['img'] = $_FILES['img']['name'];
 }
 
-// 所有上傳照片 預設不顯示 之後再手動調整
-// $_POST['sh']=0;
-
-
 // 步驟2
 // 更改.\modal\title.php <form action=
-$db=${ucfirst($_POST['table'])};
+$db = ${ucfirst($_POST['table'])};
 
 
-// 0700開始
 // 步驟3
-// 新增 if判斷式  變數$table 
-// 只有title單選  其他複選  用判斷式隔開
-// 如果資料表==title顯示0 否則顯示1
-// 只有一個為0  其他大多為1
-// 改成變數寫法
-if ($table == 'title') {
-
-    // 移進判斷式
+// if判斷式 收$post陣列鍵值 變數寫法
+// if ($table == 'title') { }
+// 選單後面兩個功能 不須顯示帳號密碼 需另外處理
+if ($_POST['table'] == 'title') {
     $_POST['sh'] = 0;
 } else {
     $_POST['sh'] = 1;
 }
 
-
-
-
-
-
-
+// 步驟4
+// 此寫法 儲存會失敗 資料表沒有table
+$db->save($_POST);
 
 
 // 步驟2
@@ -56,7 +50,7 @@ to("../backend.php?do=$table");
 ?>
 
 <script>
-/* 
+    /* 
 1. 程式優化：再思考哪些功能可以合併，參6/27筆記-第120行
 
 .\api\edit_ad.php
@@ -73,7 +67,7 @@ to("../backend.php?do=$table");
 
 2.第23行
 (1) 先從 .\api\insert_title.php
-(2) 複製.\api\insert_title.php  更名為 .\api\insert.php
+(2) 複製 .\api\insert_title.php  更名為 .\api\insert.php
 
 3.思考脈絡
 一開始只能直覺寫 之後再整合 不可能一次寫對 寫最精簡的精華
@@ -85,12 +79,13 @@ $table='title';
 $db=${ucfirst($table)};
 $db=$Title;
 
-// 不需要步驟4
+// 不需要步驟4：儲存
 物件用switch case
 只用二選一的if不夠  改用switch case
 其他表單欄位屬性有差異 多了密碼欄位 網址欄位  
 欄位不同 post處理資料也不同
 $Title->save($_POST);
+
 switch ($table) {
     case 'ad':
         $Ad->save($_POST);
@@ -103,6 +98,19 @@ switch ($table) {
     // default:
     //     # code...
     //     break;
+}
+
+// 步驟4
+1.新增 if判斷式  變數$table 
+2.只有title單選  其他複選  用判斷式隔開
+3.如果資料表==title顯示0 否則顯示1
+4.只有一個為0  其他大多為1
+if ($table == 'title') {
+
+    // 移進判斷式
+    $_POST['sh'] = 0;
+} else {
+    $_POST['sh'] = 1;
 }
 
 */

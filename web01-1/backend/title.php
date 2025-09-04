@@ -195,7 +195,8 @@ value="title" 改成 < ?= $do; ?>
 
 
 // 步驟9
-// 跨檔案的變數傳遞 ~ 此頁 跟./backend/ad.php 
+// 跨檔案的變數傳遞  利用$do變數取代後台頁面中的字串及傳值功能  
+// 此頁 跟./backend/ad.php 
 思考 input的name跟value 改用變數寫法套用  避免打錯
 * backend.php 變數$do跟$file  之後引入這個頁面  所以此頁也有$do
 * $do 在 include 之前定義

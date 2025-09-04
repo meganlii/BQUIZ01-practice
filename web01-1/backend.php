@@ -145,6 +145,12 @@ include_once "./api/db.php";
         $file = "./backend/{$do}.php";
         // $file="./backend/".$do.".php";
 
+        // 步驟10
+        // 跨檔案的變數傳遞 利用$do變數取代後台頁面中的字串及傳值功能
+        // $DB=${ucfirst($do)};   輸出$DB=title 或 ad ...
+        // 進階用法前提 須掌握程式碼結構  之後title.php使用$DB即可 $rows=${ucfirst($do)}($DB)->all();
+        // 主要此頁面要用 不寫在db.php  也不確定是否可吃到$do?  要寫也可但要....(？聽不懂)
+
 
         // 步驟7 內建函數 file_exists() 
         // 先打完if(file_exists($file)) 再加T/F { }else{ }

@@ -1,6 +1,8 @@
 <?php
 // 收後台./modal/title.php 新增網站標題圖片 送來的表單資料  寫到資料庫
 // <form action="./api/insert.php" method="post">
+// 新增功能獨立 其他表單欄位屬性有差異 text沒有文字 多了密碼欄位 網址欄位 之後再用if/switch調整即可
+// 更新功能獨立 編輯功能多為文字的顯示/刪除 所以兩個api處理頁面
 
 // 設定變數
 // 陣列變數 $_POST['img']    key值/資料表欄位
@@ -22,12 +24,22 @@ if (!empty($_FILES['img']['tmp_name'])) {
 }
 
 // 步驟2
-// 更改.\modal\title.php <form action=
+// 更改 .\modal\title.php <form action="./api/insert.php"
+// 新增 隱藏欄位輔助 input:hidden
+// <input type="hidden" name="table" value="title">
+// 思考：簡化改成變數寫法 避免複製貼上打錯字
+
 
 // 步驟5
 // 獨立拿出$table兩段式處理 新增區域變數$table
+// 先將table拿進來  表單頁面要帶value=資料表名稱(title或ad)
 $table = $_POST['table'];
 $db = ${ucfirst($table)};
+
+// 步驟6
+// 刪除之前兩個檔案 
+// .\api\insert_title.php
+// .\api\insert_ad.php
 
 
 // 步驟3
@@ -56,15 +68,15 @@ $db->save($_POST);
 // $table 怎麼來的？ get送來  另外加上
 // 路徑改成參數寫法 對應$table=title或ab...等
 // to('../backend.php?do=title');  單引號變數會失效 變成字串
-// 這裡不太懂 有兩個變數$table 刪除unset()之後 
+// **不太懂 有兩個變數$table 刪除unset()之後  參考下方註解// 步驟3
 to("../backend.php?do=$table");
+
 
 ?>
 
 <script>
-    /* 
+/* 
 1. 程式優化：再思考哪些功能可以合併，參6/27筆記-第120行
-
 .\api\edit_ad.php
 .\api\edit_title.php
 
@@ -74,15 +86,16 @@ to("../backend.php?do=$table");
 (2) 最後api只需要五個檔案，即可解決所有後台需求
 (3) 功能變多10-20個時，逐個寫太花時間 也容易出錯 負擔加重
 (4) 擴充功能 要刻畫面 寫api、modal 有更快方式解決
-(5) 用判斷式if / switch case、迴圈 排除特例或做特別處理
-簡化重複多的程式碼
+(5) 用判斷式if / switch case、迴圈 排除特例或做特別處理  簡化重複多的程式碼
 
-2.第23行
+2. 思考脈絡
+* 一開始只能直覺寫 之後再整合 不可能一次寫對 寫最精簡的精華
+* 未來遇到類似問題 只能不斷測試 程式最沒有成本
+
+// 步驟1：第23行
 (1) 先從 .\api\insert_title.php
 (2) 複製 .\api\insert_title.php  更名為 .\api\insert.php
 
-3.思考脈絡
-一開始只能直覺寫 之後再整合 不可能一次寫對 寫最精簡的精華
 
 // 步驟3
 1. ucfirst大寫字串(UpperCase縮寫)  lcfirst小寫字串

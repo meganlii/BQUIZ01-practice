@@ -1,7 +1,7 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
   <p class="t cent botli">網站標題管理</p>
 
-  <form method="post" action="./api/edit_title.php">
+  <form method="post" action="./api/edit.php">
     <table width="100%">
       <tbody>
         <tr class="yel">
@@ -13,7 +13,7 @@
         </tr>
 
         <?php
-        $rows = $Title->all();
+        $rows = ${ucfirst($do)}->all();
         foreach ($rows as $row) :
         ?>
           <tr>
@@ -37,7 +37,7 @@
           </tr>
 
           <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-
+          
         <?php
         endforeach;
         ?>
@@ -48,8 +48,12 @@
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
+          <input type="hidden" name="table" value="<?=$do;?>">
+
           <td width="200px">
-            <input type="button" onclick="op('#cover','#cvr','./modal/title.php')" value="新增網站標題圖片">
+            <input type="button" 
+            onclick="op('#cover','#cvr','./modal/<?=$do;?>.php?table=<?=$do;?>')" 
+            value="新增網站標題圖片">
           </td>
 
           <td class="cent">
@@ -65,15 +69,16 @@
 </div>
 
 <script>
-  /*
+/*
+// 位置 ./backend/title.php 後台右半部版型區 
+// 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
+// 有兩個<table>
+
 // 路徑 屬於./當前目錄  web01-1目錄  以backend.php角度來看  
 // 所以<form> action="./api/edit_title.php"  用./  不是../
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
 // api處理完了，資料夾api內的檔案跟backend.php關係 則是回上一層  用../  回到後台
 
-// 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
-// 位置 ./backend/title.php 後台右半部版型區 
-// 有兩個<table>
 
 // 步驟1：第50行
 // onclick="op  op = open  彈出視窗
@@ -105,13 +110,14 @@ $_POST['title'] = '用戶輸入的內容';  // 從表單來的
 AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 
 
-// 步驟4：第17行 <tr class="yel">  移除背景圖 class="yel"
+// 步驟4：第17行 
 // 迴圈循環 動態生成欄位 列表
+<tr class="yel">  移除背景圖 class="yel"
 1. 在第一個<tbody> 輸出上傳圖片資料 複製第一段<tr class="yel">
 
 2. 第二段<tr>前後 加上迴圈  在<tr>每列逐筆顯示資料
 
-** 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
+// 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念
 從資料庫取得所有標題資料，存到$rows陣列中
 $rows = $Title->all();     // 取得所有「列」資料  // 取得所有 rows（所有列）
 foreach ($rows as $row) :  // 遍歷每一「列」 // 每個 $row 代表表格中的一列資料
@@ -125,8 +131,10 @@ $row：單數形式，表示單筆資料（單個資料列）
 | 2  | 網站標題2  | 0      |  ← 這是一個 row
 +----+-----------+--------+
 
-3. <input>屬性 加上變數 name=text[]多筆資料加上陣列 id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
-欄位1-圖片檔名img  <img> 題目沒要求置中  變數$row['img']
+3. 第21行 <input>屬性 加上變數 
+< ?= $row['img']; ?>  記得要加分號;
+name=text[]多筆資料加上陣列 id改成預設值value=  留意不要寫錯欄位  變數語法不要遺漏符號
+欄位1-圖片檔名img  <img> 題目沒要求置中  變數$row['img'];
 欄位2-替代文字text  加上input:text 可編輯欄位 直接輸入文字修改
 欄位3-顯示sh  新增單選圓框 input:radio
 欄位4-刪除del  新增多選方框 input:checkbox
@@ -171,6 +179,47 @@ sh[]只會有一筆，可以不需要陣列
 
 // 步驟8
 // 新增./api/update_title.php
+
+// 步驟9：第50行
+此頁跟./backend/ad.php 
+1. 第二個<table> 新增 隱藏欄位輔助 input:hidden
+因為整個table 只需要送一筆隱藏id
+
+2. 之前隱藏id需要很多筆  所以寫在第一個table
+<input type="hidden" name="table" value="title">
+
+// 步驟9
+此頁跟./backend/ad.php 
+1. 思考 input的name跟value 改用變數寫法套用  避免打錯
+backend.php 變數$do 之後引入這個頁面 所以此頁也有$do
+$do = $_GET['do'] ?? 'title';
+$file = "./backend/{$do}.php";
+
+2. 第51行
+value="title" 改成 < ?= $do; ?>
+
+// 步驟10
+1. 55行：此頁 onclick路徑加上  ?table= < ?=$do; ?>
+title.php  改成 < ?=$do; ?>.php
+onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 
+
+
+2. 彈出頁面24行 modal\title.php  接收 $_GET全部大寫  打錯了
+<input type="hidden" name="table" value="< ?=$_GET['table'];?>">
+
+3. 套用同樣寫法到兩個頁面 ./backend/ad.php  ./modal/ad.php
+
+// 步驟11：
+1. 思考：哪邊還可以改成變數
+統一db共用函式的物件
+$db = ${ucfirst($table)}; 改成 ${ucfirst($do)}
+2. 修改第16行 $rows = $Title->all();   替換物件$Title
+3. 套用到 backend\ad.php
+3. 第35行 更新圖片??
+
+2. 前面兩個選單完成後，後面套用後再修改表單內容而已  輕鬆很多
+
+
 
 */
 </script>

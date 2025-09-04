@@ -41,7 +41,7 @@ foreach ($_POST['id'] as $key => $id) {
     // (2)要加上isset()判斷，同上方寫法if($_POST['del']
 
     // 寫法3：先判斷 顯示是否存在 if如果有存在且有id才設為1 不存在則為0。如果全部都沒勾選 沒有資料送出->全部不存在->全部不顯示
-
+    // 標題單選寫法  $row['sh']=($_POST['sh']==$id)?1:0;
     $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
 
 

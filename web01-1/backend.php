@@ -99,8 +99,7 @@ include_once "./api/db.php";
 
 
         <div class="dbor" style="margin:3px; width:95%; height:20%; line-height:100px;">
-          <span class="t">進站總人數 :
-            1 </span>
+          <span class="t">進站總人數 :1 </span>
         </div>
       </div>
 
@@ -151,10 +150,9 @@ include_once "./api/db.php";
         // 步驟8 複製title.php 更名為ad.php
         // 每個選單  各自拆成獨立一個檔案  用網址帶參數切換
         if (file_exists($file)) {
-
           include $file;
-        } else {
 
+        } else {
           // 步驟9-2 此頁引入 title.php頁面 onclick="op 由js函式 op() 觸發 彈出視窗
           include './backend/title.php';
         }

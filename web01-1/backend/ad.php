@@ -7,7 +7,7 @@
 
   <p class="t cent botli">動態文字廣告管理</p>
 
-  <form method="post" action="./api/edit_ad.php">
+  <form method="post" action="./api/edit.php">
     <table width="100%">
       <tbody>
         <tr class="yel">
@@ -18,7 +18,7 @@
         </tr>
 
         <?php
-        $rows = $Ad->all();
+        $rows = ${ucfirst($do)}->all();
         foreach ($rows as $row) :
         ?>
         <tr>
@@ -35,7 +35,8 @@
         </tr>
 
         <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-
+        
+        
         <?php
         endforeach;
         ?>
@@ -46,8 +47,12 @@
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
+          <input type="hidden" name="table" value="<?=$do;?>">
+
           <td width="200px">
-            <input type="button" onclick="op('#cover','#cvr','./modal/ad.php')" value="新增動態文字廣告">
+            <input type="button" 
+            onclick="op('#cover','#cvr','./modal/<?=$do;?>.php?table=<?=$do;?>')" 
+            value="新增動態文字廣告">
           </td>
 
           <td class="cent">
@@ -113,6 +118,15 @@ style="text-align:center" 失效
 1. 之前複製title.php 已經帶hidden_id  aip就可進行編輯
 2. action="./api/edit_title.php" 改為 edit_ad.php
 3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
+
+// 步驟8
+修改 ./backend/ad.php  ./modal/ad.php
+1. 53行：此頁 onclick路徑加上  ?table= < ?=$do; ?>
+title.php  改成 < ?=$do; ?>.php
+onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 
+2. 彈出頁面24行 modal\title.php  接收
+<input type="hidden" name="table" value="< ?=$_Get['table'];?>">
+
 
  */
 </script>

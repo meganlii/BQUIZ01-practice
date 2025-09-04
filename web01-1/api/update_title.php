@@ -1,6 +1,7 @@
 <?php
 // 負責收 後台./modal/update_title.php 更新圖片 送來的表單資料  寫到資料庫
 // 收資料 先新增兩個陣列變數 $_FILES['img']  $_POST['id']
+// 更新功能獨立 編輯功能多為文字的顯示/刪除 所以兩個api處理頁面
 
 // 步驟1：套用 .\api\insert_title.php  更名 .\api\update_title.php
 include_once './db.php';

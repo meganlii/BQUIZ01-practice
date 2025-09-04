@@ -16,7 +16,7 @@
   </div>
 
   <div>
-    <input type="hidden" name="table" value="ad">
+    <input type="hidden" name="table" value="<?=$_GET['table'];?>">
     <input type="submit" value="新增">
     <input type="reset" value="重置">
   </div>
@@ -39,8 +39,17 @@
 // 步驟2：<form>不刪除action 不影響功能  考量後面有功能需要上傳圖片
 改成 .\api\insert_ad.php
 
-// 步驟3：
+// 步驟3
 複製 .\api\insert_title.php
+
+// 步驟4：第19行
+// 修改value="title"
+1. 思考：簡化 改成變數寫法 避免複製貼上打錯字
+2. 本頁彈出頁面 使用ajax另外取得  傳到後端title.php  要用get收title
+value= < ?=$_GET['table']; ?>  不是 value="< ?= $do;?>"
+
+// 步驟5：
+
 
 */
 </script>

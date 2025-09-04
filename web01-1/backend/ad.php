@@ -19,6 +19,8 @@
 
         <?php
         $rows = ${ucfirst($do)}->all();
+        // $rows = ${ucfirst($do)}->all();
+        
         foreach ($rows as $row) :
         ?>
         <tr>
@@ -115,7 +117,7 @@ style="text-align:center" 失效
 新增.\modal\ad.php
 
 // 步驟7：測試可新增動態文字廣告 處理編輯功能
-1. 之前複製title.php 已經帶hidden_id  aip就可進行編輯
+1. 之前複製title.php 已經帶hidden_id  api就可進行編輯
 2. action="./api/edit_title.php" 改為 edit_ad.php
 3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
 

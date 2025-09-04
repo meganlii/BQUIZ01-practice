@@ -13,7 +13,9 @@
         </tr>
 
         <?php
-        $rows = ${ucfirst($do)}->all();
+        // $rows=$Title->all();
+        $rows=${ucfirst($do)}->all();
+        
         foreach ($rows as $row) :
         ?>
           <tr>
@@ -188,15 +190,25 @@ sh[]只會有一筆，可以不需要陣列
 2. 之前隱藏id需要很多筆  所以寫在第一個table
 <input type="hidden" name="table" value="title">
 
-// 步驟9
-此頁跟./backend/ad.php 
-1. 思考 input的name跟value 改用變數寫法套用  避免打錯
-backend.php 變數$do 之後引入這個頁面 所以此頁也有$do
-$do = $_GET['do'] ?? 'title';
-$file = "./backend/{$do}.php";
-
-2. 第51行
+3. 第51行
 value="title" 改成 < ?= $do; ?>
+
+
+// 步驟9
+// 跨檔案的變數傳遞 ~ 此頁 跟./backend/ad.php 
+思考 input的name跟value 改用變數寫法套用  避免打錯
+* backend.php 變數$do跟$file  之後引入這個頁面  所以此頁也有$do
+* $do 在 include 之前定義
+
+1. backend.php 中
+$do = $_GET['do'] ?? 'title';   // $do 在這個檔案中定義
+
+2. 當 include './backend/title.php' 時
+$do 變數會被傳遞到 title.php 中
+
+3.title.php 中
+$rows = ${ucfirst($do)}->all(); // 應該可以使用 $do
+
 
 // 步驟10
 1. 55行：此頁 onclick路徑加上  ?table= < ?=$do; ?>

@@ -1,6 +1,6 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 收後台 .\backend\title.php 表單 編輯/顯示/刪除
+// 寄件人/收後台 .\backend\title.php 表單 編輯/顯示/刪除
 // <form method="post" action="./api/edit_title.php">
 // 之前有加hidden id，辨識異動項目  api就可編輯
 // F12預覽畫面 網址輸入 api/edit_title.php

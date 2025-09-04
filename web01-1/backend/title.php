@@ -215,7 +215,6 @@ $rows = ${ucfirst($do)}->all(); // 應該可以使用 $do
 title.php  改成 < ?=$do; ?>.php
 onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 
 
-
 2. 彈出頁面24行 modal\title.php  接收 $_GET全部大寫  打錯了
 <input type="hidden" name="table" value="< ?=$_GET['table'];?>">
 

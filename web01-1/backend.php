@@ -142,8 +142,8 @@ include_once "./api/db.php";
         // 如果有do=ad，載入 $do=ad 載入檔案 ad.php
         // 如果沒有do參數，載入 $do=title 載入檔案 title.php
 
-        // $file = "./backend/{$do}.php";
-        $file="./backend/".$do.".php";
+        $file = "./backend/{$do}.php";
+        // $file="./backend/".$do.".php";
 
 
         // 步驟7 內建函數 file_exists() 

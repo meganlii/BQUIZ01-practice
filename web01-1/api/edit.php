@@ -21,8 +21,8 @@ dd($_POST);
 // 步驟2
 // 差別在資料表不同 $Title 或 $Ad
 // 先將table拿進來  表單頁面要帶value=資料表名稱(title或ad)
-$table=$_POST['table'];
-$db=${ucfirst($table)};
+$table = $_POST['table'];
+$db = ${ucfirst($table)};
 
 
 // 步驟3
@@ -32,75 +32,77 @@ $db=${ucfirst($table)};
 foreach ($_POST['id'] as $key => $id) {
 
   // * isset()跟in_array() 搭配使用 
-  if(isset($_POST['del']) && in_array($id,$_POST['del'])) {
-  $db->del($id);
-  }else{
+  if (isset($_POST['del']) && in_array($id, $_POST['del'])) {
+    $db->del($id);
+  } else {
 
-  // 處理編輯  取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
-  $row=$db->find($id);
-  
-  // 印出 從資料表拿出的$row
-  dd($row);
+    // 處理編輯  取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
+    $row = $db->find($id);
 
-  
-  // 步驟4
-  // $row['text']  $row['sh']
-  // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
-  // 同insert.php作法 用判斷式  
-  // 較複雜改用switch 拆開有差異的地方 只有第8.9個 管理者/選單管理 不同
-  
-  
-  // 步驟5：先列出table  複製7個
-  switch ($table) {
+    // 印出 從資料表拿出的$row
+    dd($row);
 
-    // 步驟5-1：放上此頁title兩行
-    case 'title':
-      $row['text']=$_POST['text'][$key];
-      $row['sh']=($_POST['sh']==$id)?1:0;
-      break;
-    
-    // 步驟5-2：複製ad兩行貼過來
-    // api\edit_ad.php
-    case 'ad':
-    $row['text'] = $_POST['text'][$key];
-    $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-    break;
-    
-    case 'mvim':
-      # code...
-      break;
-    case 'image':
-      # code...
-      break;
-    case 'news':
-      # code...
-      break;
-    case 'admin':
-      # code...
-      break;
-    case 'menu':
-      # code...
-      break;  
 
+    // 步驟4
+    // $row['text']  $row['sh']
+    // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
+    // 同insert.php作法 用判斷式  
+    // 較複雜改用switch 拆開有差異的地方 只有第8.9個 管理者/選單管理 不同
+
+
+    // 步驟5：先列出table  複製7個
+    switch ($table) {
+
+      // 步驟5-1：放上此頁title兩行
+      case 'title':
+        $row['text'] = $_POST['text'][$key];
+        $row['sh'] = ($_POST['sh'] == $id) ? 1 : 0;
+        break;
+
+      // 步驟5-2：複製ad兩行貼過來
+      // api\edit_ad.php
+      case 'ad':
+        $row['text'] = $_POST['text'][$key];
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
+
+      // 步驟7：新增 .\modal\mvim.php 顯示/刪除 功能
+      // 1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
+      // 2. 沒有text 只需要處理 顯示與否
+      // 3. 複製66行
+      // 因為每個選單功能些微不同，單獨設定 最後再看異同重複處 再處理
+      case 'mvim':
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
+      case 'image':
+        # code...
+        break;
+      case 'news':
+        # code...
+        break;
+      case 'admin':
+        # code...
+        break;
+      case 'menu':
+        # code...
+        break;
+    }
+
+    // 步驟6
+    // 修改 .\backend\title.php  .\backend\ad.php
+    // 新增 隱藏欄位輔助 input:hidden
+    // 修改 表單路徑
+    // <form method="post" action="./api/edit.php">
+    // 刪除 兩個頁面 ./api/edit_title.php  ./api/edit_ad.php 
+
+
+
+    // 如何知道新增或更新？因為有id
+    $db->save($row);
+
+    // 印出 存到資料表的$row
+    dd($row);
   }
-
-// 步驟6
-// 修改 .\backend\title.php  .\backend\ad.php
-// 新增 隱藏欄位輔助 input:hidden
-// 修改 表單路徑
-// <form method="post" action="./api/edit.php">
-// 刪除 兩個頁面 ./api/edit_title.php  ./api/edit_ad.php 
-
-
-
-  // 如何知道新增或更新？因為有id
-  $db->save($row);
-
-  // 印出 存到資料表的$row
-  dd($row);
-
-  }
-
 }
 
 // 步驟3：回到$table

@@ -44,14 +44,19 @@ api處理完了
 1. 第08行  更改 action=./api/insert.php
 2. 第20行  新增 隱藏欄位輔助 input:hidden 給api\insert.php 使用
 <input type="hidden" name="table" value="title">
-
 3. 複製到 .\modal\ad.php
+
 
 // 步驟4：第24行
 // 修改value="title"
 1. 思考：簡化 改成變數寫法  避免複製貼上打錯字
 2. 本頁彈出頁面 使用ajax另外取得  傳到後端title.php  要用get收title
 value= < ?= $_GET['table']; ?>  不是 value="< ?= $do;?>"
+
+// 步驟5
+// 套用功能到選單mvim
+1. 複製.\modal\title.php 更名為mvim.php
+2. 複製 資料表title，更名為mvim
 
 */
 </script>

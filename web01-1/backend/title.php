@@ -14,32 +14,32 @@
 
         <?php
         // $rows=$Title->all();
-        $rows=${ucfirst($do)}->all();
-        
+        $rows = ${ucfirst($do)}->all();
+
         foreach ($rows as $row) :
         ?>
-          <tr>
-            <td width="45%">
-              <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
-            </td>
-            <td width="23%">
-              <input type="text" name="text[]" value="<?= $row['text']; ?>">
-            </td>
-            <td width="7%">
-              <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
-            </td>
-            <td width="7%">
-              <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
-            </td>
+        <tr>
+          <td>
+            <img src="./images/<?= $row['img']; ?>" style="width:300px;height:30px">
+          </td>
+          <td>
+            <input type="text" name="text[]" value="<?= $row['text']; ?>">
+          </td>
+          <td>
+            <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
+          </td>
+          <td>
+            <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
+          </td>
 
-            <td>
-              <input type="button" value="更新圖片"
-                onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
-            </td>
-          </tr>
+          <td>
+            <input type="button" value="更新圖片"
+              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
+          </td>
+        </tr>
 
-          <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-          
+        <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+
         <?php
         endforeach;
         ?>
@@ -50,12 +50,11 @@
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
-          <input type="hidden" name="table" value="<?=$do;?>">
+          <input type="hidden" name="table" value="<?= $do; ?>">
 
           <td width="200px">
-            <input type="button" 
-            onclick="op('#cover','#cvr','./modal/<?=$do;?>.php?table=<?=$do;?>')" 
-            value="新增網站標題圖片">
+            <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')"
+              value="新增網站標題圖片">
           </td>
 
           <td class="cent">
@@ -116,7 +115,7 @@ AI猜測 tii可能是 標題圖片 (Title Image) 的簡寫
 // 迴圈循環 動態生成欄位 列表
 <tr class="yel">  移除背景圖 class="yel"
 1. 在第一個<tbody> 輸出上傳圖片資料 複製第一段<tr class="yel">
-
+2. 22行 移除<td>比例  會隨<tbody><td>第一行標題縮放
 2. 第二段<tr>前後 加上迴圈  在<tr>每列逐筆顯示資料
 
 // 這兩段php程式碼，特別用$rows命名 有特別意義：反映資料庫中「行（row）」的概念

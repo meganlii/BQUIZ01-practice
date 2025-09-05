@@ -20,12 +20,12 @@
         <?php
         $rows = ${ucfirst($do)}->all();
         // $rows = ${ucfirst($do)}->all();
-        
+
         foreach ($rows as $row) :
         ?>
         <tr>
           <td>
-            <input type="text" name="text[]" value="<?=$row['text'];?>" style="width:90%">
+            <input type="text" name="text[]" value="<?= $row['text']; ?>" style="width:90%">
           </td>
           <td>
             <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
@@ -37,8 +37,8 @@
         </tr>
 
         <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-        
-        
+
+
         <?php
         endforeach;
         ?>
@@ -49,12 +49,11 @@
     <table style="margin-top:40px; width:70%;">
       <tbody>
         <tr>
-          <input type="hidden" name="table" value="<?=$do;?>">
+          <input type="hidden" name="table" value="<?= $do; ?>">
 
           <td width="200px">
-            <input type="button" 
-            onclick="op('#cover','#cvr','./modal/<?=$do;?>.php?table=<?=$do;?>')" 
-            value="新增動態文字廣告">
+            <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')"
+              value="新增動態文字廣告">
           </td>
 
           <td class="cent">
@@ -81,12 +80,13 @@
 // 由上而下修改
 1.<p>標題
 2.<tbody> 表單只有三個欄位 移除替代文字
-3.修改欄位寬度 剩下60% 改成 80-10-10
+3.修改欄位寬度比例 剩下60% 改成 80-10-10
 
 
 // 步驟3：第23行 
 // 迴圈循環動態生成欄位資料
 1. 複製第一段<tr class="yel"> 貼到第二段<tr>
+移除<td>比例  會隨<tbody><td>第一行標題縮放
 不需要寬度比例  會以第一段為主
 2. 選取整個<tr>後ctrl+c 再選取第二段ctrl+v 比較不會亂掉
 3. 移除 class="yel"

@@ -17,19 +17,19 @@
 <!-- 回到.\backend\title.php 第34行 路徑檔名改成./modal/update_title.php -->
 <form action="./api/update_title.php" method="post" enctype="multipart/form-data">
   <div>
-    <label>標題區圖片</label>
+    <label>標題區圖片：</label>
     <input type="file" name="img">
   </div>
 
-<!-- 步驟4：移除替代文字 -->
-<!-- <div>
+  <!-- 步驟4：移除替代文字 -->
+  <!-- <div>
     <label>標題區替代文字</label>
     <input type="text" name="text">
 </div> -->
 
-<!-- 步驟5：value="新增" 改成 更新 -->
+  <!-- 步驟5：value="新增" 改成 更新 -->
   <div>
-    <input type="hidden" name="id" value="<?=$_GET['id'];?>" >
+    <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
     <input type="submit" value="更新">
     <input type="reset" value="重置">
   </div>

@@ -19,16 +19,20 @@
 
   <!-- 步驟0：移除替代文字 -->
 
+  <!-- 步驟3：測試功能  新增  顯示/刪除  更換
+  1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
+  2. 沒有text 只需要處理 顯示與否 -->
+
+  <!-- 步驟4：6/27-5 整併更新圖片api為一支
+  1. 新增 <input type="hidden" name="table" value= 
+  2. 回到 .\backend\title.php 設定onclick路徑參數 -->
 
   <div>
     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+    <input type="hidden" name="table" value="<?= $_GET['table']; ?>">
     <input type="submit" value="更新">
     <input type="reset" value="重置">
   </div>
 </form>
 
 <!-- 加上id -->
-
-<!-- 步驟3：測試功能  新增  顯示/刪除  更換
-1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
-2. 沒有text 只需要處理 顯示與否 -->

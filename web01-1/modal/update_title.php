@@ -28,8 +28,13 @@
 </div> -->
 
   <!-- 步驟5：value="新增" 改成 更新 -->
+
+  <!-- 步驟8：6/27-5 整併更新圖片api為一支
+   1. 新增 <input type="hidden" name="table" value= 
+   2. 回到 .\backend\title.php 設定onclick路徑參數-->
   <div>
     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+    <input type="hidden" name="table" value="<?= $_GET['table']; ?>">
     <input type="submit" value="更新">
     <input type="reset" value="重置">
   </div>

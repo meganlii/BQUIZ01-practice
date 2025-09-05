@@ -106,6 +106,7 @@ foreach ($_POST['id'] as $key => $id) {
 }
 
 // 步驟3：回到$table
+// 要改成 雙引號 變數才會生效
 to("../backend.php?do=$table");
 
 ?>

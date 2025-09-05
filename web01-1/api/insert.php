@@ -69,6 +69,7 @@ $db->save($_POST);
 // 路徑改成參數寫法 對應$table=title或ab...等
 // to('../backend.php?do=title');  單引號變數會失效 變成字串
 // **不太懂 有兩個變數$table 刪除unset()之後  參考下方註解// 步驟3
+// 要改成 雙引號 變數才會生效
 to("../backend.php?do=$table");
 
 

@@ -30,7 +30,7 @@
 
           <td>
             <input type="button" value="更換動畫"
-              onclick="op('#cover','#cvr','./modal/update_mvim.php?id=<?= $row['id']; ?>')">
+              onclick="op('#cover','#cvr','./modal/update_mvim.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
           </td>
         </tr>
 
@@ -94,6 +94,14 @@
 後面還有七個功能，可一次全部加上
 
 2. 複製 .\modal\update_title.php 更名為 .\modal\update_mvim.php 
+
+// 步驟3
+6/27-5 整併更新圖片api為一支
+1. 新增 <input type="hidden" name="table" value= 
+2. 回到 .\backend\title.php 設定onclick路徑參數
+3. 33行 新增onclick參數 &table= < ?= $do; ?>
+參考52行 
+
 
 */
 </script>

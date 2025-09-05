@@ -34,7 +34,7 @@
 
           <td>
             <input type="button" value="更新圖片"
-              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>')">
+              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
           </td>
         </tr>
 
@@ -220,7 +220,7 @@ onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')"
 
 3. 套用同樣寫法到兩個頁面 ./backend/ad.php  ./modal/ad.php
 
-// 步驟11：
+// 步驟11
 1. 思考：哪邊還可以改成變數
 統一db共用函式的物件
 $db = ${ucfirst($table)}; 改成 ${ucfirst($do)}
@@ -231,6 +231,13 @@ $db = ${ucfirst($table)}; 改成 ${ucfirst($do)}
 2. 前面兩個選單完成後，後面套用後再修改表單內容而已  輕鬆很多
 
 
+// 步驟12
+6/27-5 整併更新圖片api為一支
+1. 新增 <input type="hidden" name="table" value= 
+2. 回到 .\backend\title.php 設定onclick路徑參數
+3. 37行 新增onclick參數 &table= < ?= $do; ?>
+參考56行 
+4. 回到 .\api\update_title.php 複製後更名為 .\api\update.php
 
 */
 </script>

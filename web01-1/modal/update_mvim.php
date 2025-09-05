@@ -10,8 +10,8 @@
 <!-- 改路徑 ./api/update_mvim.php  複製新檔案到api -->
 <!-- 之後另作update功能模組 -->
 
-
-<form action="./api/update_mvim.php" method="post" enctype="multipart/form-data">
+<!-- 步驟5：action=路徑改成 ./api/update.php -->
+<form action="./api/update.php" method="post" enctype="multipart/form-data">
   <div>
     <label>動畫圖片：</label>
     <input type="file" name="img">

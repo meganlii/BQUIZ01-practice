@@ -15,7 +15,9 @@
 
 <!-- 步驟7：action=路徑改成 ./api/update_title.php -->
 <!-- 回到.\backend\title.php 第34行 路徑檔名改成./modal/update_title.php -->
-<form action="./api/update_title.php" method="post" enctype="multipart/form-data">
+
+<!-- 步驟9：action=路徑改成 ./api/update.php -->
+<form action="./api/update.php" method="post" enctype="multipart/form-data">
   <div>
     <label>標題區圖片：</label>
     <input type="file" name="img">
@@ -30,8 +32,8 @@
   <!-- 步驟5：value="新增" 改成 更新 -->
 
   <!-- 步驟8：6/27-5 整併更新圖片api為一支
-   1. 新增 <input type="hidden" name="table" value= 
-   2. 回到 .\backend\title.php 設定onclick路徑參數-->
+  1. 新增 <input type="hidden" name="table" value= 
+  2. 回到 .\backend\title.php 設定onclick路徑參數-->
   <div>
     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
     <input type="hidden" name="table" value="<?= $_GET['table']; ?>">

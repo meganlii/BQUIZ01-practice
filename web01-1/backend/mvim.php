@@ -30,7 +30,7 @@
 
           <td>
             <input type="button" value="更換動畫"
-              onclick="op('#cover','#cvr','./modal/update_mvim.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
+              onclick="op('#cover','#cvr','./modal/update.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
           </td>
         </tr>
 
@@ -49,6 +49,7 @@
           <input type="hidden" name="table" value="<?= $do; ?>">
 
           <td width="200px">
+            <!-- <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')" -->
             <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')"
               value="新增動畫圖片">
           </td>
@@ -102,6 +103,9 @@
 3. 33行 新增onclick參數 &table= < ?= $do; ?>
 參考52行 
 
+// 步驟4
+修改 33行 onclick路徑
+沒有改成$do參數  避免一行程式 重複帶一樣參數
 
 */
 </script>

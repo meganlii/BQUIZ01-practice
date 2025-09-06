@@ -34,7 +34,8 @@
 
           <td>
             <input type="button" value="更新圖片"
-              onclick="op('#cover','#cvr','./modal/update_title.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
+              onclick="op('#cover','#cvr','./modal/update.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
+              <!-- onclick="op('#cover','#cvr','./modal/update_title.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')"> -->
           </td>
         </tr>
 
@@ -238,6 +239,10 @@ $db = ${ucfirst($table)}; 改成 ${ucfirst($do)}
 3. 37行 新增onclick參數 &table= < ?= $do; ?>
 參考56行 
 4. 回到 .\api\update_title.php 複製後更名為 .\api\update.php
+
+// 步驟13
+修改 37行 onclick路徑
+沒有改成$do參數  避免一行程式 重複帶一樣參數
 
 */
 </script>

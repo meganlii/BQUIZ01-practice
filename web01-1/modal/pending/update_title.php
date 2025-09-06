@@ -31,9 +31,10 @@
 
   <!-- 步驟5：value="新增" 改成 更新 -->
 
-  <!-- 步驟8：6/27-5 整併更新圖片api為一支
+  <!-- 步驟8：6/27-5 整併更新圖片update功能為一支api檔案
   1. 新增 <input type="hidden" name="table" value= 
-  2. 回到 .\backend\title.php 設定onclick路徑參數-->
+  2. 回到 .\backend\title.php 設定onclick路徑參數
+  -->
   <div>
     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
     <input type="hidden" name="table" value="<?= $_GET['table']; ?>">
@@ -43,3 +44,11 @@
 </form>
 
 <!-- 加上id -->
+
+<!-- 步驟8：6/27-6 整併更換圖片update功能為一支彈出視窗modal檔案
+1. 複製本頁 改為.\modal\update.php
+2. 整合 選單4：新增校園映像圖片的更換圖片 也是類似項目modal
+3. 兩個頁面差異 只有<h3跟<label>標題文字不同
+使用switch case 切換文字
+
+-->

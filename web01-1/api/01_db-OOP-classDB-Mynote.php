@@ -432,6 +432,7 @@ class DB
             // )
 
             // 建立新增資料SQL語句 insert into 表/欄位/值
+            // 預覽 SQL語法 INSERT INTO `ad` (`id`, `text`, `sh`) VALUES (NULL, NULL, NULL)
             $sql = "insert into $this->table (`$cols`) values('$values')";
         }
 

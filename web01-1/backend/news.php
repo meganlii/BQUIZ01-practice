@@ -5,13 +5,13 @@
 
   <!-- 步驟1：複製 .\backend\title.php ctrl+a全選後貼上 -->
 
-  <p class="t cent botli">動態文字廣告管理</p>
+  <p class="t cent botli">最新消息管理</p>
 
   <form method="post" action="./api/edit.php">
     <table width="100%">
       <tbody>
         <tr class="yel">
-          <td width="80%">動態文字廣告</td>
+          <td width="80%">最新消息內容</td>
           <td width="10%">顯示</td>
           <td width="10%">刪除</td>
           <td></td>
@@ -25,7 +25,8 @@
         ?>
         <tr>
           <td>
-            <input type="text" name="text[]" value="<?= $row['text']; ?>" style="width:90%">
+            <textarea name="text[]" style="width: 90%;height: 60px;"><?= $row['text']; ?></textarea>
+            <!-- <input type="text" name="text[]" value="< ?= $row['text']; ?>" style="width:90%"> -->
           </td>
           <td>
             <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
@@ -53,7 +54,7 @@
 
           <td width="200px">
             <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')"
-              value="新增動態文字廣告">
+              value="新增最新消息">
           </td>
 
           <td class="cent">
@@ -75,64 +76,38 @@
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
 
-
-// 步驟2：第7行
-// 由上而下修改
-1.<p>標題
-2.<tbody> 表單只有三個欄位 移除替代文字
-3.修改欄位寬度比例 剩下60% 改成 80-10-10
-
-
-// 步驟3：第23行 
-// 迴圈循環動態生成欄位資料
-1. 複製第一段<tr class="yel"> 貼到第二段<tr>
-移除<td>比例  會隨<tbody><td>第一行標題縮放
-不需要寬度比例  會以第一段為主
-2. 選取整個<tr>後ctrl+c 再選取第二段ctrl+v 比較不會亂掉
-3. 移除 class="yel"
-4. 更改foreach參數 $Ad->all() db.php增加$Ad=new DB('ad');
-
-// 步驟4：
-// 資料庫 新增資料表
-複製titles >操作>copy table > 
-1. 勾選第一個/僅結構  不要第二個/結構和資料  
-2. 刪除img
-3. text 備註為 動態文字廣告
-
-
-// 步驟4：第26行
-// 修改foreach資料 <input>
-1. name=text[]多筆資料加上陣列
-2. name="sh"加上陣列[]  改成checkbox
-3. <input> 本身有寬度 要另設style="width=90%"固定(沒有全部對齊th)  沒改會變成一半4
-width=90%打錯  應為半形冒號 width:90%
-style="text-align:center" 失效
-
-// 步驟5：修改第二個table onclick=op()
-1. 路徑改成 ./modal/ad.php
-2. value= 改成 "新增動態文字廣告"
-
-
-// 步驟6：彈出視窗
-新增.\modal\ad.php
-
-// 步驟7：測試可新增動態文字廣告 處理編輯功能
-1. 之前複製title.php 已經帶hidden_id  api就可進行編輯
-2. action="./api/edit_title.php" 改為 edit_ad.php
-3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
-
-// 步驟8
-修改 ./backend/ad.php  ./modal/ad.php
-1. 53行：此頁 onclick路徑加上  ?table= < ?=$do; ?>
-title.php  改成 < ?=$do; ?>.php
-onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 
-2. 彈出頁面24行 modal\title.php  接收
-<input type="hidden" name="table" value="< ?=$_Get['table'];?>">
-
-// 步驟9
+// 步驟1
 複製 .\backend\ad.php 更名為news.php
 
- */
+// 步驟2
+由上而下修改
+
+1. 修改表單 欄位名稱
+08行/14行/56行
+最新消息管理/最新消息內容/新增最新消息
+
+2. 28行 <input>改成<textarea>  </textarea>
+不要斷行  不要加字
+value="< ?= $row['text'] 寫到前後標籤中間 不用寫value=
+設定高度60px
+
+
+// 步驟3
+// CURD 增C、改U  刪查/編輯功能
+不須更新 update
+
+// 步驟4
+測試insert功能  新增modal
+55行 onclick已經設定 新增模組-自動帶入參數 
+1. 複製 .\modal\ad.php  更名為 news.php
+
+
+// 步驟5
+測試edit功能 修改 .\api\edit.php
+新增最新消息內容後 可刪除 但顯示功能沒有變更  還沒有更新edit功能 
+
+
+*/
 </script>
 
 <?php

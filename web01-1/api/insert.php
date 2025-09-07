@@ -61,6 +61,7 @@ if ($_POST['table'] == 'title') {
 unset($_POST['table']);
 // echo $table;
 
+// 儲存表單所有內容
 $db->save($_POST);
 
 

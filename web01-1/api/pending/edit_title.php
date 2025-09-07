@@ -1,8 +1,10 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 收後台 .\backend\title.php 表單 編輯/顯示/刪除
+// 處理編輯功能-按鈕/修改確定： 欄位-顯示/刪除
+// 收後台 .\backend\title.php表單
 // <form method="post" action="./api/edit_title.php">
 // 之前有加hidden id，辨識異動項目  api就可編輯
+// <input type="hidden" name="id[]" value="<?= $row['id']; ? >">
 // F12預覽畫面 網址輸入 api/edit_title.php
 
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 

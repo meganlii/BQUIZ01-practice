@@ -1,9 +1,10 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 處理編輯功能：顯示、刪除
+// 處理編輯功能-按鈕/修改確定： 欄位-顯示/刪除 
 // 寄件人/收後台 .\backend\title.php 表單  
 // <form method="post" action="./api/edit_title.php">
-// 之前有加hidden id，辨識異動項目  api就可編輯
+// 後台有加hidden id，辨識異動項目  api就可編輯
+// <input type="hidden" name="id[]" value="<?= $row['id']; ? >">
 // F12預覽畫面 網址輸入 api/edit_title.php
 
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
@@ -63,34 +64,78 @@ foreach ($_POST['id'] as $key => $id) {
 
       // 步驟5-2：複製ad兩行貼過來
       // api\edit_ad.php
-      case 'ad':
-        $row['text'] = $_POST['text'][$key];
-        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-        break;
 
-      // 步驟7：新增 .\modal\mvim.php 顯示/刪除 功能
+
+      // 步驟11：併入'mvim'與'image' 再簡化 
+      // 7個項目，已有4個合併  62行sh改為二維陣列可再簡化-不太懂？？
+      // case 'ad':
+      // case 'news':
+      // case 'mvim':
+      // case 'image':
+
+
+        // 步驟11-1：加if判斷式 區分是否有text 有就執行 沒有就不做
+        // 步驟12：此段再簡化 移到128行default 預設執行 70-73行也不用了
+
+        // if (isset($row['text'])) {
+        //   $row['text'] = $_POST['text'][$key];
+        // }
+        // $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        // break;
+
+      // 步驟7：新增 .\modal\mvim.php 顯示/刪除 功能--之後簡化併入
       // 1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
       // 2. 沒有text 只需要處理 顯示與否
       // 3. 複製66行
       // 因為每個選單功能些微不同，單獨設定 最後再看異同重複處 再處理
-      case 'mvim':
-        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-        break;
+
+      // ***************再簡化**********
+      // case 'mvim':
+      // case 'image':
+      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      //   break;
+      // ***************再簡化**********
       
-      // 步驟8：新增 .\modal\image.php 顯示/刪除 功能
+      // 步驟8：新增 .\modal\image.php 顯示/刪除 功能--之後簡化併入
       // 複製case 'mvim'
-      case 'image':
-        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-        break;
-      case 'news':
-        # code...
-        break;
+      // case 'image':
+      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      //   break;
+      
+      // 步驟9：新增 .\modal\news.php 顯示/刪除 功能--之後簡化併入
+      // 複製case 'ad'
+      // case 'news':
+      //   $row['text'] = $_POST['text'][$key];
+      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      //   break;
+
+      // 步驟10：思考上面7個異同處 再簡化
+      // 相同兩組：'mvim'與'image'。'ad'與'news'
+      // 相同case放一起即可 關鍵在break
+      
+      // 步驟11：再簡化，回到70行重整
+      
+
+      // 最後兩個選單比較複雜
       case 'admin':
         # code...
         break;
+
       case 'menu':
         # code...
         break;
+      
+      // 步驟12：終極簡化，增加default
+      // 80-83行 if判斷式 移到預設執行
+      // 只有edit需要重構  insert跟update不需要
+      default:
+        if (isset($row['text'])) {
+          $row['text'] = $_POST['text'][$key];
+        }
+
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
+
     }
 
     // 步驟6
@@ -106,7 +151,9 @@ foreach ($_POST['id'] as $key => $id) {
 
     // 印出 存到資料表的$row
     dd($row);
+
   }
+
 }
 
 // 步驟3：回到$table

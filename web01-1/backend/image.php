@@ -20,7 +20,7 @@
         <tr>
           <td>
             <img src="./images/<?= $row['img']; ?>" 
-            style=" width:120px;height:68px">
+            style=" width:120px;height:68px; ">
           </td>
           <td>
             <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
@@ -98,18 +98,22 @@
 // 步驟3
 1. 22行 後台圖片大小有規範  後台管理顯示大小為 100*68 像素。
 style="width:100px" 
-text-align:center / align-items: center 置中失效 可能要設在別處？？
+置中失效 可能要設在別處？？
+text-align:center / align-items: center / vertical-align:middle 
 
 // 步驟4
-不須修改 update、insert
+// CURD 增C、改U  刪查/編輯功能
+不須更新 update
 
 // 步驟5
-新增modal
+insert功能  新增modal
 複製 .\modal\mvim.php  更名為 image.php
 
 // 步驟6
+edit功能
 新增圖片後，顯示功能無法修改  還沒有更新edit功能 
 修改 .\api\edit.php
+
 
 ----以下不須更動，已經用變數取代
 2. 複製 .\modal\update_title.php 更名為 .\modal\update_mvim.php 

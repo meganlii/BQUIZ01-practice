@@ -1,6 +1,6 @@
 <!-- 此功能搭配筆記 11401-FILE-mynote\upload\01-upload.php -->
 
-<h3 style='text-align:center'>新增動態文字廣告</h3>
+<h3 style='text-align:center'>新增最新消息</h3>
 <hr>
 
 <!-- 不刪除action 改成 insert_ad.php 不影響功能  考量後面有功能需要上傳圖片 -->
@@ -11,8 +11,10 @@
   </div> -->
 
   <div>
-    <label>動態文字廣告：</label>
-    <input type="text" name="text">
+    <label>最新消息：</label>
+    <textarea name="text" style=" width:200px;height:100px;vertical-align:middle; "></textarea>
+    <!-- <textarea name="" id=""></textarea> -->
+    <!-- <input type="text" name="text"> -->
   </div>
 
   <div>
@@ -30,26 +32,17 @@
 3. 使用ajax另外取得  傳到後端title.php  title.php再被引入到backend.php
 4. "multipart/form-data" 多媒體格式/表單資料 配合type="file"才會用編碼方式傳送file 一般表單不用加
 
-// 步驟1：彈出視窗
-1. 複製 .\modal\title.php 更名.\modal\adphp
-2. <h3>更名 新增動態文字廣告
-3. 移除第一欄圖片區
-4. <label>改成  動態文字廣告：
+// 步驟1
+複製 ./modal/ad.php 更名為 news.php
 
-// 步驟2：<form>不刪除action 不影響功能  考量後面有功能需要上傳圖片
-改成 .\api\insert_ad.php
+// 步驟2
+由上而下修改 表單 欄位名稱
 
-// 步驟3
-複製 .\api\insert_title.php
-
-// 步驟4：第19行
-// 修改value="title"
-1. 思考：簡化 改成變數寫法 避免複製貼上打錯字
-2. 本頁彈出頁面 使用ajax另外取得  傳到後端title.php  要用get收title
-value= < ?=$_GET['table']; ?>  不是 value="< ?= $do;?>"
-
-// 步驟5：
-複製 ./modal/ad.php 更名為 new.php
+// 步驟1
+15行 <input>改成<textarea></textarea>
+1. 不要斷行  不要加字 才不會增加多餘空白
+2. 預設格子很小 可加上style="width:200px;height:100px;"
+3. 置中 vertical-align:middle
 
 */
 </script>

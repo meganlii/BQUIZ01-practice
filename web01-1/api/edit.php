@@ -1,6 +1,7 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 寄件人/收後台 .\backend\title.php 表單 編輯/顯示/刪除
+// 處理編輯功能：顯示、刪除
+// 寄件人/收後台 .\backend\title.php 表單  
 // <form method="post" action="./api/edit_title.php">
 // 之前有加hidden id，辨識異動項目  api就可編輯
 // F12預覽畫面 網址輸入 api/edit_title.php
@@ -31,24 +32,25 @@ $db = ${ucfirst($table)};
 
 foreach ($_POST['id'] as $key => $id) {
 
+  // 處理編輯功能：刪除
   // * isset()跟in_array() 搭配使用 
   if (isset($_POST['del']) && in_array($id, $_POST['del'])) {
     $db->del($id);
   } else {
 
-    // 處理編輯  取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
+    // 取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
     $row = $db->find($id);
 
     // 印出 從資料表拿出的$row
     dd($row);
 
 
+    // // 處理編輯功能：顯示
     // 步驟4
     // $row['text']  $row['sh']
     // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
     // 同insert.php作法 用判斷式  
     // 較複雜改用switch 拆開有差異的地方 只有第8.9個 管理者/選單管理 不同
-
 
     // 步驟5：先列出table  複製7個
     switch ($table) {
@@ -74,8 +76,11 @@ foreach ($_POST['id'] as $key => $id) {
       case 'mvim':
         $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
         break;
+      
+      // 步驟8：新增 .\modal\image.php 顯示/刪除 功能
+      // 複製case 'mvim'
       case 'image':
-        # code...
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
         break;
       case 'news':
         # code...
@@ -94,7 +99,6 @@ foreach ($_POST['id'] as $key => $id) {
     // 修改 表單路徑
     // <form method="post" action="./api/edit.php">
     // 刪除 兩個頁面 ./api/edit_title.php  ./api/edit_ad.php 
-
 
 
     // 如何知道新增或更新？因為有id

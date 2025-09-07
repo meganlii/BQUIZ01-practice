@@ -77,9 +77,11 @@
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
 // api處理完了，資料夾api內的檔案跟backend.php關係 則是回上一層  用../  回到後台
 
+// 步驟0
+複製 .\backend\title.php 更名為mvim.php
+
 // 步驟1
 由上而下修改
-1. 複製 .\backend\title.php 更名為mvim.php
 2. 02行 修改表單 欄位名稱  沒有規定標題
 3. 08行 移除text 修改欄位寬度比例%  80/10/10
 4. 不用改 action  table名稱$do會動態生成mvim
@@ -106,6 +108,10 @@
 // 步驟4
 修改 33行 onclick路徑
 沒有改成$do參數  避免一行程式 重複帶一樣參數
+
+// 步驟5
+1. 複製此頁，更名為 .\backend\image.php
+
 
 */
 </script>

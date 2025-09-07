@@ -146,6 +146,7 @@ class DB
 
 
 // 類似 宣告$pdo= new DB($dsn,'root','')
+// 共九個物件
 $Title = new DB('title');
 $Ad = new DB('ad');
 $Mvim = new DB('mvim');
@@ -155,6 +156,8 @@ $Admin = new DB('admin');
 $Menu = new DB('menu');
 $Total = new DB('total');
 $Bottom = new DB('bottom');
+
+
 
 // if(!isset($_SESSION['visit'])){
 //     //第一次來訪

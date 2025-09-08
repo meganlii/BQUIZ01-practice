@@ -19,7 +19,8 @@ function q($sql)
 function to($url)
 {
     // header("location:".$url);
-    header("location: $url");
+    // 雙引號內 直接以空格(可不加) 區分不同字串或變數  不加空格可生效
+    header("location:$url");
 }
 
 

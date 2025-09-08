@@ -1,5 +1,5 @@
 <?php
-// 搭配講義註解
+// 搭配講義註解--下次從136行開始看
 /* 
 1.[技能檢定]網頁乙級檢定-前置作業-程式功能整合測試-基礎
 https://mackliu.github.io/php-book/2024/01/03/skill-check1-init-04/
@@ -9,14 +9,16 @@ https://mackliu.github.io/php-book/2021/09/20/db-lesson-03/
 
 3.老師題組一解題說明
 https://bquiz.mackliu.com/solve/solve01-02.html
+
+4. 6/24、6/27 解題錄影檔案
 */
 
-// 總共2+3+6+1 = 12個函式
-// 記憶技巧 先列出全部函式 寫完時間 老師15分 同學25分
+// 總共(2+3)+6+1 = 12個函式
+// 記憶技巧 先列出全部函式跟變數(常忘記) 寫完時間 老師15分 同學25分
 /*
 1.全域函式 *2 + *3  再寫DB類別  *6
 
-2.寫FN name( ){ }，先寫名稱/小大括號/變數  例 function all(...$arg)
+2.寫FN name1 (2/4) {3}，先寫名稱1/小2/大括號3/變數4  例 function all(...$arg){ }
 all//find(查R) count  save(增C.改U)//del(刪D)  arraytosql
 R-read顯示 在SQL稱為query  顯示功能屬於R
 
@@ -32,11 +34,11 @@ if(!isset($_SESSION['visit'])){...}
 /* ==============================================================
  * 簡化 CRUD動作、除錯過程
  * 減少 撰寫SQL錯誤
- * include 到所有頁面使用 之後維護和重複使用
+ * include 到所有頁面使用  方便之後維護和重複使用
  * 放到最上/外層的頁面 放backend.php(後台) 寫一次即可 不用寫好幾次
- * 後台會載入其他檔案(如backend\title.php) 都會共用到 
+ * 後台會載入其他不同檔案(如backend\title.php) 都會共用到函式
  * 使用include_once 因為有用session
- * php echo 接雙引號還是單引號 雙引號會解析變數和轉義字符，而單引號則不會
+ * php echo 接雙引號還是單引號  雙引號會解析變數和轉義字符，而單引號則不會
  * 有些功能獨立寫到api 而非全部塞到一個檔案處理 後面維護麻煩 如果有錯不容易找到或要改好幾個地方
 ============================================================== */
 
@@ -47,7 +49,7 @@ session_start();
 
 
 // 設定預設時區為台北，避免時間錯誤
-date_default_timezone_set("Asia/Taipei");
+date_default_timezone_set('Asia/Taipei');
 
 
 // 二、撰寫輔助用的全域函式：輔助函式
@@ -58,16 +60,15 @@ date_default_timezone_set("Asia/Taipei");
 ============================================================== */
 
 // 陣列除錯用/測試用輔助函數，格式化輸出內容，方便開發時檢查資料
-function dd($array)
-{
+function dd($array) {
     // 格式化輸出
-    echo "<pre>";
+    echo '<pre>';
     
     // print_r() 以易讀 保持格式化結構 輸出變數的結構和內容
     print_r($array);
     
     // 關閉格式化輸出
-    echo "</pre>";
+    echo '</pre>';
 }
 
 
@@ -80,60 +81,56 @@ function dd($array)
 * }
 */
 // 複雜SQL語法的簡化函式
-function q($sql)
-{
+function q($sql) {
 
-    // DSN 資料來源/連線名稱 (Data Source Name)
+    // DSN 資料來源/連線名稱 (縮寫 Data Source Name)
     $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
 
 
-    // PDO (PHP Data Objects)
-    // PDO也是一個物件
-    // 資料庫設定資料：資料庫位置和名稱
-    // 使用者名稱
-    // 密碼（空白
+    // PDO (縮寫 PHP Data Objects)
+    // PDO 也是一個物件
+    // 資料庫設定資料：資料庫位置和名稱 / 使用者名稱 / 密碼（空白)
     $pdo = new PDO($dsn, 'root', '');
 
+
+    // 參考 https://mackliu.github.io/php-book/2021/09/21/php-lesson-04/
     /*
-    1. return 自訂函式用 return 回傳資料
+    1. return 自訂函式用它回傳資料
 
-    2. $pdo->query($sql) 執行 SQL 查詢並返回結果
+    2. $pdo->query($sql) 執行 SQL查詢 並返回結果
 
-    3. 回傳值 fetchAll()
-    fetchAll(PDO::FETCH_ASSOC) 取得所有結果，並以關聯陣列形式返回資料
-    PDO::FETCH_ASSOC 只返回 關聯陣列(二維)key=value，不返回數字索引
+    3. fetchAll (PDO::FETCH_ASSOC) 回傳值
+        取得所有結果，並以關聯陣列形式返回資料
+        
+        PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
+        ::「進入」一個類別，存取符號 存取內部靜態內容（常數、靜態方法、靜態屬性）
+        存取 類別常數：存取PDO類別中  定義的常數-FETCH_ASSOC
+        
+        ASSOC：只返回 關聯陣列(二維)key=value，不返回 數字/索引陣列
 
-    參考 https://mackliu.github.io/php-book/2021/09/21/php-lesson-04/
-    PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
-    存取 類別常數：存取 PDO 類別中定義的常數
-    存取 PDO類別 的 FETCH_ASSOC 常數
-    ::「進入」一個類別，存取符號 存取內部靜態內容（常數、靜態方法、靜態屬性）
-
-    4. 類別常數 PDO 
-    PDO::FETCH_ASSOC  回傳 帶欄位 名稱的資料
+    4. 不同回傳值
+    PDO::FETCH_ASSOC  回傳 帶欄位名稱的資料
     關聯陣列 ['name' => 'John', 'age' => 25]
 
     PDO::FETCH_NUM   回傳 帶欄位 索引的資料
     索引陣列 [0 => 'John', 1 => 25]
     */
+
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    // 共三組參數 pdo  // query($sql) 執行SQL查詢  // fetchAll(PDO::FETCH_ASSOC)取回全部關聯陣列
+    // 共兩組參數-查詢跟取回
+    // $pdo//query($sql) 執行SQL查詢  // fetchAll(PDO::FETCH_ASSOC)取回 全部關聯陣列
     // 將sql句子帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
 
-    // 錄製_2025_06_24_09_36_32_40-1300-步驟3 建立共用函式檔
-    // 要更新到 OOP-db.php FN all()檔案
 }
 
 
-
 // 接收一個參數 $url（要跳轉的目標網址）
-function to($url)
-{
-    // header("location:" . $url); 雙引號內 直接以空格區分不同字串或變數
+function to($url) {
+    // header("location:" . $url); 雙引號內 直接以空格(可不加) 區分不同字串或變數
     // header() 函數發送 HTTP 標頭Location
     // 標頭Location 會告訴瀏覽器 跳轉到指定的網址
     // . $url 將參數中的網址串接到 "location:" 後面
-    header("location: $url");
+    header("location:$url");
 }
 
 /* 頁面導(定)向輔助函式：PHP檔頭管理指令-header()
@@ -160,8 +157,7 @@ function to($url)
 
 // 步驟1 宣告類別DB
 // 類別名稱：大寫開頭
-class DB
-{
+class DB {
 
     // 步驟2 宣告屬性/變數  
     // PDO連線的建立方式  

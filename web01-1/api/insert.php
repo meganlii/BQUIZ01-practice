@@ -16,7 +16,7 @@ print_r($_FILES);
 echo "</pre>";
 
 // 步驟1
-// 如果有上傳圖片就放上去
+// 如果有上傳圖片就放上去  有/無   用!empty()不是空值確認  vs isset是否存在??
 if (!empty($_FILES['img']['tmp_name'])) {
 
     move_uploaded_file($_FILES['img']['tmp_name'], "../images/" . $_FILES['img']['name']);
@@ -77,7 +77,7 @@ to("../backend.php?do=$table");
 ?>
 
 <script>
-/* 
+    /* 
 1. 程式優化：再思考哪些功能可以合併，參6/27筆記-第120行
 .\api\edit_ad.php
 .\api\edit_title.php

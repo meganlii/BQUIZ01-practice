@@ -60,28 +60,30 @@ date_default_timezone_set('Asia/Taipei');
 ============================================================== */
 
 // 陣列除錯用/測試用輔助函數，格式化輸出內容，方便開發時檢查資料
-function dd($array) {
+function dd($array)
+{
     // 格式化輸出
     echo '<pre>';
-    
+
     // print_r() 以易讀 保持格式化結構 輸出變數的結構和內容
     print_r($array);
-    
+
     // 關閉格式化輸出
     echo '</pre>';
 }
 
 
-// classDB函式處理不了 解決聯表查詢或是子查詢 執行複雜 SQL 查詢
+// classDB函式處理不了 解決 聯表查詢或是子查詢 執行 複雜SQL 查詢 ($sql是SQL語句)
 /*
-* 只有題組三會用到 直接執行SQL語句，並返回結果 不會用到class DB
+* 只有題組三會用到 直接執行 SQL語句，並返回結果 不會用到class DB
 * $movies = q("select `movie` from `orders` group by `movie`");
 * foreach($movies as $movie){
 * echo "<option value='{$movie['movie']}'>{$movie['movie']}</option>";
 * }
 */
 // 複雜SQL語法的簡化函式
-function q($sql) {
+function q($sql)
+{
 
     // DSN 資料來源/連線名稱 (縮寫 Data Source Name)
     $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
@@ -114,18 +116,20 @@ function q($sql) {
 
     PDO::FETCH_NUM   回傳 帶欄位 索引的資料
     索引陣列 [0 => 'John', 1 => 25]
+    粗箭頭（=>）：可用於陣列/數組 ex.[key]=>[value]
     */
 
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     // 共兩組參數-查詢跟取回
     // $pdo//query($sql) 執行SQL查詢  // fetchAll(PDO::FETCH_ASSOC)取回 全部關聯陣列
-    // 將sql句子帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
+    // 將sql句子 帶進pdo的query方法中，並以fetchAll()方式回傳所有的結果
 
 }
 
 
 // 接收一個參數 $url（要跳轉的目標網址）
-function to($url) {
+function to($url)
+{
     // header("location:" . $url); 雙引號內 直接以空格(可不加) 區分不同字串或變數
     // header() 函數發送 HTTP 標頭Location
     // 標頭Location 會告訴瀏覽器 跳轉到指定的網址
@@ -157,7 +161,8 @@ function to($url) {
 
 // 步驟1 宣告類別DB
 // 類別名稱：大寫開頭
-class DB {
+class DB
+{
 
     // 步驟2 宣告屬性/變數  
     // PDO連線的建立方式  
@@ -181,7 +186,7 @@ class DB {
     function __construct($table)
     {
         // $this替換 資料表名稱 帶參數的概念
-        $this->table = $table;  
+        $this->table = $table;
         $this->pdo = new PDO($this->dsn, 'root', '');
     }
 
@@ -403,8 +408,8 @@ class DB {
 
             // 步驟2 insert into
             // 新增資料
-            $cols = join("`,`", array_keys($array));
             // $cols 取得 欄位名稱
+            $cols = join("`,`", array_keys($array));
             // array_keys()
             // 將陣列的鍵名轉換為字串，並用逗號分隔
             // 例如 $array = [
@@ -417,8 +422,9 @@ class DB {
             // 輸出：name(`,`)age(`,`)age
             // 之後加上 前後引號(`$cols`) 就完美了
 
-            $values = join("','", $array);
+
             // $values 取得 欄位值
+            $values = join("','", $array);
             // 關聯陣列使用 join() ，PHP 只會使用值（value），會忽略鍵（key）
             // 另一個函式    也可以取得索引=>值
             // Array

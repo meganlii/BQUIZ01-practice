@@ -1,10 +1,4 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
-  <!-- 步驟0：測試頁  更名為 動態文字廣告管理 -->
-  <!-- 先不複製其他7個頁面 每頁互動方式不同要改變 避免混淆 -->
-  <!-- 總共9個 7個差不多 另外2個有異動 -->
-
-  <!-- 步驟1：複製 .\backend\title.php ctrl+a全選後貼上 -->
-
   <p class="t cent botli">動態文字廣告管理</p>
 
   <form method="post" action="./api/edit.php">
@@ -23,20 +17,19 @@
 
         foreach ($rows as $row) :
         ?>
-        <tr>
-          <td>
-            <input type="text" name="text[]" value="<?= $row['text']; ?>" style="width:90%">
-          </td>
-          <td>
-            <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
-          </td>
-          <td>
-            <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
-          </td>
-          <td></td>
-        </tr>
+          <tr>
+            <td>
+              <input type="text" name="text[]" value="<?= $row['text']; ?>" style="width:90%">
+            </td>
+            <td>
+              <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
+            </td>
+            <td>
+              <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
+            </td>
+          </tr>
 
-        <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+          <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
 
 
         <?php
@@ -69,21 +62,26 @@
 </div>
 
 <script>
-/**
+  /*
 // 路徑 ./當前目錄  以backend.php角度來看
 // 所以<form> action="./api/edit_ad.php"  ./不是  ../
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
 
+// 步驟0：測試頁  更名為 動態文字廣告管理
+先不複製其他7個頁面 每頁互動方式不同要改變 避免混淆
+總共9個 7個差不多 另外2個有異
 
-// 步驟2：第7行
+// 步驟0：複製 .\backend\title.php ctrl+a全選後貼上
+
+// 步驟1：第7行
 // 由上而下修改
 1.<p>標題
 2.<tbody> 表單只有三個欄位 移除替代文字
 3.修改欄位寬度比例 剩下60% 改成 80-10-10
 
 
-// 步驟3：第23行 
+// 步驟2：第23行 
 // 迴圈循環動態生成欄位資料
 1. 複製第一段<tr class="yel"> 貼到第二段<tr>
 移除<td>比例  會隨<tbody><td>第一行標題縮放
@@ -92,7 +90,7 @@
 3. 移除 class="yel"
 4. 更改foreach參數 $Ad->all() db.php增加$Ad=new DB('ad');
 
-// 步驟4：
+// 步驟3：
 // 資料庫 新增資料表
 複製titles >操作>copy table > 
 1. 勾選第一個/僅結構  不要第二個/結構和資料  
@@ -132,7 +130,7 @@ onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')"
 // 步驟9
 複製 .\backend\ad.php 更名為news.php
 
- */
+*/
 </script>
 
 <?php

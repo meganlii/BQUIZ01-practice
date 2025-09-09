@@ -46,11 +46,29 @@ $db = ${ucfirst($table)};
 // if判斷式 收$post陣列鍵值 變數寫法
 // if ($table == 'title') { }
 // 選單後面兩個功能 不須顯示帳號密碼 需另外處理
-if ($_POST['table'] == 'title') {
-    $_POST['sh'] = 0;
-} else {
-    $_POST['sh'] = 1;
+// if ($_POST['table'] == 'title') {
+//     $_POST['sh'] = 0;
+// } else {
+//     $_POST['sh'] = 1;
+// }
+
+// 步驟5
+// 1. 因應選單8-admin 資料表沒有sh欄位，if改成switch
+// 2. 放變數$table 兩個case 其他預設
+
+switch ($table) {
+    case 'title':
+        $_POST['sh'] = 0;
+        break;
+    case 'admin':
+        # 沒有sh，不處理
+        break;
+    default:
+        $_POST['sh'] = 1;
+        break;
 }
+
+
 
 // 步驟4
 // 此寫法 儲存會失敗 資料表沒有table欄位
@@ -139,6 +157,12 @@ if ($table == 'title') {
 } else {
     $_POST['sh'] = 1;
 }
+
+// 步驟4：49行
+1. 因為選單8-admin 資料表沒有sh欄位 但共用insert新增功能，F12會報錯 但不影響功能
+參考6/27筆記-550行 截圖
+2. ./api/insert.php 改成switch  也可用else if/比較麻煩
+3. 複習if/真假二選一 跟switch/多選分配 條件式差異
 
 */
 </script>

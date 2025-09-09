@@ -74,14 +74,14 @@ foreach ($_POST['id'] as $key => $id) {
       // case 'image':
 
 
-        // 步驟11-1：加if判斷式 區分是否有text 有就執行 沒有就不做
-        // 步驟12：此段再簡化 移到128行default 預設執行 70-73行也不用了
+      // 步驟11-1：加if判斷式 區分是否有text 有就執行 沒有就不做
+      // 步驟12：此段再簡化 移到128行default 預設執行 70-73行也不用了
 
-        // if (isset($row['text'])) {
-        //   $row['text'] = $_POST['text'][$key];
-        // }
-        // $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-        // break;
+      // if (isset($row['text'])) {
+      //   $row['text'] = $_POST['text'][$key];
+      // }
+      // $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      // break;
 
       // 步驟7：新增 .\modal\mvim.php 顯示/刪除 功能--之後簡化併入
       // 1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
@@ -95,13 +95,13 @@ foreach ($_POST['id'] as $key => $id) {
       //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
       //   break;
       // ***************再簡化**********
-      
+
       // 步驟8：新增 .\modal\image.php 顯示/刪除 功能--之後簡化併入
       // 複製case 'mvim'
       // case 'image':
       //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
       //   break;
-      
+
       // 步驟9：新增 .\modal\news.php 顯示/刪除 功能--之後簡化併入
       // 複製case 'ad'
       // case 'news':
@@ -112,19 +112,20 @@ foreach ($_POST['id'] as $key => $id) {
       // 步驟10：思考上面7個異同處 再簡化
       // 相同兩組：'mvim'與'image'。'ad'與'news'
       // 相同case放一起即可 關鍵在break
-      
+
       // 步驟11：再簡化，回到70行重整
-      
+
 
       // 最後兩個選單比較複雜
       case 'admin':
-        # code...
+        $row['acc'] = $_POST['acc'][$key];
+        $row['pw'] = $_POST['pw'][$key];
         break;
 
       case 'menu':
         # code...
         break;
-      
+
       // 步驟12：終極簡化，增加default
       // 80-83行 if判斷式 移到預設執行
       // 只有edit需要重構  insert跟update不需要
@@ -135,7 +136,6 @@ foreach ($_POST['id'] as $key => $id) {
 
         $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
         break;
-
     }
 
     // 步驟6
@@ -151,9 +151,7 @@ foreach ($_POST['id'] as $key => $id) {
 
     // 印出 存到資料表的$row
     dd($row);
-
   }
-
 }
 
 // 步驟3：回到$table
@@ -163,7 +161,7 @@ to("../backend.php?do=$table");
 ?>
 
 <script>
-/** 
+  /** 
 //  $row['text']=$_POST['text'][$key];
 資料庫的替代文字  對應$_POST表單送來的資料  對照截圖看
 

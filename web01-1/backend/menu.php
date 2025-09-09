@@ -12,7 +12,8 @@
           <td width="10%">刪除</td>
           <td width="10%">
             <!-- 移除路徑參數 讓彈出視窗可正常顯示 -->
-            <input type="button" value="編輯次選單" onclick="op('#cover','#cvr','./modal/submenu.php')">
+            <!-- 測試OK 先註解 -->
+            <!-- <input type="button" value="編輯次選單" onclick="op('#cover','#cvr','./modal/submenu.php')"> -->
           </td>
           <!-- <td width="10%">編輯次選單</td> -->
         </tr>
@@ -34,7 +35,7 @@
             <td>3.次選單數</td>
 
             <td>
-              <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>">
+              <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : "" ;?> >
             </td>
             <td>
               <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
@@ -96,10 +97,11 @@
 3. 08行 修改欄位寬度比例 改成30/30  移除sh顯示欄位
 4. 30行 複製1個<td> 複製多選框改成sh 
 5. 24行 修改2個<td> 更改type=text name=text href
+6. 68行 新增主選單
 
 // 步驟3
 1. 第六個欄位有 按鈕-編輯次選單 到title複製onclick()
-onclick="op('#cover','#cvr','./modal/update.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
+onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
 2. 更名為 編輯次選單
 3. 彈出視窗 獨立給一個檔案 submenu.php - 老師會花半天說明原理
 複製./modal/update.php 更名為 ./modal/submenu.php
@@ -111,16 +113,22 @@ onclick="op('#cover','#cvr','./modal/update.php?id=<?= $row['id']; ?>&table=<?= 
 讓彈出視窗可正常顯示
 3. ./modal/submenu.php 15行 21行也先註解
 
+// 步驟5
 複製/修改 .\modal\admin.php 更名為 .\modal\menu.php
 
+// 步驟6
+1. 測試新增功能 顯示功能沒有預設打勾 回到.\backend\menu.php 
+2. 38行 加上php變數< ?=($row['sh'] == 1) ? "checked" : "" ;?>
+本來checked 直接加在標籤內不用加雙引號
+3. 新增兩個主選單：管理登入、網站首頁  
+4. 新增兩個連結網址：?do=login  index.php   寫變數？
 
-
-// 步驟4
+// 步驟7
 修改 編輯功能 ./api/edit.php
-1. 欄位不是text 獨立加上兩行 
-2. 複製title $row 更名為acc pw
-
-
+1. 複製admin兩個 $row 更名為text href
+2. 複製default一個 $row['sh']
+這段忘記什麼意思？
+$row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
 
 
 備註
@@ -167,7 +175,7 @@ style="text-align:center" 失效
 3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
 
 // 步驟8
-修改 ./backend/ad.php  ./modal/ad.php
+修改 ./backend/ad.php   ./modal/ad.php
 1. 53行：此頁 onclick路徑加上  ?table= < ?=$do; ?>
 title.php  改成 < ?=$do; ?>.php
 onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 

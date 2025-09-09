@@ -26,7 +26,7 @@
             <input type="text" name="text[]" value="<?= $row['text']; ?>">
           </td>
           <td>
-            <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
+            <input type="radio" name="sh" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?> >
           </td>
           <td>
             <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
@@ -161,8 +161,8 @@ sh[]只會有一筆，可以不需要陣列
 
 // 步驟6：第34行
 // 新增 更新圖片 彈出視窗 <input type="button" value="更新圖片">
-1. 彈出視窗的js函式onclick=op() 套用 到更新圖片按鈕中 
-2. 複製 ./modal/title.php 更名update_title.php
+1. 彈出視窗的js函式onclick=op() 加到 更新圖片按鈕 
+2. 複製 ./modal/title.php 更名為 update_title.php
 修改表單內容 更新h3、action= 移除替代文字  新增改成更新
 
 // 步驟7

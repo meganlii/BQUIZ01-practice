@@ -1,9 +1,10 @@
 <!-- 此功能搭配筆記 11401-FILE-mynote\upload\01-upload.php -->
 
-<!-- 步驟1：新增 資料夾madal跟title.php ./madal/title.php -->
+<!-- 步驟1：新增 資料夾modal跟title.php ./madal/title.php -->
 <!-- ./view2 <h3><form> 移到此頁 -->
 
-<!-- 步驟3：複製 .\modal\title.php -->
+<!-- 步驟3：複製 .\modal\title.php 更名為 .\modal\update_title.php -->
+<!-- 利用原本新增網站標題圖片的彈出視窗功能，改成 更新圖片 -->
 <!-- 更名<h3> -->
 <h3 style='text-align:center'>更新標題區圖片</h3>
 <hr>

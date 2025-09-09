@@ -25,6 +25,17 @@
   </div>
 </form>
 
+
+<!-- 步驟0
+1. 第六個欄位有 按鈕-編輯次選單 到title複製onclick()
+onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
+2. 更名為 編輯次選單
+3. 編輯功能/彈出視窗 獨立給一個檔案 submenu.php - 老師花半天說明原理
+複製./modal/update.php 更名為 ./modal/submenu.php 
+4. 編輯功能update.php 套用三個選單更新/更換功能
+-->
+
+<!-- --------------------- -->
 <!-- 步驟6
 1. 修改 .\backend\mvim.php   33行onclick路徑 改成 './modal/update.php
 2. 修改 .\backend\title.php  33行onclick路徑 改成 './modal/update.php
@@ -40,10 +51,3 @@
 選單5 跟 選單6  比較特別，獨立製表 手動放一筆資料進去
 -->
 
-<!-- 步驟8
-1. 第六個欄位有 按鈕-編輯次選單 到title複製onclick()
-onclick="op('#cover','#cvr','./modal/update.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">
-2. 更名為 編輯次選單
-3. 彈出視窗 獨立給一個檔案 submenu.php - 老師花半天說明原理
-複製./modal/update.php 更名為 ./modal/submenu.php 
--->

@@ -182,15 +182,22 @@ sh[]只會有一筆，可以不需要陣列
 // 步驟8
 // 新增./api/update_title.php
 
-// 步驟9：第50行
-此頁跟./backend/ad.php 
-1. 第二個<table> 新增 隱藏欄位輔助 input:hidden
-因為整個table 只需要送一筆隱藏id
 
-2. 之前隱藏id需要很多筆  所以寫在第一個table
+// 步驟9：新增 2個 隱藏欄位輔助 name="id[]"name="table"
+// 給api編輯功能使用 (modal的title.php也有設 給api新增功能使用)
+<form method="post" action="./api/edit.php">
+
+此頁跟./backend/ad.php 
+1. 42行
+第一個<table> 新增 隱藏欄位輔助 input:hidden
+因為整個table 只需要送一筆隱藏id
+<input type="hidden" name="id[]" value="< ?= $row['id']; ?>">
+
+之前隱藏id需要很多筆  所以寫在第2個table
 <input type="hidden" name="table" value="title">
 
-3. 第51行
+3. 54行
+<input type="hidden" name="table" value="< ?= $do; ?>">
 value="title" 改成 < ?= $do; ?>
 
 

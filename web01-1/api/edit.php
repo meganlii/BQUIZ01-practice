@@ -1,6 +1,8 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 處理編輯功能-按鈕/修改確定： 欄位-顯示/刪除 
+// 處理編輯功能-按鈕/修改確定：修改文字 欄位-顯示/刪除 
+// 沒加的話 欄位改文字 點選顯示或刪除  會失效 無法修改存入
+
 // 寄件人/收後台 .\backend\title.php 表單  
 // <form method="post" action="./api/edit_title.php">
 // 後台有加hidden id，辨識異動項目  api就可編輯
@@ -10,6 +12,7 @@
 // 其他資料夾modal、backend檔案 送到api處理  要以backend.php角度來看跟api關係  屬於./當前目錄  web01-1目錄 
 // api處理完了，資料夾api內的檔案跟backend.php關係 則是回上一層  用../  回到後台
 // to("../backend.php?do=title");
+
 
 include_once './db.php';
 
@@ -22,7 +25,7 @@ dd($_POST);
 
 // 步驟2
 // 差別在資料表不同 $Title 或 $Ad
-// 先將table拿進來  表單頁面要帶value=資料表名稱(title或ad)
+// 先將table拿進來 抓到不同資料表 表單頁面要帶value=資料表名稱(title或ad)  參下方180行註解
 $table = $_POST['table'];
 $db = ${ucfirst($table)};
 
@@ -46,7 +49,7 @@ foreach ($_POST['id'] as $key => $id) {
     dd($row);
 
 
-    // // 處理編輯功能：顯示
+    // 處理編輯功能：顯示
     // 步驟4
     // $row['text']  $row['sh']
     // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
@@ -122,11 +125,13 @@ foreach ($_POST['id'] as $key => $id) {
         $row['pw'] = $_POST['pw'][$key];
         break;
 
+      // 步驟13：複製121/122/140行
+      // 改成['text']['href']
       case 'menu':
-        $row['text'] = $_POST['text'][$key];
-        $row['href'] = $_POST['href'][$key];
-        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-        break;
+      $row['text'] = $_POST['text'][$key];
+      $row['href'] = $_POST['href'][$key];
+      $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      break;
 
       // 步驟12：終極簡化，增加default
       // 80-83行 if判斷式 移到預設執行
@@ -163,12 +168,27 @@ to("../backend.php?do=$table");
 ?>
 
 <script>
-  /** 
+/*
 //  $row['text']=$_POST['text'][$key];
 資料庫的替代文字  對應$_POST表單送來的資料  對照截圖看
 
 // $row['sh']=($_POST['sh']==$id)?1:0;
 ad複選寫法 二維陣列  $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
 title單選寫法 一維陣列只有值  三元運算式  條件式用兩個等號=
+
+
+// 錄製_2025_06_30_08_47_ 總整理-編輯功能
+1. 將不同資料表的編輯功能 整併再一支程式裡面  新增/更新功能 也用同樣方法套用
+2. 先設變數 抓到不同資料表 $table = $_POST['table'];
+來自.backend\title.php 等7個選單頁面  皆有新增2個隱藏欄位輔助 name="id[] "name="table"
+<form method="post" action="./api/edit.php">
+<input type="hidden" name="id[]" value="< ?= $row['id']; ? >">
+<input type="hidden" name="table" value="< ?= $do; ? >">
+
+3. 再設兩個$ 可變變數  ${ucfirst($table)}
+POST收到的table可以變成宣告的DB類別的大寫物件
+4. 最後，因應資料表不同欄位(圖片、帳號/密碼)、欄位結構(文字、路徑)、單/多選框
+使用switch 拆開有差異的地方 各自可變更資料表不同欄位  後續新增維護更方便
+
 */
 </script>

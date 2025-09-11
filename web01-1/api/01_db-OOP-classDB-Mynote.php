@@ -1,5 +1,5 @@
 <?php
-// 搭配講義註解--下次從136行開始看
+// 搭配講義註解--下次從237行開始看  繼續加油
 /* 
 1.[技能檢定]網頁乙級檢定-前置作業-程式功能整合測試-基礎
 https://mackliu.github.io/php-book/2024/01/03/skill-check1-init-04/
@@ -85,13 +85,14 @@ function dd($array)
 function q($sql)
 {
 
-    // DSN 資料來源/連線名稱 (縮寫 Data Source Name)
+    // DSN 資料庫來源/連線名稱 (縮寫 Data Source Name)
+    // host => 主機名稱或是位置IP / charset => 使用的字元集，一般選utf8 / dbname => 使用的資料庫名稱
     $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
 
 
-    // PDO (縮寫 PHP Data Objects)
-    // PDO 也是一個物件
-    // 資料庫設定資料：資料庫位置和名稱 / 使用者名稱 / 密碼（空白)
+    // PDO 也是一個物件 (縮寫 PHP Data Objects)
+    // 使用 new語法 建立一個 PDO連線物件，並將這個物件指定給一個 變數$pdo (概念同505行$Title = new DB('title');) 
+    // 資料庫設定資料：( 資料庫位置和名稱，使用者名稱，密碼（空白)  )
     $pdo = new PDO($dsn, 'root', '');
 
 
@@ -139,86 +140,104 @@ function to($url)
 
 /* 頁面導(定)向輔助函式：PHP檔頭管理指令-header()
 1. 重新導向/跳轉 到指定網址 可為內部首頁、外部網址、相對路徑
-2. 跳轉時帶參數 to("profile.php?id=123");
-3. 跳轉到首頁 to("index.php") 
-    伺服器 發送 HTTP 標頭：Location: login.php
-    瀏覽器 接收標頭
-    瀏覽器 自動跳轉到 login.php
-4. 常見使用情境 不用前後端一直跳頁
-    // 表單提交後跳轉
-    if($_POST['submit']) {
-        // 處理表單...
-        to("success.php");
-    }
+跳轉時帶參數 to("profile.php?id=123");
+跳轉到首頁 to("index.php") 
+
+2. 伺服器 發送 HTTP 標頭：Location: login.php
+瀏覽器 接收標頭
+瀏覽器 自動跳轉到 login.php
+
+3. 常見使用情境 不用前後端一直跳頁
+// 表單提交後跳轉
+if($_POST['submit']) {
+// 處理表單...
+to("success.php");
+}
 */
 
 // 三、資料庫操作類別 (Database Access Object, DAO)
 /* ======================================================================
 1. 簡化自訂函式：用物件導向的方式 簡化自訂函式的撰寫
 2. 考量檢定時間限制，並不是全面採用OOP
-3. 只是把常用的自訂函式，包裝成一個 資料庫DB類別(Class DB)
+3. 只把常用的自訂函式，包裝成一個 資料庫DB類別(Class DB)
 ======================================================================== */
 
 // 步驟1 宣告類別DB
-// 類別名稱：大寫開頭
+// 類別名稱：大寫開頭  317：三個private/變數 一個construct  七個FN
 class DB
 {
 
-    // 步驟2 宣告屬性/變數  
-    // PDO連線的建立方式  
-    // 2-1 建立資料庫基本資料  $dsn  $pdo=new PDO()
-    // host => 主機名稱或是位置IP / charset => 使用的字元集，一般選utf8 / dbname => 使用的資料庫名稱
+    // 步驟2 宣告屬性/變數：三個private/變數 概念同85行 function q($sql)
+    // 2-1 建立 資料庫基本資料  $dsn  $pdo=new PDO()
+    // 物件屬性1：資料庫來源/連線名稱
     private $dsn = "mysql:host=localhost;dbname=db09;charset=utf8";
 
 
-    // 2-2 建立PDO物件 連線資料庫
-    private $pdo;  // 這裡存放另一個物件（PDO物件)
+    // 2-2 建立 PDO物件 連線資料庫
+    // function q($sql) { $pdo = new PDO($dsn, 'root', '')
+    // 物件屬性2：PDO連線物件
+    private $pdo;  // 
 
 
-    // 2-3 讓每個 DB 物件記住自己要操作哪個資料表！
+    // 2-3 讓每個 DB物件 記住自己要操作哪個資料表
+    // 物件屬性3：資料表名稱  
     private $table;  // $this->table = 資料表名稱
 
 
-    // 步驟3 建構函式/建構子
-    // 在建構時帶入 table資料表名稱時 會建立資料庫的連線
-    // 建立物件時 自動執行
-    // 物件被實例化(new DB)時 會先執行的方法
+    // 步驟3 建構函式/建構子：兩個 $this
+    // 505行 建立物件時/物件被實例化(new DB) 會先執行的方法/自動執行 
+    // 在物件內部 存取這些屬性，都必須用 $this->property = 物件屬性 
+    // $this->屬性名稱(字串、不用$)]  存取 物件屬性(變數)
+    // $this-> 代表「這個物件本身-依據上下文決定」，用來存取「這個物件/我自己的」內部屬性和方法。
+    // 記憶法：呼應上方3個private $table  $pdo  $dsn
     function __construct($table)
     {
-        // $this替換 資料表名稱 帶參數的概念
+        // $this設定/存取  存取物件內部的 table、pdo、dsn 屬性
+        // 設定物件的 table 屬性 // 把參數 $table 的值，存到「這個物件」的 table 屬性中
         $this->table = $table;
+        
+        
+        // 存取物件的 dsn 屬性  寫$dsn會找不到變數（錯誤）
+        // 1. 使用「這個物件」的 dsn 屬性（$this->dsn）
+        // 2. 建立一個新的 PDO 物件
+        // 3. 把 PDO 物件 存到「這個物件」的 pdo 屬性中
+        // $this->dsn = $dsn = "mysql:host=localhost;dbname=db09;charset=utf8"
         $this->pdo = new PDO($this->dsn, 'root', '');
     }
 
-    // 3-1 使用 [$this->屬性名稱(不用$)]  存取 物件的屬性(變數)
-
-    // 3-2 $this->dsn = $dsn = "mysql:host=localhost;dbname=db09;charset=utf8"
     /*
-     * PHP 內建類別PDO 不需要自己宣告
-     * 同時建立另一個PDO物件(內部建立的PDO物件)，存放在$this->pdo屬性中
-     * 物件包含物件的概念 建構子 之下有兩個$this
-     */
+    // 建立 DB 物件時：在建構時 帶入 table資料表名稱時 執行兩個$this
+    $Title = new DB('title');
+    這時發生什麼：
+    $this->table = 'title';           // 把 'title' 存到物件的 table 屬性
+    $this->pdo = new PDO(...);        // 建立 PDO 連線並存到物件的 pdo 屬性
+
+    // 之後在其他方法中可以使用：
+    function all() {
+        return $this->pdo->query("SELECT * FROM " . $this->table)->fetchAll();
+                ↑使用物件的pdo屬性                     ↑使用物件的table屬性
+    }
+    */
 
 
     // 步驟4 自訂函式-CRUD / CURD
-    // 共7個FN：const  all//find(查R)  count(額外加)  save(增C.改U)//del(刪D)  arraytosql
+    // 共7個FN：const  all//find(查R)  count(額外加)  save(增C.改U)//del(刪D)  arraytosql(a2s)
 
-    // 4-1 $Table->all()-查詢 符合條件的 "全部資料" select *
+    // 4-1 $Table->all()-查詢 符合條件的 "全部資料/全部拿來" select *
     // 五組變數 $sql  三個if  return
     /*
      * 使用 "..." 可變/不定(數量的)參數  三個點點點...
      * (...$arg) 不定參數陣列，表示可以接收0個或多個參數
-     * 參數 會被包裝成陣列 $arg
+     * 參數  會被包裝成陣列 $arg
      * 如果有傳入參數$arg[0][1]，則根據參數來修改 SQL 語句
      * all();                             // 0個參數 ✓
      * all(['name' => 'John']);           // 1個參數 ✓  
      * all(['age' => 25], "ORDER BY id"); // 2個參數 ✓
      */
-    function all(...$arg)
-    {
+    function all(...$arg) {
         // 步驟1：建立查詢語句
         // 查詢 基本語句，選取資料表所有欄位
-        // $this->table = 資料表名稱  'title'
+        // $this->table = 資料表名稱  'title'或ad...
         // 輸出 $sql = "select * from title"
         $sql = "select * from $this->table";
 
@@ -231,8 +250,7 @@ class DB
             if (is_array($arg[0])) {
 
 
-                // 步驟2：arraytosql() 將陣列 轉為SQL字串
-                // 簡稱 a2s()
+                // 步驟2：arraytosql() a2s() 將陣列 轉為 SQL字串
                 $tmp = $this->arraytosql($arg[0]);
 
                 $sql = $sql . " where " . join(" AND ", $tmp);
@@ -250,7 +268,7 @@ class DB
                 // join(" AND ", ['id' => 1, 'name' => 'John'])
                 // 輸出：`id`='1' AND `name`='John'  (`id`=1 數字可不用' ')
                 // 整個 $sql 輸出
-                // select * from users where `id`='1' AND `name`='John'
+                // select * from users . where `id`='1' AND `name`='John'
 
 
                 // 如果第一個參數不是陣列，則直接附加到SQL語句後
@@ -259,7 +277,7 @@ class DB
                 // $sql = $sql . $arg[0];
                 // 將原本 $sql 變數內容保留，並在後面 加上新內容
                 // 例如 $sql .= " where id=1"
-                // $sql = "select * from title where `id`='1'
+                // $sql = "select * from title .  where `id`='1'
                 // 程式假設使用者傳入完整 SQL 片段，不用再加"where"
             }
         }
@@ -267,10 +285,10 @@ class DB
         // .= 是一個 複合-賦值-運算符：相當在原來的字串後面加上新的內容
         /*
         1. $variable .= $value 等同於 $variable = $variable . $value。
-        結合 字串串接 (string concatenation) 和 賦值 (assignment) 的功能 
-        "=" 賦值 運算符，用於將一個值賦給一個變數。
+        結合 字串串接 (string concatenation) 和 賦值/給你 (assignment) 的功能 
         "." 字串串接 運算符，用於將兩個字串連接在一起。
-        2. 將右邊的值附加到左邊變數的值之後，然後將結果賦值給左邊的變數
+        "=" 賦值 運算符，用於將一個值賦給一個變數。
+        2. 將右邊的值 附加到 左邊變數的值之後，然後將結果賦值給左邊的變數
         $variable .= $value 先將 $variable 的值與 $value 的值串接，然後將結果存回 $variable
         
 
@@ -294,20 +312,17 @@ class DB
 
     // 4-5 查詢 資料筆數 select count(*) 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
     // count() SQL內建函式 聚合函式
-    function count(...$arg)
-    {
+    function count(...$arg) {
         $sql = "select count(*) from $this->table ";
 
         // 處理第一個參數 
         // isset()  檢查是否成立 有傳入資料
         if (isset($arg[0])) {
 
-
             // is_array() 如果第一個參數是陣列
             if (is_array($arg[0])) {
                 $tmp = $this->arraytosql($arg[0]);
                 $sql = $sql . " where " . join(" AND ", $tmp);
-
 
                 // 如果第一個參數不是陣列，則直接附加到SQL語句後
             } else {
@@ -315,21 +330,20 @@ class DB
             }
         }
 
-
         // 處理第二個參數
         // 如果有第二個參數，則附加到SQL語句where之後
         if (isset($arg[1])) {
             $sql .= $arg[1];
         }
 
-
         // fetchColumn() 只返回第一列的第一個欄位值
         // 例如：如果查詢結果是 10 筆資料，則返回 10
         // 執行sql語句，並返回該筆資料中指定欄位的資料，$n為欄位的索引值(0,1,2…)
         return $this->pdo->query($sql)->fetchColumn();
+
     }
 
-    // 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料" select *
+    // 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料/找一個" select *
     // 複製all()，變數改為($id)  刪除isset()
     /*
      * 找某個特定id的資料  回傳資料表 指定id的資料 
@@ -486,12 +500,12 @@ class DB
     }
 }
 
-// 建立資料庫物件
+// 建立資料庫物件：物件被實例化(new DB) 大寫DB
 /*
- * 使用 new語法 建立一個DB連線物件，並將這個物件指定給一個變數$DB
- * 類似 宣告$pdo= new DB($dsn,'root','')
+1. 使用 new語法 建立一個 DB連線物件，並將這個物件指定給一個 變數$var 或物件變數$Var 
+類似 宣告$pdo= new DB($dsn,'root','')
 
- * 變數$DB(大寫開頭) = new DB('資料表名稱');
+ * 變數$Table(大寫開頭) = new DB('資料表名稱');
  * 資料表名稱 實務上 用複數 較理想['titles']  因應檢定考試取巧之需
  * 可與單數形式的資料欄位區分
 

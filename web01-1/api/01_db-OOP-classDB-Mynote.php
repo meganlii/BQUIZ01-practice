@@ -316,7 +316,7 @@ class DB
         $sql = "select count(*) from $this->table ";
 
         // 處理第一個參數 
-        // isset()  檢查是否成立 有傳入資料
+        // isset()  檢查是否成立 有/無傳入資料 ㄧ
         if (isset($arg[0])) {
 
             // is_array() 如果第一個參數是陣列
@@ -364,16 +364,13 @@ class DB
         // 如果 $id 是陣列
         if (is_array($id)) {
 
-
             //執行內部方法4-6 a2s()
             // 將陣列轉換為字串
             $tmp = $this->arraytosql($id);
 
-
             //拚接sql語句
             $sql = $sql .
                 " where " . join(" AND ", $tmp);
-
 
             // 如果 $id 不是陣列  是其他類型
         } else {
@@ -381,7 +378,6 @@ class DB
             //拚接sql語句
             $sql .= " WHERE `id`='$id'";
         }
-
 
         //echo $sql;
         //將sql句子帶進pdo的query方法中，並以fetch的方式回傳一筆資料結果

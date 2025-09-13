@@ -1,41 +1,28 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
-  <p class="t cent botli">動態文字廣告管理</p>
+  <p class="t cent botli">進佔總人數管理</p>
 
   <form method="post" action="./api/edit.php">
-    <table width="100%">
+    <table width="50%" style="margin:auto">
       <tbody>
         <tr class="yel">
-          <td width="80%">動態文字廣告</td>
-          <td width="10%">顯示</td>
-          <td width="10%">刪除</td>
-          <!-- <td></td> -->
+          <td width="50%">進佔總人數</td>
+          <td width="50%">
+            <?php
+            $row = ${ucfirst($do)}->find(1); 
+            // dd($row)
+            // Array
+            // (
+            //     [id] => 1
+            //     [total] => 200
+            // )
+            // ${ucfirst($do)}->find(1)['total'] 得到一組陣列 再加上key['total'] 得到 value=200 
+            ?>
+            <input type="text" name="text[]" value="<?= ${ucfirst($do)}->find(1)['total'] ;?>" style="width:90%">
+            
+            <!-- <input type="text" name="text[]" value="< ?= $do ?>" style="width:90%"> -->
+            <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+          </td>
         </tr>
-
-        <?php
-        $rows = ${ucfirst($do)}->all();
-        // $rows = ${ucfirst($do)}->all();
-
-        foreach ($rows as $row) :
-        ?>
-          <tr>
-            <td>
-              <input type="text" name="text[]" value="<?= $row['text']; ?>" style="width:90%">
-            </td>
-            <td>
-              <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : ""; ?>>
-            </td>
-            <td>
-              <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
-            </td>
-          </tr>
-
-          <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-
-
-        <?php
-        endforeach;
-        ?>
-
       </tbody>
     </table>
 
@@ -45,8 +32,8 @@
           <input type="hidden" name="table" value="<?= $do; ?>">
 
           <td width="200px">
-            <input type="button" onclick="op('#cover','#cvr','./modal/<?= $do; ?>.php?table=<?= $do; ?>')"
-              value="新增動態文字廣告">
+            <!-- <input type="button" onclick="op('#cover','#cvr','./modal/< ?= $do; ?>.php?table=< ?= $do; ?>')"
+              value="新增動態文字廣告"> -->
           </td>
 
           <td class="cent">
@@ -68,19 +55,37 @@
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
 
-// 步驟0：測試頁  更名為 動態文字廣告管理
-先不複製其他7個頁面 每頁互動方式不同要改變 避免混淆
-總共9個 7個差不多 另外2個有異
-
-// 步驟0：複製 .\backend\title.php ctrl+a全選後貼上
 
 // 步驟1：第7行
 // 由上而下修改
-1.<p>標題
-2.<tbody> 表單只有三個欄位 移除替代文字
-3.修改欄位寬度比例 剩下60% 改成 80-10-10
+1. <p>標題：進佔總人數管理
+2. <tbody> 表單只有2個欄位 移除刪除
+3. <table width="100%"> 改成 50%
+表格置中  margin:auto
+4. 修改欄位寬度比例 剩下一半 改成 50/50，實際只有25%
+比例沒有生效  應該是下面php指令干擾 刪除後就正常顯示
 
 
+// 步驟2：刪除用不到欄位
+1. 16行/33行 只有一欄數字 不需要foreach 
+2. 20行 複製input到 09行<td>裡面
+3. 18-28行 <tr>整列不需要  保留30行id
+4. 08行 動態文字廣告 改成 進佔總人數
+5. 46行 移除<input>按鈕 新增動態文字廣告 不要動到外面 <td>  才不會影響其他兩個按鈕置中
+
+// 步驟3
+1. 09行 value要改成進佔總人數，如何拿到？
+2. 套用${ucfirst($do)} 拿到物件$Total  造成下面<table>消失？
+3. 14行 註解php
+4. name="id[]"移到 12行
+
+// 步驟4：10行
+1. ${ucfirst($do)} 只有拿到物件$Total 如何拿到特定一筆資料
+2. 改成${ucfirst($do)}->find(1) 得到陣列  出現錯誤訊息提示 Array to string conversion
+
+
+
+--------------------------
 // 步驟2：第23行 
 // 迴圈循環動態生成欄位資料
 1. 複製第一段<tr class="yel"> 貼到第二段<tr>

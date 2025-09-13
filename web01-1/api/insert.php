@@ -5,7 +5,7 @@
 // 更新功能獨立 編輯功能多為文字的顯示/刪除 所以兩個api處理頁面
 
 // 設定變數
-// 陣列變數 $_POST['img']    key值/資料表欄位
+// 陣列變數 $_POST['img']    key值/表單欄位名稱 <input type="file" name="img"
 // 陣列變數 $_POST['table']  table=title
 // <input type="hidden" name="table" value="title">
 
@@ -14,6 +14,10 @@ echo "<pre>";
 print_r($_POST);
 print_r($_FILES);
 echo "</pre>";
+
+// dd($_POST)
+// dd($_FILES)
+
 
 // 步驟1
 // 如果有上傳圖片就放上去  有/無   用!empty()不是空值確認  vs isset是否存在??

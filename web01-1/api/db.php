@@ -83,6 +83,7 @@ class DB
 
     // 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料" select *
     // 找某個特定id的資料  回傳資料表 指定id的資料 
+    // 例如find(1) 得到 一組陣列[]
     function find($id)
     {
         $sql = "select * from $this->table ";

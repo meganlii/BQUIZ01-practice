@@ -1,7 +1,7 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
   <p class="t cent botli">進佔總人數管理</p>
 
-  <form method="post" action="./api/edit.php">
+  <form method="post" action="./api/edit_column.php">
     <table width="50%" style="margin:auto">
       <tbody>
         <tr class="yel">
@@ -15,14 +15,15 @@
             //     [total] => 200
             // )
             // ${ucfirst($do)}->find(1)['total'] 
-            // 得到上方陣列 再加上key['total'] 得到 value=200 
+            // 得到上方$row陣列 再加上key['total'] 得到 value=200 
             // 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
+            // find(1) 等同 $_POST['id']
             $row = ${ucfirst($do)}->find(1); 
             // dd($row)
             ?>
 
-            <input type="text" name="text[]" value="<?= $row['total'] ;?>" style="width:90%">
-            <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
+            <input type="text" name="total" value="<?= $row['total'] ;?>" style="width:90%">
+            <input type="hidden" name="id" value="<?= $row['id']; ?>">
           </td>
         </tr>
       </tbody>
@@ -87,10 +88,15 @@
 1. ${ucfirst($do)} 只有拿到物件$Total 如何拿到特定一筆資料
 2. 改成${ucfirst($do)}->find(1) 得到陣列  出現錯誤訊息提示 Array to string conversion
 3. 要再加上key['total'] 得到 value=200
+4. 24行/25行 取消陣列 name="text[]改為 name="total"  name="id[]" 改為 name="id"
+
+
 
 // 步驟5
 1. 只有一筆資料 獨立寫edit功能：其他都是多筆資料編輯 post送出後生成多維陣列 無法共用 api\edit.php
-
+2. 04行 新增 api\edit_column.php
+<form method="post" action="./api/edit_column.php">
+3. 此表 沒有新增功能
 
 
 

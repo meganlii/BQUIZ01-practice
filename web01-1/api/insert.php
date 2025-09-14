@@ -10,13 +10,14 @@
 // <input type="hidden" name="table" value="title">
 
 include_once "db.php";
-echo "<pre>";
-print_r($_POST);
-print_r($_FILES);
-echo "</pre>";
 
-// dd($_POST)
-// dd($_FILES)
+dd($_POST);
+dd($_FILES);
+
+// echo "<pre>";
+// print_r($_POST);
+// print_r($_FILES);
+// echo "</pre>";
 
 
 // 步驟1
@@ -73,13 +74,12 @@ switch ($table) {
 }
 
 
-
 // 步驟4
 // 此寫法 儲存會失敗 資料表沒有table欄位
 // table已經在前面步驟功能處理完畢 需要移除 用unset
 // 會影響to() $table  獨立拿出$table兩段式處理 回到步驟2
 // 在 save() 時 不想包含 table 欄位
-// 刪除的是 $_POST['table']，不是 $table
+// 在此階段 刪除$_POST['table']的值 value=資料表名稱(title或ad) 不要存入資料庫 後面繼續沿用$table = $_POST['table']=資料表名稱(title或ad)
 unset($_POST['table']);
 // echo $table;
 

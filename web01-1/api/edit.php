@@ -16,7 +16,14 @@
 
 include_once './db.php';
 
+// Array
+// (
+//     [total] => 100
+//     [id] => 1
+//     [table] => total
+// )
 // dd陣列  印出 表單收到資料
+// 例如 $_POST=['id'=>1,'total'=>200,'table'=>'total'];
 dd($_POST);
 
 // 步驟1
@@ -43,6 +50,8 @@ foreach ($_POST['id'] as $key => $id) {
     $db->del($id);
 
   // 3-2 取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
+  // 先用find撈出資料 再用switch根據post表單做對應處理
+  // 對照api\edit_column.php 不用find跟foreach 跟switch
   } else {
     
     $row = $db->find($id);
@@ -158,8 +167,15 @@ foreach ($_POST['id'] as $key => $id) {
     // 如何知道新增或更新？因為有id
     $db->save($row);
 
+    // Array
+    // (
+    //     [total] => 100
+    //     [id] => 1
+    // )
     // 印出 存到資料表的$row
+    // $row=['id'=>1,'total'=>200];
     dd($row);
+    
   }
 }
 

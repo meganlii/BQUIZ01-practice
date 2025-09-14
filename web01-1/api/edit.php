@@ -1,9 +1,9 @@
 <?php
 // 錄音檔 0624-8 完成網站標題管理修改資料功能(D)
-// 處理編輯功能-按鈕/修改確定：修改文字 欄位-顯示/刪除 
+// 處理編輯功能：按鈕/修改確定：修改文字 欄位-顯示/刪除 
 // 沒加的話 欄位改文字 點選顯示或刪除  會失效 無法修改存入
 
-// 寄件人/收後台 .\backend\title.php 表單  
+// 寄件人/後台 .\backend\title.php 表單  
 // <form method="post" action="./api/edit_title.php">
 // 後台有加hidden id，辨識異動項目  api就可編輯
 // <input type="hidden" name="id[]" value="<?= $row['id']; ? >">
@@ -36,21 +36,23 @@ $db = ${ucfirst($table)};
 
 foreach ($_POST['id'] as $key => $id) {
 
-  // 處理編輯功能：刪除
+  // 3-1 處理編輯功能：刪除
   // * isset()跟in_array() 搭配使用 
   if (isset($_POST['del']) && in_array($id, $_POST['del'])) {
-    $db->del($id);
-  } else {
 
-    // 取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
+    $db->del($id);
+
+  // 3-2 取出資料查詢符合id的"單筆資料"  回傳資料表 指定id資料
+  } else {
+    
     $row = $db->find($id);
 
     // 印出 從資料表拿出的$row
     dd($row);
 
 
-    // 處理編輯功能：顯示
     // 步驟4
+    // 處理編輯功能：顯示
     // $row['text']  $row['sh']
     // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
     // 同insert.php作法 用判斷式  

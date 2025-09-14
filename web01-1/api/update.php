@@ -18,20 +18,21 @@ $db = ${ucfirst($table)};
 // 確認檔案是否上傳成功
 if (!empty($_FILES['img']['tmp_name'])) {
 
+
   // 檔案移到暫存區
   move_uploaded_file($_FILES['img']['tmp_name'], "../images/" . $_FILES['img']['name']);
+
 
   // 拿出原本資料 單筆資料 所以不用$rows
   // $row資料表-行變數 $row['id'] 用法參考.\backend\title.php
   $row = $db->find($_POST['id']);
 
 
-
   $row['img'] = $_FILES['img']['name'];
   // $_POST['img'] = $_FILES['img']['name'];
   // $_POST['sh'] = 0;
 
-
+  
   $db->save($row);
 }
 

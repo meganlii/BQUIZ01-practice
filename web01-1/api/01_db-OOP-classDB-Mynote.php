@@ -98,26 +98,44 @@ function q($sql)
 
     // 參考 https://mackliu.github.io/php-book/2021/09/21/php-lesson-04/
     /*
-    1. return 自訂函式用它回傳資料
+    1. return 自訂函式 需要用 return 回傳資料
 
     2. $pdo->query($sql) 執行 SQL查詢 並返回結果
 
-    3. fetchAll (PDO::FETCH_ASSOC) 回傳值
-        取得所有結果，並以關聯陣列形式返回資料
-        
-        PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
-        ::「進入」一個類別，存取符號 存取內部靜態內容（常數、靜態方法、靜態屬性）
-        存取 類別常數：存取PDO類別中  定義的常數-FETCH_ASSOC
-        
-        ASSOC：只返回 關聯陣列(二維)key=value，不返回 數字/索引陣列
+    3. 回傳值
+    fetch() 一次取回一筆
+    例：find()
 
-    4. 不同回傳值
-    PDO::FETCH_ASSOC  回傳 帶欄位名稱的資料
+    fetchAll (PDO::FETCH_ASSOC) 一次取回多筆
+    把(所有all)查詢結果 轉成 關聯陣列，  返回全部的資料，所有資料會放在一個陣列
+    例：q()、all()
+
+    PDO:: PHP範圍解析運算符，用雙冒號 :: 表示
+    ::「進入」一個類別，存取符號 存取內部靜態內容（常數、靜態方法、靜態屬性）
+    存取 類別常數：存取PDO類別中  定義的常數-FETCH_ASSOC
+
+
+    4. 回傳值形式
+    回傳值的內容會因為傳遞時的SQL語法而有不同的結果，有時是單一個值，有時是陣列
+    FETCH_ASSOC
+    回傳 帶欄位名稱的陣列
+    只返回 關聯陣列(二維)key=value，不返回 數字/索引陣列
     關聯陣列 ['name' => 'John', 'age' => 25]
-
-    PDO::FETCH_NUM   回傳 帶欄位 索引的資料
+    
+    FETCH_NUM
+    回傳 帶欄位 索引的陣列
     索引陣列 [0 => 'John', 1 => 25]
     粗箭頭（=>）：可用於陣列/數組 ex.[key]=>[value]
+
+    fetchColumn($n)
+    返回單一個值 返回該筆資料中指定欄位的資料， $n為欄位的索引值(0,1,2…)
+    只返回第一列的第一個欄位值
+    例：count() 如果查詢結果是 10 筆資料，則返回 10
+
+
+    exec($sql)
+    執行sql語句，但不返回資料，而是返回影響的資料筆數，適合使用在更新/新增(save)，或刪除資料時
+    例：save()、del()
     */
 
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -238,7 +256,7 @@ class DB
         // 步驟1：建立查詢語句
         // 查詢 基本語句，選取資料表所有欄位
         // $this->table = 資料表名稱  'title'或ad...
-        // 輸出 $sql = "select * from title"
+        // 輸出字串  $sql = "select * from title"
         $sql = "select * from $this->table";
 
 
@@ -254,7 +272,7 @@ class DB
                 $tmp = $this->arraytosql($arg[0]);
 
                 $sql = $sql . " where " . join(" AND ", $tmp);
-                // 拚接sql語句
+                // 拚接 sql語句
                 // 留意 (點.)運算子  WHERE前後有空格
                 // AND拼接 WHERE 條件字串
                 // 將語法字串及參數帶入 取得一個完整的SQL句子
@@ -304,13 +322,16 @@ class DB
             $sql .= $arg[1];
         }
 
+        // 步驟6
         // 共三組參數 $this->pdo // query($sql) 執行SQL查詢  
-        // fetchAll 執行sql語句，並返回全部的資料，所有資料會放在一個陣列；
-        // PDO::FETCH_ASSOC 取回關聯陣列 只回傳帶欄位名稱的資料
+        // fetchAll 執行sql語句，並返回 全部資料，所有資料會放在一個陣列；
+        // PDO::FETCH_ASSOC 轉成關聯陣列  只回傳帶欄位名稱的資料
+        // 步驟2：a2s() 將陣列 轉為 SQL字串  最後結果要再轉回陣列
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 4-5 查詢 資料筆數 select count(*) 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
+    // 4-5 查詢 資料筆數 select count(*) 
+    // 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
     // count() SQL內建函式 聚合函式
     function count(...$arg) {
         $sql = "select count(*) from $this->table ";
@@ -338,7 +359,7 @@ class DB
 
         // fetchColumn() 只返回第一列的第一個欄位值
         // 例如：如果查詢結果是 10 筆資料，則返回 10
-        // 執行sql語句，並返回該筆資料中指定欄位的資料，$n為欄位的索引值(0,1,2…)
+        // 執行sql語句，並返回該筆資料中指定欄位的資料， $n為欄位的索引值(0,1,2…)
         return $this->pdo->query($sql)->fetchColumn();
 
     }
@@ -359,23 +380,23 @@ class DB
      */
     function find($id)
     {
-        $sql = "select * from $this->table ";  // 資料表
+        $sql = "select * from $this->table ";  // 回傳：字串
 
         // 如果 $id 是陣列
         if (is_array($id)) {
 
-            //執行內部方法4-6 a2s()
+            // 執行內部方法4-6 a2s()
             // 將陣列轉換為字串
             $tmp = $this->arraytosql($id);
 
-            //拚接sql語句
+            // 拚接sql語句
             $sql = $sql .
                 " where " . join(" AND ", $tmp);
 
             // 如果 $id 不是陣列  是其他類型
         } else {
 
-            //拚接sql語句
+            // 拚接sql語句
             $sql .= " WHERE `id`='$id'";
         }
 
@@ -391,7 +412,6 @@ class DB
      * 利用新增和更新語法的特點，整合兩個動作為一個，
      * 簡化函式的數量並提高函式的通用性
      * $arg 必須是陣列，但考量速度，程式中沒有特別檢查是否為陣列
-     * 
      */
 
 
@@ -400,7 +420,6 @@ class DB
         // 先判斷有沒有id 決定 新增 或 更新
         // 如果 $array 中有 'id' 鍵
         if (isset($array['id'])) {
-
 
             // 步驟1 update set
             // 更新資料的 SQL 語句 UPDATE `table` SET
@@ -421,7 +440,7 @@ class DB
             // $cols 取得 欄位名稱
             $cols = join("`,`", array_keys($array));
             // array_keys()
-            // 將陣列的鍵名轉換為字串，並用逗號分隔
+            // 將陣列的鍵名 轉換為字串，並用逗號分隔
             // 例如 $array = [
             //     'name' => 'John',
             //     'age' => 25,

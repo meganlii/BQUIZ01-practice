@@ -8,18 +8,20 @@
           <td width="50%">進佔總人數</td>
           <td width="50%">
             <?php
-            $row = ${ucfirst($do)}->find(1); 
-            // dd($row)
+            
             // Array
             // (
             //     [id] => 1
             //     [total] => 200
             // )
-            // ${ucfirst($do)}->find(1)['total'] 得到一組陣列 再加上key['total'] 得到 value=200 
+            // ${ucfirst($do)}->find(1)['total'] 
+            // 得到上方陣列 再加上key['total'] 得到 value=200 
+            // 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
+            $row = ${ucfirst($do)}->find(1); 
+            // dd($row)
             ?>
-            <input type="text" name="text[]" value="<?= ${ucfirst($do)}->find(1)['total'] ;?>" style="width:90%">
-            
-            <!-- <input type="text" name="text[]" value="< ?= $do ?>" style="width:90%"> -->
+
+            <input type="text" name="text[]" value="<?= $row['total'] ;?>" style="width:90%">
             <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
           </td>
         </tr>
@@ -76,12 +78,19 @@
 // 步驟3
 1. 09行 value要改成進佔總人數，如何拿到？
 2. 套用${ucfirst($do)} 拿到物件$Total  造成下面<table>消失？
+改用$do 測試正常
+<input type="text" name="text[]" value="< ?= $do ?>" style="width:90%">
 3. 14行 註解php
 4. name="id[]"移到 12行
 
-// 步驟4：10行
+// 步驟4：24行
 1. ${ucfirst($do)} 只有拿到物件$Total 如何拿到特定一筆資料
 2. 改成${ucfirst($do)}->find(1) 得到陣列  出現錯誤訊息提示 Array to string conversion
+3. 要再加上key['total'] 得到 value=200
+
+// 步驟5
+1. 只有一筆資料 獨立寫edit功能：其他都是多筆資料編輯 post送出後生成多維陣列 無法共用 api\edit.php
+
 
 
 

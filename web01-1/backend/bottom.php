@@ -1,28 +1,18 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
-  <p class="t cent botli">進佔總人數管理</p>
+  <p class="t cent botli">頁尾版權管理</p>
 
   <form method="post" action="./api/edit_column.php">
     <table width="50%" style="margin:auto">
       <tbody>
         <tr class="yel">
-          <td width="50%">進佔總人數：</td>
+          <td width="50%">頁尾版權：</td>
           <td width="50%">
             <?php
-
-            // Array
-            // (
-            //     [id] => 1
-            //     [total] => 200
-            // )
-            // ${ucfirst($do)}->find(1)['total'] 
-            // 得到上方$row陣列 再加上key['total'] 得到 value=200 
-            // 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
-            // find(1) 等同 $_POST['id']
             $row = ${ucfirst($do)}->find(1);
             // dd($row)
             ?>
 
-            <input type="text" name="total" value="<?= $row['total']; ?>" style="width:90%">
+            <input type="text" name="bottom" value="<?= $row['bottom']; ?>" style="width:90%">
             <input type="hidden" name="id" value="<?= $row['id']; ?>">
           </td>
         </tr>
@@ -35,8 +25,6 @@
           <input type="hidden" name="table" value="<?= $do; ?>">
 
           <td width="200px">
-            <!-- <input type="button" onclick="op('#cover','#cvr','./modal/< ?= $do; ?>.php?table=< ?= $do; ?>')"
-              value="新增動態文字廣告"> -->
           </td>
 
           <td class="cent">
@@ -58,10 +46,18 @@
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
 // 位置 ./backend/title.php 後台右半部版型區
 
+// 步驟0
+1. 複製 .\backend\total.php 更名為 bottom.php
+2. 頁尾版權區和total.php頁面結構一樣，直接複製後修改套用
 
+// 步驟1
+1. 15行 修改資料表名稱 bottom
+2. api如果寫正確 測試即可成功
+
+---------------
 // 步驟1：第7行
 // 由上而下修改
-1. <p>標題：進佔總人數管理
+1. <p>標題：頁尾版權管理
 2. <tbody> 表單只有2個欄位 移除刪除
 3. <table width="100%"> 改成 50%
 表格置中  margin:auto
@@ -100,62 +96,6 @@
 
 
 
---------------------------
-// 步驟2：第23行 
-// 迴圈循環動態生成欄位資料
-1. 複製第一段<tr class="yel"> 貼到第二段<tr>
-移除<td>比例  會隨<tbody><td>第一行標題縮放
-不需要寬度比例  會以第一段為主
-2. 選取整個<tr>後ctrl+c 再選取第二段ctrl+v 比較不會亂掉
-3. 移除 class="yel"
-4. 更改foreach參數 $Ad->all() db.php增加$Ad=new DB('ad');
-
-// 步驟3：
-// 資料庫 新增資料表
-複製titles >操作>copy table > 
-1. 勾選第一個/僅結構  不要第二個/結構和資料  
-2. 刪除img
-3. text 備註為 動態文字廣告
-
-
-// 步驟4：第26行
-// 修改foreach資料 <input>
-1. name=text[]多筆資料加上陣列
-2. name="sh"加上陣列[]  改成checkbox
-3. <input> 本身有寬度 要另設style="width=90%"固定(沒有全部對齊th)  沒改會變成一半4
-width=90%打錯  應為半形冒號 width:90%
-style="text-align:center" 失效
-
-// 步驟5：修改第二個table onclick=op()
-1. 路徑改成 ./modal/ad.php
-2. value= 改成 "新增動態文字廣告"
-
-
-// 步驟6：彈出視窗
-新增.\modal\ad.php
-
-// 步驟7：測試可新增動態文字廣告 處理編輯功能
-1. 之前複製title.php 已經帶hidden_id  api就可進行編輯
-2. action="./api/edit_title.php" 改為 edit_ad.php
-3. 複製貼上 .\api\edit_title.php 更名為 edit_ad.php
-
-// 步驟8
-修改 ./backend/ad.php  ./modal/ad.php
-1. 53行：此頁 onclick路徑加上  ?table= < ?=$do; ?>
-title.php  改成 < ?=$do; ?>.php
-onclick="op('#cover','#cvr','./modal/title.php ?table= < ?=$do; ?>')" 
-2. 彈出頁面24行 modal\title.php  接收
-<input type="hidden" name="table" value="< ?=$_Get['table'];?>">
-
-// 步驟9
-複製 .\backend\ad.php 更名為 news.php
-
-// 步驟10
-複製 .\backend\ad.php 更名為 total.php
-
-// 步驟11
-複製 .\backend\total.php 更名為 bottom.php
-頁尾版權區和total.php頁面結構一樣，直接複製後修改套用
 
 */
 </script>

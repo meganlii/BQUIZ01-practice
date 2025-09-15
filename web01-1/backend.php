@@ -129,21 +129,20 @@ include_once "./api/db.php";
 
         <?php
         // 步驟6 網頁傳值到後端  用get/$_GET 網址帶參數傳值 ?參數=值
-        // 如果有do=ad，載入 $do = 'ad'
-        // 如果沒有do參數  載入 $do = 'title'
+        // 空合併運算符--兩個問號 ?? 代表if跟isset
+        // 專門用來提供預設值，比三元運算符更簡潔好用！
+        // if else 結合isset() 是否存在/為null
+        // 如果有do=ad，載入 $do = 'ad' ，沒有do參數 就載入$do = 'title'
         $do=$_GET['do']??'title';
-        // $do=$_GET['do']??'title';
+        
 
-
-        // $file = "./backend/" . $do . ".php";  改成合併寫法 雙引號內字串連接+大括號
-        // $file = "./backend/{$do}.php";
+        // $file = "./backend/" . $do . ".php";  點運算式 寫法
+        // $file = "./backend/{$do}.php";  合併寫法 雙引號內字串連接+大括號
         // ./backend  前後都要加上/   可用echo $file; 除錯
         // **除錯妙招** 複製老師寫法貼在下一行比對
         // 如果有do=ad，載入 $do=ad 載入檔案 ad.php
         // 如果沒有do參數，載入 $do=title 載入檔案 title.php
-
         $file = "./backend/{$do}.php";
-        // $file="./backend/".$do.".php";
 
         // 步驟10
         // 跨檔案的變數傳遞 利用$do變數取代後台頁面中的字串及傳值功能

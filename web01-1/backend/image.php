@@ -97,8 +97,12 @@
       2. 用三元運算?:  當前頁 數字放大顯示 
       $size($i==$now)?'20px':''; 少寫=
       3. style="font-size:< ?=$size;?>"
-      4. 套用到其他頁面，三個<a>改成網址帶參數 do=image 改成 do= < ?=$do;?> 
+      4. 套用到其他頁面-最新消息，三個<a>改成網址帶參數 do=image 改成 do= < ?=$do;?> 
       變數來自backend.php $do=$_GET['do']??'title';
+      5. 測試 第2頁 任一筆取消顯示->修改確認後 會跳回第1頁 
+      要改的話  要記住當前頁  用session/get/cookie皆可
+      在第1頁示範即可
+
       -->
       <?php
       for($i=1;$i<=$pages;$i++): 

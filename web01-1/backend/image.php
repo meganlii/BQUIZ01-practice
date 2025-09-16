@@ -39,6 +39,9 @@
         // 拼錯字limin
         $rows = ${ucfirst($do)}->all("limit $start,$div");
         // $rows = ${ucfirst($do)}->all();
+
+        // 步驟7：分頁功能變數設定 end
+
         foreach ($rows as $row) :
         ?>
           <tr>
@@ -128,6 +131,7 @@
       <?php endif; ?>
     </div>
 
+    <!-- 步驟8：分頁導航連結 end -->
 
     <table style="margin-top:40px; width:70%;">
       <tbody>

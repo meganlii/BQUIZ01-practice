@@ -11,9 +11,10 @@
           <td width="10%">顯示</td>
           <td width="10%">刪除</td>
           <td width="10%">
-            <!-- 移除路徑參數 讓彈出視窗可正常顯示 -->
-            <!-- 測試OK 先註解 -->
-            <!-- <input type="button" value="編輯次選單" onclick="op('#cover','#cvr','./modal/submenu.php')"> -->
+            <!-- 1. 移除路徑參數 讓彈出視窗可正常顯示
+            2. 測試OK 先註解
+            3. <input type="button" value="編輯次選單" onclick="op('#cover','#cvr','./modal/submenu.php')"> 
+            -->
           </td>
           <!-- <td width="10%">編輯次選單</td> -->
         </tr>
@@ -41,6 +42,10 @@
               <input type="checkbox" name="del[]" value="<?= $row['id']; ?>">
             </td>
             <!-- <td>6.增加按鈕-編輯次選單</td> -->
+            <!-- 步驟1：檢查是否有id跟table變數 確認連動頁面
+            1. modal可以$_GET[] 
+            2. api比較特別  無法使用edit  因為同時可多筆資料修改(其他都是單一欄位) 畫面CRUD都有
+            -->
             <td>
               <input type="button" value="編輯次選單"
                 onclick="op('#cover','#cvr','./modal/submenu.php?id=<?= $row['id']; ?>&table=<?= $do; ?> ')">

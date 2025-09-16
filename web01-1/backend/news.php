@@ -18,8 +18,36 @@
         </tr>
 
         <?php
-        $rows = ${ucfirst($do)}->all();
+        // 1. 貼上分頁功能變數
+        // 步驟7：分頁功能變數設定 拆成6個參數  假設有 10 筆資料
+        // 總資料數 $all=10  count()計算總數 貼上$rows
+        $all = count(${ucfirst($do)}->all());
+
+        // 每頁筆數：每頁3筆  設定每頁顯示 3 筆資料
+        $div = 3;
+
+        // 計算總頁數（給分頁導航用） 知道要產生幾個頁碼按鈕
+        // ceil()無條件進位，確保即使最後一頁資料不足也會算一頁
+        // $pages = ceil(10/3) = 4頁（用來顯示：1 2 3 4 頁碼按鈕）
+        $pages = ceil($all / $div);
+
+        // 取得目前頁碼，另外在URL設定參數p取得，如果沒有傳入參數，預設為第1頁
+        // 點第3頁 $now = 3 
+        $now = $_GET['p'] ?? 1;
+
+        // 計算SQL查詢的起始索引位置（給SQL Limit查詢用） 知道要從哪筆開始取
+        // $start = (3-1) * 3 = 6，表示從 索引6 開始取3筆 = 第 7,8,9 筆
+        // 第3頁 (3-1)表示前2頁*每頁3筆 = 共6筆資料 = 索引值6
+        $start = ($now - 1) * $div;
+
+
+        // 輸出 $rows=$Title->all();
+        // LIMIT限制筆數(索引值,查詢筆數) LIMIT 10,20 從資料表第11筆開始，取出20筆資料
+        // 拼錯字limin
+        $rows = ${ucfirst($do)}->all("limit $start,$div");
         // $rows = ${ucfirst($do)}->all();
+
+        // 1. 貼上分頁導航連結 end
 
         foreach ($rows as $row) :
         ?>
@@ -46,6 +74,63 @@
 
       </tbody>
     </table>
+
+    <!-- 2. 貼上分頁導航連結 -->
+    <div class="cent">
+      <!-- 上一頁：因為<要設a連結到上頁  p=$now-1才可到下頁
+      1.整段用php包起來  加判斷式 大括號{} 改用:/endif
+      < ?php if():  ?>
+      < ?php endif; ?>
+      2. 加上 &p= < ?= $now-1; ?>
+      3. $now-1>0 
+      共3頁 第1頁  不顯示<  1-1=0   X
+      共3頁 第2頁  顯示<    2-1=1  >0
+      共3頁 第3頁  顯示<    3-1=2  >0
+      -->
+      <?php if ($now-1>0): ?>
+        <a href="?do=<?=$do;?>&p=<?= $now-1 ;?>"> < </a>
+      <?php endif; ?>
+
+      <!-- 中間有多頁 無法寫死  
+      1. 用for迴圈
+      < ?php for():  ?>
+      < ?php endfor; ?>
+      
+      2. 用三元運算?:  當前頁 數字放大顯示 
+      $size($i==$now)?'20px':''; 少寫=
+      3. style="font-size:< ?=$size;?>"
+      4. 套用到其他頁面-最新消息，三個<a>改成網址帶參數 do=image 改成 do= < ?=$do;?> 
+      變數來自backend.php $do=$_GET['do']??'title';
+      5. 測試 第2頁 任一筆取消顯示->修改確認後 會跳回第1頁 
+      要改的話  要記住當前頁  用session/get/cookie皆可
+      在第1頁示範即可
+
+      -->
+      <?php
+      for($i=1;$i<=$pages;$i++): 
+      $size=($i==$now)?'30px':'';
+      ?>
+        <a href="?do=<?=$do;?>&p=<?=$i;?>" style="font-size:<?=$size;?>" >
+          <?=$i;?> 
+        </a>
+      <?php endfor; ?>
+
+  <!--  <a href=""> 1 </a>
+        <a href=""> 2 </a>
+        <a href=""> 3 </a> -->
+      
+      <!-- 下一頁：因為>要設a連結到下頁  p=$now+1才可到下頁
+      $now+1<=$pages
+      共3頁 第1頁 顯示>    1+1=2 <3
+      共3頁 第2頁 顯示>    2+1=3 =3
+      共3頁 第3頁 不顯示>  3+1=4  X
+      -->
+      <?php if ($now+1<=$pages): ?>
+        <a href="?do=<?=$do;?>&p=<?= $now+1 ;?>"> > </a>
+      <?php endif; ?>
+    </div>
+
+    <!-- 2. 分頁導航連結 end -->
 
     <table style="margin-top:40px; width:70%;">
       <tbody>

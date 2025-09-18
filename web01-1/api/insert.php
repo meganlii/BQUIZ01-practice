@@ -80,7 +80,7 @@ switch ($table) {
 // 會影響to() $table  獨立拿出$table兩段式處理 回到步驟2
 // 在 save() 時 不想包含 table 欄位
 // 在此階段 刪除$_POST['table']的值 value=資料表名稱(title或ad) 不要存入資料庫 後面繼續沿用$table = $_POST['table']=資料表名稱(title或ad)
-// 因為指定陣列key['table']，只會刪除指定元素，並不會刪除整個$_POST陣列，不影響$table變數使用
+// 指定陣列key['table']，只會刪除指定元素，並不會刪除整個$_POST陣列，不影響$table變數使用
 unset($_POST['table']);
 // echo $table;
 

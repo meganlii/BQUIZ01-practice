@@ -90,7 +90,7 @@ function q($sql)
     $dsn = 'mysql:host=localhost;dbname=db09;charset=utf8';
 
 
-    // PDO 也是一個物件 (縮寫 PHP Data Objects)
+    // PDO 屬於連線物件 負責連線資料庫 (縮寫 PHP Data Objects)
     // 使用 new語法 建立一個 PDO連線物件，並將這個物件指定給一個 變數$pdo (概念同505行$Title = new DB('title');) 
     // 資料庫設定資料：( 資料庫位置和名稱，使用者名稱，密碼（空白)  )
     $pdo = new PDO($dsn, 'root', '');
@@ -542,46 +542,50 @@ $Bottom = new DB('bottom');
 
 
 // 網站訪客計數器
+// 檢查是否為新訪客：檢查 Session 中是否有 'visit' 標記(變數/key值)
 if (!isset($_SESSION['visit'])) {
-    // 檢查是否為新訪客：檢查 Session 中是否有 'visit' 標記(變數/key值)
 
     // 第一次來訪
     // 如果沒有設定，表示這是使用者第一次造訪網站
 
-    $t = $Total->find(1);
     // 如果是新訪客
     // 從資料庫取得 ID 為 1 的總訪問次數記錄
     // $Total 應該是一個資料庫操作類別的實例    
+    $t = $Total->find(1);
 
 
-    $t['total']++;
     // 將總訪問次數加 1
     // $t (=$total) 是一個陣列，包含 資料庫記錄的各個欄位
     // 'total' 欄位儲存 總訪問次數
+    $t['total']++;
 
-    $Total->save($t);
     // 將更新後的資料存回資料庫
+    $Total->save($t);
 
-    $_SESSION['visit'] = 1;
     // 在 Session 中設定 'visit' 標記為 1
     // 表示這個使用者已經被計算過了，避免重複計算
+    $_SESSION['visit'] = 1;
+
 }
 
-/* 網站訪客計數器
+
+/* 
+// 網站訪客計數器
 1. 檢查是否為新訪客：檢查 Session 中是否有 'visit' 標記
 2. 如果是新訪客：
-    從資料庫取得目前的總訪問次數
-    將次數加 1
-    更新回資料庫
-    在 Session 中做標記，避免同一個訪客重複計算
-*/
+從資料庫取得目前的總訪問次數
+將次數加 1
+更新回資料庫
+在 Session 中做標記，避免同一個訪客重複計算
 
-/*
- * 第一次訪問
-    $_SESSION['visit'] 不存在 → 執行計數邏輯
-    假設資料庫中 total = 100
-    執行後：total = 101，$_SESSION['visit'] = 1
 
- * 同一使用者再次訪問（重新整理頁面等）
-    $_SESSION['visit'] = 1 已存在 → 跳過計數邏輯，不重複加 1
+// 第一次訪問
+1. $_SESSION['visit'] 不存在 → 執行計數邏輯
+2. 假設資料庫中 total = 100
+3. 執行後：total = 101，$_SESSION['visit'] = 1
+
+
+// 同一使用者再次訪問（重新整理頁面等）
+$_SESSION['visit'] = 1 已存在 → 跳過計數邏輯，不重複加 1
+
 */

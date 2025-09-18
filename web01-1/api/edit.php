@@ -40,7 +40,6 @@ $db = ${ucfirst($table)};
 // 步驟3
 // $Title 全部改用$db 代替
 // foreach、if + isset()網頁傳值先判斷預設值
-
 foreach ($_POST['id'] as $key => $id) {
 
   // 3-1 處理編輯功能：刪除

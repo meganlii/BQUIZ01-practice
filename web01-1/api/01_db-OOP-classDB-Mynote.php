@@ -251,6 +251,15 @@ class DB
      * all();                             // 0個參數 ✓
      * all(['name' => 'John']);           // 1個參數 ✓  
      * all(['age' => 25], "ORDER BY id"); // 2個參數 ✓
+
+    SELECT
+        ProductID,
+        ProductName,
+        CategoryName
+    FROM
+        Products
+        INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+
      */
     function all(...$arg) {
         // 步驟1：建立查詢語句
@@ -389,14 +398,14 @@ class DB
             // 將陣列轉換為字串
             $tmp = $this->arraytosql($id);
 
-            // 拚接sql語句
+            // 拚接 sql語句
             $sql = $sql .
                 " where " . join(" AND ", $tmp);
 
             // 如果 $id 不是陣列  是其他類型
         } else {
 
-            // 拚接sql語句
+            // 拚接 sql語句
             $sql .= " WHERE `id`='$id'";
         }
 
@@ -412,9 +421,22 @@ class DB
      * 利用新增和更新語法的特點，整合兩個動作為一個，
      * 簡化函式的數量並提高函式的通用性
      * $arg 必須是陣列，但考量速度，程式中沒有特別檢查是否為陣列
-     */
+    // 更新
+    UPDATE
+        `students`
+    SET
+        `name` = 'bob-change'
+    WHERE
+        `students`.`id` = 2
 
-
+    // 新增
+    INSERT INTO
+        `students` (`id`, `name`)
+    VALUES
+        (NULL, 'amy'),
+        (NULL, 'bob')
+    
+    */
     function save($array)
     {
         // 先判斷有沒有id 決定 新增 或 更新
@@ -474,7 +496,13 @@ class DB
 
 
     // 4-3 刪除資料
-    // 複製find()
+    // 複製 find()
+    /* SQL語句
+    DELETE FROM
+        `students`
+    WHERE
+        `students`.`id` = 4;
+    */
     function del($id)
     {
         $sql = "delete  from $this->table ";

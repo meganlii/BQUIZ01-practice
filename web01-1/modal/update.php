@@ -99,6 +99,14 @@ strreplace也可  但要換三個 有點囉嗦  沒有快很多
 選單7-news   資料表-複製選單2-ad
 選單8-admin  資料表-複製選單1-title
 選單9-menu   資料表-複製title 因為欄位最多
-選單5 跟 選單6  比較特別，獨立製表 手動放一筆資料進去
+選單5-total 跟 選單6-bottom  比較特別，獨立製表 手動放一筆資料進去
 -->
+
+<!-- 步驟8
+編輯功能/彈出視窗 獨立給一個檔案 submenu.php - 老師花半天說明原理
+複製./modal/update.php 更名為 ./modal/submenu.php 
+-->
+
+<!-- 編輯功能update.php 套用三個選單更新/更換功能 -->
+
 

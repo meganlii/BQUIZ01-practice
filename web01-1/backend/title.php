@@ -260,4 +260,9 @@ $db = ${ucfirst($table)}; 改成 ${ucfirst($do)}
 // 移除&#39 --> 單引號' ' 標籤內有單雙引號時使用 html_entities
 // https://www.w3schools.com/html/html_entities.asp
 
+// 省略寫法
+// 整段用php包起來  加判斷式 大括號{} 改用兩行代替 : 跟  /endif
+// < ?php if():  ? >
+// < ?php endif; ? >
+
 ?>

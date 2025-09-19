@@ -126,7 +126,7 @@ function more(){
   </div>
   `
 
-  // 步驟8：設定 觸發 jqaqqend不只塞一個，用html每次會洗掉 
+  // 步驟8：設定 觸發 jqaqqend不只塞一個，用.html每次會洗掉 
   // $("＃add ").append(item)
   // 點選more()，將append(item) 塞到("＃add ")/ html的div裡面
   $("#add").append(item);

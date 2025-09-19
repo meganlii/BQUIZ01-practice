@@ -2,6 +2,7 @@
 1. 第六個欄位有 按鈕-編輯次選單 到title.php 複製onclick()
 onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
 2. 更名為 編輯次選單
+
 3. 編輯功能/彈出視窗 獨立給一個檔案 submenu.php - 老師花半天說明原理
 複製./modal/update.php 更名為 ./modal/submenu.php 
 
@@ -20,7 +21,9 @@ onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?
 1. 測試是否可打開modal 出現錯誤訊息  移除多於變數15行
 2. 表單api單獨處理 同步新增 api/submenu.php 
 -->
-<!-- 步驟4：修改表單格式 改用div寫  也可用table
+
+<!-- 步驟4：
+修改表單格式 改用div寫  也可用table
 1. 共3列 沒有label 最後列div不動  之前div用不到重寫 
 2. 第一列：1個div包3個div 外層容器flex
 3. 不是<table> <div width="45%">寫法失效 要改成
@@ -30,7 +33,7 @@ input:text/checkbox 出現name= id=
 -->
 <form action="./api/submenu.php" method="post" enctype="multipart/form-data">
   
-  <!-- 第一列
+  <!-- 第一列：標題
   1. 容器<div>設display:flex
   2. 盒子<div>設寬度與間距
   -->
@@ -40,35 +43,134 @@ input:text/checkbox 出現name= id=
     <div style="width:10%; margin:5px 0.5%" >刪除</div>
   </div>
 
-  <!-- 第二列 
+  <!-- 第二列：內容
   1. 盒子<div>裡面放<input>
   2. <input tyle="width:95%"> 塞滿整個div
+  3. 加上name=text[]  href[] 欄位名稱同資料表欄位 一次可能送出多筆 加上陣列[]
+  4. 字串模板範本
   -->
   <div style="display:flex; margin:auto; width:70%" class="cent" >
     <div style="width:45%; margin:5px 0.5%" >
-      <input type="text" value="" style="width:95%">
+      <input type="text" name="text[]" value="" style="width:95%">
     </div>
     <div style="width:45%; margin:5px 0.5%"  >
-      <input type="text" value="" style="width:95%">
+      <input type="text" name="href[]" value="" style="width:95%">
     </div>
     <div style="width:10%; margin:5px 0.5%" >
-      <input type="checkbox" value="" >
+      <input type="checkbox" name="del[]" value="" >
     </div>
-  </div>  
+  </div>
 
-  <!-- 第三列
+  <!-- 字串模板插入處 id=""忘記加雙引號"" 輸入id後按tap emmet有預設""-->
+  <div id="add" ></div>
+
+
+  <!-- 第三列：按鈕
   1. 盒子<div> 設定置中 class="cent"
   2. 修改按鈕名稱
   3. 新增按鈕 更多次選單
   -->
+  <!-- 不小心誤刪 value="< ?= $_GET['id']; ?>"> 測試送出F12沒有顯示id-->
   <div class="cent">
-    <input type="hidden" name="id" value="">
+    <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
     <input type="hidden" name="table" value="<?= $_GET['table']; ?>">
     <input type="submit" value="修改確定">
     <input type="reset" value="重置">
-    <input type="button" value="更多次選單">
+
+  <!-- 步驟5
+  1. 新增JS onclick事件
+  使用JQ 將一段html放到網頁某個容器裡面，點下按鈕後 塞入一個input表單  新增資料
+  80行 <script>一定要在容器後面執行  寫在</form>之後
+  2. 設定 onclick="more()" 直接寫在行內  或另外綁定class
+  3. 共三行而已
+  自訂函式 function more(){ }
+  字串模板let item=``
+  字串模板插入處
+  jqappend() 
+
+  3. onclick換成行外的獨立寫法：JS原生跟JQ
+  -->
+    <input type="button" value="更多次選單" onclick="more()" >
+    <!-- <input type="button" value="更多次選單" id="moreBtn" > -->
+
   </div>
 </form>
+
+<script>
+function more(){
+
+  /*
+  // 步驟6：設定 字串模板
+  1.範本處 第二列整段<div> 之後 設定 一對<div id=add  >
+    上(反)引號``(數字1左邊那顆) 放第二列整段<div> 47行
+    對JS，單雙引號斷行內容 視為不同程式碼/變數 會變色(非字串)   要很辛苦湊成一行才有字串效果。
+  2. JS 6.0版本之後 推出反引號
+
+  3. 移除checkbox即可 <input type="checkbox" value="" > 保留第三組<div>
+
+  // 步驟7：設定 字串模板 放置處
+  1. 第二列整段<div> 之後 設定 一對<div id="add" >
+  2. 點下後 字串模板 可接續在 第二列整段<div> 之後
+  3. 若沒加 設定append()會失效：只用在容器後，會接在</form>之後 即第三列整段<div> 之後
+  */
+  let item=`
+  <div style="display:flex; margin:auto; width:70%" class="cent" >
+    <div style="width:45%; margin:5px 0.5%" >
+      <input type="text" name="text2[]" value="" style="width:95%">
+    </div>
+    <div style="width:45%; margin:5px 0.5%"  >
+      <input type="text" name="href2[]" value="" style="width:95%">
+    </div>
+    <div style="width:10%; margin:5px 0.5%" >
+    </div>
+  </div>
+  `
+
+  // 步驟8：設定 觸發 jqaqqend不只塞一個，用html每次會洗掉 
+  // $("＃add ").append(item)
+  // 點選more()，將append(item) 塞到("＃add ")/ html的div裡面
+  $("#add").append(item);
+
+  /*
+  // 步驟9：確認測試 只有出現第三列<div> name=id table 
+  1. 新增第二段<div> name=text[]  href[] del[] 欄位名稱同資料表欄位
+  2. 一次可能送出多筆 加上陣列[]
+  3. 建立表單時可以先打上
+  4. 參考excel筆記截圖
+
+  // 步驟10：區分input編輯(第一列)或新增  項目
+  1. let item 字串模板 兩個name 改成 name="text2[]  name="href2[]"
+  2. 不同陣列送出的資料 text1[ ] 、 text2[ ]
+  3. api可以一次處理兩種不同資料
+  */
+
+  
+}
+
+// 補充寫法 onclick行外事件 換成 分離事件：JS原生跟JQ
+// 等頁面載入完成後綁定事件
+// 要複習之前JS寫法 都忘光了
+// 對照excel筆記
+
+// JS原生 寫法
+// document.getElementById('moreBtn').addEventListener('click',more);
+
+// jQuery 寫法 先打jqready
+// $(document).ready(function () {
+//   $('#moreBtn').click(more);
+// });
+
+// $(selector).click(function (e) { 
+//   // e.preventDefault();
+  
+// });
+
+</script>
+
+
+
+
+
 
   <!-- 之前div用不到 重新寫 -->
   <!-- <div>

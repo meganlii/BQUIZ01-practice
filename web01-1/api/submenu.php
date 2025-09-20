@@ -1,6 +1,7 @@
 <?php include_once './db.php';
 
 // 不需要另外新增物件 $Submenu 隸屬 $Menu下 id=0 次選單模式
+// 此頁路徑 <form action="./api/submenu.php" method="post" >
 
 /*
 // foreach 將陣列中的每一個元素，拆成「鑰匙」和「值」兩部分
@@ -59,6 +60,8 @@ Array
             [2] => d
         )
 
+    // 將主選單id  [id] => 4 存入資料表 'main_id'欄位
+    // 透過$main_id = $_POST['id'];  save('main_id' => $main_id)
     [id] => 4
     [table] => menu
 )
@@ -68,7 +71,7 @@ Array
 $main_id = $_POST['id'];
 
 
-// 步驟2：
+// 步驟2
 // 1. if判斷：如果['text2']存在就新增 沒有就編輯
 if (isset($_POST['text2'])) {
 
@@ -104,3 +107,13 @@ if (isset($_POST['text2'])) {
 
 // to('../backend/menu.php');
 to("../backend.php?do=menu");
+
+// 步驟3
+/*
+1. 剛才新增的次選單  不應該出現在  主選單畫面
+2. 主次選單差異在main_id  主選單main_id=0
+3. 回到 backend\menu.php  修改23行
+$rows = ${ucfirst($do)}->all();
+$rows = ${ucfirst($do)}->all(['main_id'=>0]);
+*/
+

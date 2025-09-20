@@ -20,7 +20,13 @@
         </tr>
 
         <?php
-        $rows = ${ucfirst($do)}->all();
+        // 步驟8：只顯示主選單  新增['main_id'=>0] 
+        /*
+        1. 主次選單差異在main_id  主選單main_id=0
+        2. all([ ]) 括號內是關聯陣列寫法  key=>value
+        */
+
+        $rows = ${ucfirst($do)}->all(['main_id'=>0]);
         // $rows = ${ucfirst($do)}->all();
 
         foreach ($rows as $row) :
@@ -53,8 +59,8 @@
             </td>
           </tr>
 
+          <!-- 此為主選單id = 次選單main_id -->
           <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-
 
         <?php
         endforeach;
@@ -134,6 +140,9 @@ onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?
 2. 複製default一個 $row['sh']
 這段忘記什麼意思？
 $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+
+
+// 步驟8：只顯示主選單  新增['main_id'=>0] 
 
 
 備註

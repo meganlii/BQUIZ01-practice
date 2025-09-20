@@ -147,6 +147,7 @@ function q($sql)
 
 
 // 接收一個參數 $url（要跳轉的目標網址）
+// 例：to('../backend/menu.php');  括號內要加引號
 function to($url)
 {
     // header("location:" . $url); 雙引號內 直接以空格(可不加) 區分不同字串或變數

@@ -31,25 +31,76 @@ foreach ($student as $key => $value) {
 // 鑰匙: grade, 值: A
 */
 
+dd($_POST);
+/*
+Array
+(
+    [text] => Array
+        (
+            [0] => 1
+        )
+
+    [href] => Array
+        (
+            [0] => a
+        )
+
+    [text2] => Array
+        (
+            [0] => 2
+            [1] => 3
+            [2] => 4
+        )
+
+    [href2] => Array
+        (
+            [0] => b
+            [1] => c
+            [2] => d
+        )
+
+    [id] => 4
+    [table] => menu
+)
+*/
+
 // 步驟1：設定main_id
+$main_id = $_POST['id'];
+
 
 // 步驟2：
 // 1. if判斷：如果['text2']存在就新增 沒有就編輯
 if (isset($_POST['text2'])) {
 
- // 2.foreach：取出['text2']索引key+value $key=$text
- // ['text2']['href2']成對出現，共用索引值$key 根據$key找出['href2']的$text
+    // 2. foreach
+    // 48行 取出['text2']索引key+value $key=$text
+    // 55行 ['text2']與['href2']成對出現，共用索引值$key 根據$key找出['href2']的$text
+    foreach ($_POST['text2'] as $key => $text) {
 
+        // 3. if判斷
+        // 取出 ['href2']索引key+value  $key = $href 
+        // if判斷：如果$text不等於空白(有新增的意思)
+        // $href值 從['href2'][$key]取得    
+        if ($text != "") {
+            $href = $_POST['href2'][$key];
 
- // 3. 取出 ['href2']索引key+value $key=$href 
- // if判斷：如果$text不等於空白(有新增的意思)
- // $href值 從['href2'][$key]取得
+            // 4. 資料表名稱table用不到 只有一個menu
+            // 直接將變數直接寫成陣列形式 存入物件$Menu
+            // 不在外面新增一個陣列，對應資料表三個欄位 存入相對應三組變數$text $href $main_id
+            // $Menu->save([]);
+            $Menu->save(
+                [
+                    'text' => $text,
+                    'href' => $href,
+                    'main_id' => $main_id,
 
-
- // 4. 資料表名稱table用不到 只有一個menu
- // 直接將變數直接寫成陣列形式 存入物件$Menu
- // 不在外面新增一個陣列變數先寫好
-
-}else {
- # code...
+                    // 加上1 資料表sh欄位=1 不顯示null空值
+                    'sh'=> 1
+                ]
+            );
+        }
+    }
 }
+
+// to('../backend/menu.php');
+to("../backend.php?do=menu");

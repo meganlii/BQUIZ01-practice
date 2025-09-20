@@ -168,10 +168,6 @@ function more(){
 </script>
 
 
-
-
-
-
   <!-- 之前div用不到 重新寫 -->
   <!-- <div>
   <label>

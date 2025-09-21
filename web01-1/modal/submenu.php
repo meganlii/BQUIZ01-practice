@@ -9,6 +9,8 @@ onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?
 4. 編輯功能update.php 套用三個選單更新/更換功能 
 
 5. 本頁實際路徑 /modal/submenu.php?id=4&table=menu
+按下按鈕[編輯次選單]出現彈出視窗modal，按F12才會顯示url路徑 瀏覽器網址是後台do=menu
+所以86/87行 可用get取得url參數id table
 \backend\menu.php 加入url參數
 onclick="op('#cover','#cvr','./modal/submenu.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
 -->
@@ -77,7 +79,7 @@ input:text/checkbox 出現name= id=
   4. 不小心誤刪 value="< ?= $_GET['id']; ?>"> 測試送出F12沒有顯示id
 
   5. 此欄位為主選單id  透過$_GET['id']取得url參數
-  之後api會將主選單id  [id] => 4  存入資料表'main_id'欄位  兩邊值相同作為主次同組的依據
+  之後api/submenu.php會將主選單id  [id] => 4  存入資料表'main_id'欄位  兩邊值相同作為主次同組的依據
   透過$main_id = $_POST['id'];  save('main_id' => $main_id) 
   -->
   <div class="cent">

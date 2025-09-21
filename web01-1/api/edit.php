@@ -43,7 +43,7 @@ $db = ${ucfirst($table)};
 foreach ($_POST['id'] as $key => $id) {
 
   // 3-1 處理編輯功能：刪除
-  // * isset()跟in_array() 搭配使用 
+  // isset() && in_array(兩個參數：變數,陣列) 搭配使用 
   if (isset($_POST['del']) && in_array($id, $_POST['del'])) {
 
     $db->del($id);
@@ -59,12 +59,14 @@ foreach ($_POST['id'] as $key => $id) {
     dd($row);
 
 
+    /*
     // 步驟4
-    // 處理編輯功能：顯示
-    // $row['text']  $row['sh']
-    // 有的沒有['text']欄位  後面選單['text']是路徑不是文字
-    // 同insert.php作法 用判斷式  
-    // 較複雜改用switch 拆開有差異的地方 只有第8.9個 管理者/選單管理 不同
+    處理編輯功能：顯示
+    $row['text']  $row['sh']
+    有的沒有['text']欄位  後面選單['text']是路徑不是文字
+    同insert.php作法 用判斷式  
+    較複雜改用switch 拆開有差異的地方 只有第8.9個 管理者/選單管理 不同
+    */
 
     // 步驟5：先列出table  複製7個
     switch ($table) {
@@ -75,58 +77,60 @@ foreach ($_POST['id'] as $key => $id) {
         $row['sh'] = ($_POST['sh'] == $id) ? 1 : 0;
         break;
 
+      /*
       // 步驟5-2：複製ad兩行貼過來
-      // api\edit_ad.php
+      api\edit_ad.php
 
 
       // 步驟11：併入'mvim'與'image' 再簡化 
-      // 7個項目，已有4個合併  62行sh改為二維陣列可再簡化-不太懂？？
-      // case 'ad':
-      // case 'news':
-      // case 'mvim':
-      // case 'image':
+      7個項目，已有4個合併  62行sh改為二維陣列可再簡化-不太懂？？
+      case 'ad':
+      case 'news':
+      case 'mvim':
+      case 'image':
 
 
       // 步驟11-1：加if判斷式 區分是否有text 有就執行 沒有就不做
       // 步驟12：此段再簡化 移到128行default 預設執行 70-73行也不用了
 
-      // if (isset($row['text'])) {
-      //   $row['text'] = $_POST['text'][$key];
-      // }
-      // $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-      // break;
+      if (isset($row['text'])) {
+        $row['text'] = $_POST['text'][$key];
+      }
+      $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+      break;
 
       // 步驟7：新增 .\modal\mvim.php 顯示/刪除 功能--之後簡化併入
-      // 1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
-      // 2. 沒有text 只需要處理 顯示與否
-      // 3. 複製66行
-      // 因為每個選單功能些微不同，單獨設定 最後再看異同重複處 再處理
+      1. 顯示/刪除失效  因為.\api\edit.php 還沒設定
+      2. 沒有text 只需要處理 顯示與否
+      3. 複製66行
+      因為每個選單功能些微不同，單獨設定 最後再看異同重複處 再處理
 
-      // ***************再簡化**********
-      // case 'mvim':
-      // case 'image':
-      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-      //   break;
-      // ***************再簡化**********
+      ***************再簡化**********
+      case 'mvim':
+      case 'image':
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
+      ***************再簡化**********
 
       // 步驟8：新增 .\modal\image.php 顯示/刪除 功能--之後簡化併入
-      // 複製case 'mvim'
-      // case 'image':
-      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-      //   break;
+      複製case 'mvim'
+      case 'image':
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
 
       // 步驟9：新增 .\modal\news.php 顯示/刪除 功能--之後簡化併入
-      // 複製case 'ad'
-      // case 'news':
-      //   $row['text'] = $_POST['text'][$key];
-      //   $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
-      //   break;
+      複製case 'ad'
+      case 'news':
+        $row['text'] = $_POST['text'][$key];
+        $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
+        break;
 
       // 步驟10：思考上面7個異同處 再簡化
-      // 相同兩組：'mvim'與'image'。'ad'與'news'
-      // 相同case放一起即可 關鍵在break
+      相同兩組：'mvim'與'image'。'ad'與'news'
+      相同case放一起即可 關鍵在break
 
       // 步驟11：再簡化，回到70行重整
+      */
 
 
       // 最後兩個選單比較複雜
@@ -155,24 +159,28 @@ foreach ($_POST['id'] as $key => $id) {
         break;
     }
 
+    /*
     // 步驟6
-    // 修改 .\backend\title.php  .\backend\ad.php
-    // 新增 隱藏欄位輔助 input:hidden
-    // 修改 表單路徑
-    // <form method="post" action="./api/edit.php">
-    // 刪除 兩個頁面 ./api/edit_title.php  ./api/edit_ad.php 
+    修改 .\backend\title.php  .\backend\ad.php
+    新增 隱藏欄位輔助 input:hidden
+    修改 表單路徑
+    <form method="post" action="./api/edit.php">
+    刪除 兩個頁面 ./api/edit_title.php  ./api/edit_ad.php
+    */
 
 
     // 如何知道新增或更新？因為有id
     $db->save($row);
 
+    /*
     // Array
-    // (
-    //     [total] => 100
-    //     [id] => 1
-    // )
-    // 印出 存到資料表的$row
-    // $row=['id'=>1,'total'=>200];
+    (
+        [total] => 100
+        [id] => 1
+    )
+    印出 存到資料表的$row
+    $row=['id'=>1,'total'=>200];
+    */
     dd($row);
     
   }

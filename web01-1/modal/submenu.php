@@ -98,6 +98,7 @@ input:text/checkbox 出現name= id=
     1. 主選單id[] 區隔步驟12-4name="main_id"
     2. 設定 id[] 、main_id  之後編輯才有依據
     3. 至此完成 次選單新增項目 顯示在 彈出視窗上
+    4. 回到api\submenu.php  設定 編輯功能
     -->
     <input type="hidden" name="id[]" value="<?=$row['id'];?>">
 

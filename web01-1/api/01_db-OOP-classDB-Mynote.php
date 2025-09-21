@@ -116,7 +116,7 @@ function q($sql)
 
 
     4. 回傳值形式
-    回傳值的內容 會因為傳遞時SQL語法而有不同的結果，有時是陣列，有時是單一個值
+    回傳值的內容 會因為傳遞時SQL語法而有不同的結果，有時是陣列(關聯/數字索引)，有時是單一個值
     
     FETCH_ASSOC
     回傳 帶欄位名稱的陣列
@@ -125,7 +125,7 @@ function q($sql)
     
     FETCH_NUM
     回傳 帶欄位索引的陣列
-    返回 索引陣列 [0 => 'John', 1 => 25]
+    返回 數字/索引陣列 [0 => 'John', 1 => 25]
     粗箭頭（=>）：可用於陣列/數組 ex.[key]=>[value]
 
     fetchColumn($n)
@@ -337,7 +337,7 @@ class DB
         // 步驟6
         // 共三組參數 $this->pdo // query($sql) 執行SQL查詢  
         // fetchAll 執行sql語句，並返回 全部資料，所有資料會放在一個陣列；
-        // PDO::FETCH_ASSOC 轉成關聯陣列  只回傳帶欄位名稱的資料
+        // PDO::FETCH_ASSOC 轉成關聯陣列  回傳 帶欄位名稱的陣列
         // 步驟2：a2s() 將陣列 轉為 SQL字串  最後結果要再轉回陣列
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }

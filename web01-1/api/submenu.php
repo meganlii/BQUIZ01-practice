@@ -68,7 +68,8 @@ Array
 */
 
 // 步驟1：設定main_id
-$main_id = $_POST['id'];
+// 來自modal\submenu.php<input type="hidden" name="main_id" value="<?= $_GET['id']; ? >">
+$main_id = $_POST['main_id'];
 
 
 // 步驟2

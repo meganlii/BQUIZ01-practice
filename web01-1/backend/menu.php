@@ -26,6 +26,7 @@
         2. all([ ]) 括號內是關聯陣列寫法  key=>value
         3. 共用函式all() 最後存入資料庫 PDO::FETCH_ASSOC 轉成關聯陣列  回傳 帶欄位名稱的陣列
         所以$rows是關聯陣列形式
+        4. 回到 modal\submenu.php 處理 只顯示次選單
         */
         $rows = ${ucfirst($do)}->all(['main_id'=>0]);
         // $rows = ${ucfirst($do)}->all();

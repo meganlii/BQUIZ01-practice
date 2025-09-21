@@ -1,3 +1,11 @@
+<!-- 步驟12 增加 api\db.php 
+1. 指令裡面先寫 "  "; 
+2. 不是在api\submenu.php include
+3. 可吃到64行 物件 $Menu
+4. 設定次選單 新增 與 編輯 功能，步驟11-13
+-->
+<?php include_once "../api/db.php"; ?>
+
 <!-- 步驟0
 1. 第六個欄位有 按鈕-編輯次選單 到title.php 複製onclick()
 onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
@@ -14,6 +22,7 @@ onclick="op('#cover','#cvr','./modal/update.php?id=< ?= $row['id']; ?>&table=< ?
 \backend\menu.php 加入url參數
 onclick="op('#cover','#cvr','./modal/submenu.php?id=< ?= $row['id']; ?>&table=< ?= $do; ?> ')">
 -->
+
 
 <h3 style='text-align:center'>
   <!-- < ?= $str[$_GET['table']]['header']; ?> -->
@@ -49,23 +58,56 @@ input:text/checkbox 出現name= id=
     <div style="width:10%; margin:5px 0.5%" >刪除</div>
   </div>
 
-  <!-- 第二列：內容
+  <!-- 步驟11
+  1. 取出 次選單所有資料['main_id'] 來自146行 $_GET['id']
+  2. foreach 印出每筆資料 改用冒號:並在資料結束處加上endforeach;
+  3. 在顯示資料區  value= 加上變數
+  -->
+  <?php
+  $rows=$Menu->all([ 'main_id'=>$_GET['id'] ]);
+  foreach ($rows as $row):
+  ?>
+
+
+
+  <!-- 第二列：內容--預設空白一列  之後當字串模板範本
   1. 盒子<div>裡面放<input>
   2. <input tyle="width:95%"> 塞滿整個div
   3. 加上name=text[]  href[] 欄位名稱同資料表欄位 一次可能送出多筆 加上陣列[]
-  4. 字串模板範本
   -->
   <div style="display:flex; margin:auto; width:70%" class="cent" >
     <div style="width:45%; margin:5px 0.5%" >
-      <input type="text" name="text[]" value="" style="width:95%">
+
+      <!-- 步驟12 value= < ?=$row['text'];?> -->
+      <input type="text" name="text[]" value="<?=$row['text'];?>" style="width:95%">
     </div>
     <div style="width:45%; margin:5px 0.5%"  >
-      <input type="text" name="href[]" value="" style="width:95%">
+
+      <!-- 步驟12-1 value= < ?=$row['href'];?> -->
+      <input type="text" name="href[]" value="<?=$row['href'];?>" style="width:95%">
     </div>
+
     <div style="width:10%; margin:5px 0.5%" >
-      <input type="checkbox" name="del[]" value="" >
+      <!-- 步驟12-2 value= < ?=$row['id'];?> 
+      設定del[]值 = row['id']值
+      -->
+      <input type="checkbox" name="del[]" value="<?=$row['id'];?>" >
     </div>
+
+    <!-- 步驟12-3 增加隱藏欄位 
+    1. 主選單id[] 區隔步驟12-4name="main_id"
+    2. 設定 id[] 、main_id  之後編輯才有依據
+    3. 至此完成 次選單新增項目 顯示在 彈出視窗上
+    -->
+    <input type="hidden" name="id[]" value="<?=$row['id'];?>">
+
   </div>
+
+  <!-- 步驟11-1 資料結束處 加上endforeach; -->
+  <?php
+  endforeach;
+  ?>
+
 
   <!-- 字串模板插入處 id=""忘記加雙引號"" 輸入id後按tap emmet有預設""-->
   <div id="add" ></div>
@@ -83,7 +125,10 @@ input:text/checkbox 出現name= id=
   透過$main_id = $_POST['id'];  save('main_id' => $main_id) 
   -->
   <div class="cent">
-    <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+    <!-- 步驟12-4：將name="id" 改為 name="main_id" 更清楚 
+    api\submenu.php 修改
+    -->
+    <input type="hidden" name="main_id" value="<?= $_GET['id']; ?>">
     <input type="hidden" name="table" value="<?= $_GET['table']; ?>">
     <input type="submit" value="修改確定">
     <input type="reset" value="重置">
@@ -155,8 +200,9 @@ function more(){
   3. api可以一次處理兩種不同資料
   */
 
-  
 }
+
+// 新增 步驟11-13
 
 // 補充寫法 onclick行外事件 換成 分離事件：JS原生跟JQ
 // 等頁面載入完成後綁定事件
@@ -179,13 +225,13 @@ function more(){
 </script>
 
 
-  <!-- 之前div用不到 重新寫 -->
-  <!-- <div>
-  <label>
-    < ?= $str[$_GET['table']]['label']; ?>： 
-    </label>
-    <input type="file" name="img"> 
-  </div> -->
+<!-- 之前div用不到 重新寫 -->
+<!-- <div>
+<label>
+  < ?= $str[$_GET['table']]['label']; ?>： 
+  </label>
+  <input type="file" name="img"> 
+</div> -->
 
 
 <!-- --------------------- -->

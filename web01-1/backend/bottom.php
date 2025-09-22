@@ -40,12 +40,20 @@
 </div>
 
 <script>
-  /*
+/*
 // 路徑 ./當前目錄  以backend.php角度來看
-// 所以<form> action="./api/edit_ad.php"  ./不是  ../
-// 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
-// 位置 ./backend/title.php 後台右半部版型區
+所以<form> action="./api/edit_ad.php"  ./不是  ../
+此頁 include 到 後台./backend.php-149行 可吃到db.php資料
+位置 ./backend/title.php 後台右半部版型區
 
+// 複習歸納
+1. $row = ${ucfirst($do)}->find(1)
+2. value 設定陣列/key/資料表欄位 "< ?= $row['bottom']; ?>"
+
+
+
+
+------------------
 // 步驟0
 1. 複製 .\backend\total.php 更名為 bottom.php
 2. 頁尾版權區和total.php頁面結構一樣，直接複製後修改套用

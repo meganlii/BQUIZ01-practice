@@ -9,17 +9,32 @@
           <td width="50%">
             <?php
 
-            // Array
-            // (
-            //     [id] => 1
-            //     [total] => 200
-            // )
-            // ${ucfirst($do)}->find(1)['total'] 
-            // 得到上方$row陣列 再加上key['total'] 得到 value=200 
-            // 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
-            // find(1) 等同 $_POST['id']
+            /*
+            Array
+            (
+                [id] => 1
+                [total] => 200
+            )
+            ${ucfirst($do)}->find(1)['total'] 
+
+            // 步驟1
+            1. 得到上方$row陣列 再加上key['total'] 得到 value=200 
+            2. 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
+            3. find(1) 等同 ($_POST['id'])
+
             $row = ${ucfirst($do)}->find(1);
             // dd($row)
+
+            // 步驟2：進站總人數顯示在前台
+            資料庫撈出來秀在畫面上
+            1. 複製31行 貼到後台跟前台主頁backend.php
+            <?=$Total->find(1)['total'] ;?>
+            2. 在html塞入php程式語言變數 稱作義大利麵條
+            因為 HTML 和 PHP 混在一起，就像煮過頭的義大利麵條一樣，糾纏在一起，難以分離
+            3. 不太確定怎麼include？
+            要個別貼到兩個頁面，如果頁面多不好維護更新，像後台一樣獨立切出區塊 total.php 存到資料夾front
+            */
+            $row = $Total->find(1);
             ?>
 
             <input type="text" name="total" value="<?= $row['total']; ?>" style="width:90%">
@@ -52,13 +67,20 @@
 </div>
 
 <script>
-  /*
-// 路徑 ./當前目錄  以backend.php角度來看
-// 所以<form> action="./api/edit_ad.php"  ./不是  ../
-// 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
-// 位置 ./backend/title.php 後台右半部版型區
+/*
+路徑 ./當前目錄  以backend.php角度來看
+所以<form> action="./api/edit_ad.php"  ./不是  ../
+此頁 include 到 後台./backend.php-149行 可吃到db.php資料
+位置 ./backend/title.php 後台右半部版型區
+---------------------------
+
+// 複習歸納
+1. $row = ${ucfirst($do)}->find(1)
+2. value 設定陣列/key/資料表欄位 "< ?= $row['bottom']; ?>"
 
 
+
+------------------------
 // 步驟1：第7行
 // 由上而下修改
 1. <p>標題：進佔總人數管理

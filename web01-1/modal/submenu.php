@@ -60,7 +60,8 @@ input:text/checkbox 出現name= id=
 
   <!-- 步驟11
   1. 取出 次選單所有資料['main_id'] 來自146行 $_GET['id']
-  2. foreach 印出每筆資料 改用冒號:並在資料結束處加上endforeach;
+  2. foreach 印出每筆資料
+  原本{echo}寫法 改成 (1)冒號: (2)在html資料結束處加上endforeach;
   3. 在顯示資料區  value= 加上變數
   -->
   <?php
@@ -95,10 +96,11 @@ input:text/checkbox 出現name= id=
     </div>
 
     <!-- 步驟12-3 增加隱藏欄位 
-    1. 主選單id[] 區隔步驟12-4name="main_id"
+    1. 將主選單的id[]加入到隱藏欄位中，區隔步驟12-4name="main_id"
     2. 設定 id[] 、main_id  之後編輯才有依據
-    3. 至此完成 次選單新增項目 顯示在 彈出視窗上
-    4. 回到api\submenu.php  設定 編輯功能
+    3. 讓後台的api知道這個表單的次選單資料是屬於那個主選單
+    4. 至此完成 次選單新增項目 顯示在 彈出視窗上
+    5. 回到api\submenu.php  設定 編輯功能
     -->
     <input type="hidden" name="id[]" value="<?=$row['id'];?>">
 
@@ -139,11 +141,12 @@ input:text/checkbox 出現name= id=
   使用JQ 將一段html放到網頁某個容器裡面，點下按鈕後 塞入一個input表單  新增資料
   80行 <script>一定要在容器後面執行  寫在</form>之後
   2. 設定 onclick="more()" 直接寫在行內  或另外綁定class
-  3. 共三行而已
-  自訂函式 function more(){ }
-  字串模板let item=``
-  字串模板插入處
-  jqappend() 
+
+  3. 新增次選單的js函式：共3+1行
+  (1)自訂函式 function more(){ }
+  (2)字串模板let item=``
+  (3)字串模板插入處
+  (4)jqappend()：將html字串，添加到列表的最後面
 
   3. onclick換成行外的獨立寫法：JS原生跟JQ
   -->

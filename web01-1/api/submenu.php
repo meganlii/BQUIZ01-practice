@@ -113,6 +113,7 @@ if (isset($_POST['id'])) {
 1. if判斷：如果['text2']存在就新增 沒有就編輯
 
 2. foreach
+新增的資料可能多筆，因此使用迴圈來一筆一筆處理
 48行 取出['text2']索引key+value $key=$text
 55行 ['text2']與['href2']成對出現，共用索引值$key 根據$key找出['href2']的$text
 

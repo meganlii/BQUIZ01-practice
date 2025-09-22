@@ -342,9 +342,14 @@ class DB
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /*
     // 4-5 查詢 資料筆數 select count(*) 
-    // 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
-    // count() SQL內建函式 聚合函式
+    1. 之後7/1才補上的函數-進行more判斷並在db.php中增count函式
+    2. count() SQL內建函式 聚合函式
+    3. 原始寫法 backend\menu.php
+    <?= count($Menu->all([ 'main_id' => $row['id'] ] ) ) ;?>
+    */
+
     function count(...$arg) {
         $sql = "select count(*) from $this->table ";
 

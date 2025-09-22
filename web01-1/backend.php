@@ -117,19 +117,21 @@
           </tbody>
         </table>
 
-        <!-- < ?php include './backend/title.php'; ?> -->
-        <!-- 註解沒標示好 使php include生效 造成干擾 -->
-
-        <!-- 步驟5 分離右半部區域 -->
-        <!-- 左方選取不同選單 載入對應頁面 ?do=title -->
-        <!-- 網址：example.com?do=admin
-        $do = $_GET['do'] ?? 'title';  // 輸出 $do = 'admin' -->
+        <!-- 
+        步驟5 分離右半部區域
+        1. < ?php include './backend/title.php'; ?>
+        註解沒標示好 使php include失效
+        2. 左方選取不同選單 載入對應頁面 ?do=title
+        3. 網址：example.com?do=admin
+        $do = $_GET['do'] ?? 'title';  // 輸出 $do = 'admin'
+        -->
 
         <?php
         // 步驟6 網頁傳值到後端  用get/$_GET 網址帶參數傳值 ?參數=值
-        // 空合併運算符--兩個問號 ?? 代表if跟isset
-        // 專門用來提供預設值，比三元運算符更簡潔好用！
-        // if else 結合isset() 是否存在/為null
+        // 空合併運算符--兩個問號?? 代表if跟isset
+        // 1. if else 結合isset() 是否存在/為null
+        // 2. 專門用來提供預設值：三元運算子?： 與 isset() 精簡後的語法
+
         // 如果有do=ad，載入 $do = 'ad' ，沒有do參數 就載入$do = 'title'
         $do=$_GET['do']??'title';
         

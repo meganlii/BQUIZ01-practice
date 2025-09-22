@@ -22,10 +22,10 @@
         <?php
         // 步驟8：只顯示主選單  新增['main_id'=>0] 
         /*
-        1. 主次選單差異在main_id  主選單main_id=0
+        1. 主次選單差異在main_id(資料表欄位才有)  主選單main_id=0
         2. all([ ]) 括號內是關聯陣列寫法  key=>value
         3. 共用函式all() 最後存入資料庫 PDO::FETCH_ASSOC 轉成關聯陣列  回傳 帶欄位名稱的陣列
-        所以$rows是關聯陣列形式
+        所以$rows是關聯陣列(二維)
         4. 回到 modal\submenu.php 處理 只顯示次選單
         */
         $rows = ${ucfirst($do)}->all(['main_id'=>0]);
@@ -80,7 +80,17 @@
               <input type="text" name="href[]" value="<?= $row['href']; ?>" style="width:90%">
             </td>
 
-            <td>3.次選單數</td>
+            <!-- 加上變數 兩種做法
+            1. q()
+            2. or()+count()：比較快
+            3. 先寫< ?= ;?>
+            4. 計算 次選單main_id的總筆數  = 主選單id值 --113行
+            5. count()  $Meun->all()  [ 'main_id' => $row['id'] ]
+            6. 思考：$Menu->count() 加到db.php
+            -->
+            <td>
+              <?= count($Menu->all([ 'main_id' => $row['id'] ] ) ) ;?>
+            </td>
 
             <td>
               <input type="checkbox" name="sh[]" value="<?= $row['id']; ?>" <?= ($row['sh'] == 1) ? "checked" : "" ;?> >
@@ -100,7 +110,9 @@
             </td>
           </tr>
 
-          <!-- 此為主選單id = 次選單main_id -->
+          <!-- 此為主選單id = 次選單main_id
+          作為資料表欄位 次選單main_id 同步連動的值
+          -->
           <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
 
         <?php
@@ -184,6 +196,8 @@ $row['sh'] = (isset($_POST['sh']) && in_array($id, $_POST['sh'])) ? 1 : 0;
 
 
 // 步驟8：只顯示主選單  新增['main_id'=>0] 
+
+// 步驟9：84行 次選單數加上變數
 
 
 備註

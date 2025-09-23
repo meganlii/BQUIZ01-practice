@@ -45,7 +45,7 @@ class DB
         if (isset($arg[0])) {
             if (is_array($arg[0])) {
                 $tmp = $this->arraytosql($arg[0]);
-                $sql = $sql . " where " . join(" AND ", $tmp);
+                $sql = $sql . " where " . join(" and ", $tmp);
             } else {
                 $sql .= $arg[0];
             }
@@ -67,7 +67,7 @@ class DB
         if (isset($arg[0])) {
             if (is_array($arg[0])) {
                 $tmp = $this->arraytosql($arg[0]);
-                $sql = $sql . " where " . join(" AND ", $tmp);
+                $sql = $sql . " where " . join(" and ", $tmp);
             } else {
                 $sql .= $arg[0];
             }
@@ -81,18 +81,22 @@ class DB
     }
 
 
+    /*
     // 4-2 $Table->find($id)-查詢 符合條件的 "單筆資料" select *
-    // 找某個特定id的資料  回傳資料表 指定id的資料 
-    // 例如find(1) 得到 一組關聯陣列[]
+    1. 找某個特定id的資料  回傳資料表 指定id的資料 
+    2. 例如find(1) 得到 一組關聯陣列[]
+    3. SQL 關鍵字不區分大小寫，所以完全可以統一改成小寫
+    // 改成where放$sql
+    */
     function find($id)
     {
-        $sql = "select * from $this->table ";
+        $sql = "select * from $this->table where ";
 
         if (is_array($id)) {
             $tmp = $this->arraytosql($id);
-            $sql = $sql . " where " . join(" AND ", $tmp);
+            $sql .= join(" and ", $tmp);
         } else {
-            $sql .= " WHERE `id`='$id'";
+            $sql .= "`id`='$id'";
         }
         //echo $sql;
         return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
@@ -119,15 +123,16 @@ class DB
 
 
     // 4-3 刪除資料
+    // 改成where放$sql
     function del($id)
     {
-        $sql = "delete  from $this->table ";
+        $sql = "delete from $this->table where ";
 
         if (is_array($id)) {
             $tmp = $this->arraytosql($id);
-            $sql = $sql . " where " . join(" AND ", $tmp);
+            $sql .= join(" and ", $tmp);
         } else {
-            $sql .= " WHERE `id`='$id'";
+            $sql .= "`id` = '$id'";  //加上空格讓 = 更易讀
         }
         //echo $sql;
         return $this->pdo->exec($sql);

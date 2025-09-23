@@ -283,7 +283,7 @@ class DB
                 // 步驟2：arraytosql() a2s() 將陣列 轉為 SQL字串
                 $tmp = $this->arraytosql($arg[0]);
 
-                $sql = $sql . " where " . join(" AND ", $tmp);
+                $sql = $sql . " where " . join(" and ", $tmp);
                 // 拚接 sql語句
                 // 留意 (點.)運算子  WHERE前後有空格
                 // AND拼接 WHERE 條件字串
@@ -360,7 +360,7 @@ class DB
             // is_array() 如果第一個參數是陣列
             if (is_array($arg[0])) {
                 $tmp = $this->arraytosql($arg[0]);
-                $sql = $sql . " where " . join(" AND ", $tmp);
+                $sql = $sql . " where " . join(" and ", $tmp);
 
                 // 如果第一個參數不是陣列，則直接附加到SQL語句後
             } else {
@@ -394,10 +394,34 @@ class DB
      * 比較
      * all(...$arg)：不定參數 → 需要用 isset() 檢查參數是否存在
      * find($id)：固定參數 → 參數一定存在，只需檢查參數的內容/類型
-     */
+     * SQL 關鍵字不區分大小寫，所以完全可以統一改成小寫
+
+    // 記憶法：先想 SQL，再拆解邏輯 
+    「先建基礎，再判斷，最後執行」
+    「SQL 字串 → 條件判斷 → 資料庫查詢 → 結果回傳」
+
+    1. 先寫出 SQL指令語句
+
+    
+    // 原始寫法 改成 where放到$sql基礎語句
     function find($id)
     {
-        $sql = "select * from $this->table ";  // 回傳：字串
+        $sql = "select * from $this->table";  // 去掉末尾空格
+        
+        if (is_array($id)) {
+            $tmp = $this->arraytosql($id);
+            $sql .= " where " . join(" and ", $tmp);  // 改成.=  and前後需要空格
+        } else {
+            $sql .= " where `id` = '$id'";  // 加上空格讓 = 更易讀
+        }
+        
+        return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+    }
+
+    */
+    function find($id)
+    {
+        $sql = "select * from $this->table where ";  // 回傳：字串
 
         // 如果 $id 是陣列
         if (is_array($id)) {
@@ -407,14 +431,16 @@ class DB
             $tmp = $this->arraytosql($id);
 
             // 拚接 sql語句
-            $sql = $sql .
-                " where " . join(" AND ", $tmp);
+            $sql .= join(" and ", $tmp);
 
-            // 如果 $id 不是陣列  是其他類型
+            // 如果 $id 不是陣列  是單一值
         } else {
 
-            // 拚接 sql語句
-            $sql .= " WHERE `id`='$id'";
+            // 拚接 sql語句 注意空格
+            // ⚠️ 前面空格不需要，因為最前面where已經前後有空格
+            // ✅ 等號兩邊空格（可讀性好）
+            // ⚠️ 後面空格（通常不需要）
+            $sql .= "`id` = '$id'";
         }
 
         //echo $sql;
@@ -459,8 +485,7 @@ class DB
 
             // 拚接 SQL 語句
             // join()位置不同
-            $sql .= join(" , ", $tmp) .
-                " where `id`= '{$array['id']}' ";
+            $sql .= join(" , ", $tmp) . " where `id`= '{$array['id']}' ";
 
             // 如果 $array 中 沒有 'id' 鍵    
         } else {
@@ -514,13 +539,13 @@ class DB
     */
     function del($id)
     {
-        $sql = "delete  from $this->table ";
+        $sql = "delete  from $this->table where ";
 
         if (is_array($id)) {
             $tmp = $this->arraytosql($id);
-            $sql = $sql . " where " . join(" AND ", $tmp);
+            $sql .= join(" and ", $tmp);
         } else {
-            $sql .= " WHERE `id`='$id'";
+            $sql .= "`id`='$id'";
         }
         //echo $sql;
 

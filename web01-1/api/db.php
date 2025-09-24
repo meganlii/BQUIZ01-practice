@@ -110,7 +110,7 @@ class DB
             //update
             $sql = "update $this->table set ";
             $tmp = $this->arraytosql($array);
-            $sql .= join(" , ", $tmp) . "where `id`= '{$array['id']}'";
+            $sql .= join(" , ", $tmp) . " where `id`= '{$array['id']}'";
         } else {
             //insert
             $cols = join("`,`", array_keys($array));

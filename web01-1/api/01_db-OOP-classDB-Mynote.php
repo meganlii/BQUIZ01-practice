@@ -455,21 +455,24 @@ class DB
      * 利用新增和更新語法的特點，整合兩個動作為一個，
      * 簡化函式的數量並提高函式的通用性
      * $arg 必須是陣列，但考量速度，程式中沒有特別檢查是否為陣列
+    
+    // $array = [
+        'id' => 123,
+        'name' => 'John',
+        'age' => 30
+        ];    
+
     // 更新
-    UPDATE
-        `students`
-    SET
-        `name` = 'bob-change'
-    WHERE
-        `students`.`id` = 2
+    // UPDATE（有 id = 修改現有資料）SQL
+    UPDATE $this->table SET name='John', age=30 WHERE `id`=123
+    --       ↑           ↑    ↑需要處理↑             ↑條件↑
+    --      表名         固定  將陣列轉成 key='value'  用id來定位
 
     // 新增
-    INSERT INTO
-        `students` (`id`, `name`)
-    VALUES
-        (NULL, 'amy'),
-        (NULL, 'bob')
-    
+    // INSERT（無 id = 新增資料） SQL
+    INSERT INTO $this->table (`name`,`age`) VALUES('Alice',25),()
+    --              ↑           ↑欄位名稱↑        ↑對應的值↑
+    --            表名         用鍵產生$key          用值產生
     */
     function save($array)
     {
@@ -477,34 +480,38 @@ class DB
         // 如果 $array 中有 'id' 鍵
         if (isset($array['id'])) {
 
-            // 步驟1 update set
-            // 更新資料的 SQL 語句 UPDATE `table` SET
-            $sql = " update $this->table set ";
+            
+            // 步驟1：UPDATE（有 id = 修改現有資料）SQL
+            // 更新 SQL基本語句 UPDATE `table` SET
+            // UPDATE `table` name='John', age=30 WHERE `id`=123
+            $sql = "update $this->table set ";
 
+
+            // 回傳['`id`='123'', '`name`='John'', '`age`='30'']
             $tmp = $this->arraytosql($array);  // 將陣列轉換為字串
 
-            // 拚接 SQL 語句
-            // join()位置不同
-            $sql .= join(" , ", $tmp) . " where `id`= '{$array['id']}' ";
+
+            // 組合 SET 部分 拚接 SQL 語句
+            // join()結果：`id`='123' , `name`='John' , `age`='30'
+            // 加上 WHERE 條件  where 前面有空格
+            $sql .= join(" , ", $tmp) . " where `id`= '{$array['id']}'";
 
             // 如果 $array 中 沒有 'id' 鍵    
         } else {
 
-            // 步驟2 insert into
-            // 新增資料
+            /*
+            // 步驟2：INSERT（無 id = 新增資料）
+            // 新增 SQL基本語句 insert into () VALUES ()
+            INSERT INTO table (`name`,`age`) VALUES('Alice','25'),()
+            */
             // $cols 取得 欄位名稱
             $cols = join("`,`", array_keys($array));
             // array_keys()
             // 將陣列的鍵名 轉換為字串，並用逗號分隔
-            // 例如 $array = [
-            //     'name' => 'John',
-            //     'age' => 25,
-            //     'email' => 'john@example.com'
-            // ];
+            // array_keys($array) = ['name' , 'age']
+            // join("`,`", ...) = name`,`age
+            
             // 取得陣列key：將key或index取出為一個陣列
-
-            // 輸出：name(`,`)age(`,`)age
-            // 之後加上 前後引號(`$cols`) 就完美了
             // 補充 array_values()
 
 
@@ -518,8 +525,7 @@ class DB
             // [1] => age
             // )
 
-            // 建立新增資料SQL語句 insert into 表/欄位/值
-            // 預覽 SQL語法 INSERT INTO `ad` (`id`, `text`, `sh`) VALUES (NULL, NULL, NULL)
+            // 組合完整 SQL 建立新增SQL語句 insert into 表/欄位/值
             $sql = "insert into $this->table (`$cols`) values('$values')";
         }
 
@@ -532,10 +538,7 @@ class DB
     // 4-3 刪除資料
     // 複製 find()
     /* SQL語句
-    DELETE FROM
-        `students`
-    WHERE
-        `students`.`id` = 4;
+    DELETE FROM `students` WHERE `id` = 4;
     */
     function del($id)
     {

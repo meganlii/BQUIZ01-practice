@@ -241,52 +241,124 @@ class DB
 
 
     // 步驟4 自訂函式-CRUD / CURD
-    // 共7個FN：const  all//find(查R)  count(額外加)  save(增C.改U)//del(刪D)  arraytosql(a2s)
+    // 共7個FN：const  all//find(查R)  count(額外加上)  save(增C.改U)//del(刪D)  arraytosql(a2s)
 
     // 4-1 $Table->all()-查詢 符合條件的 "全部資料/全部拿來" select *
     // 五組變數 $sql  三個if  return
     /*
      * 使用 "..." 可變/不定(數量的)參數  三個點點點...
-     * (...$arg) 不定參數陣列，表示可以接收0個或多個參數
+     * (...$arg) 不定參數陣列，表示可以接收0個/1個/2個或多個參數
      * 如果有傳入參數$arg[0][1]，則根據參數來修改 SQL 語句
      * 參數$arg  會被包裝成陣列 
      * all([ ]) 括號內是關聯陣列寫法 key=>value
      * all();                             // 0個參數 ✓
-     * all(['name' => 'John']);           // 1個參數 ✓  
-     * all(['age' => 25], "ORDER BY id"); // 2個參數 ✓
+     * all(['name' => 'John']);           // 只有1個參數 ✓  
+     * all(['age' => 25], "ORDER BY id"); // 有第2個參數 ✓
+     * 
+    
+    // 記憶法：「目標導向/從結果倒推」、SQL優先思考法
+    1. 1. 先寫 基礎SQL：最終輸出的 SQL指令語句
+    $SQL = "SELECT * FROM table
+    2. 判斷條件類型：三種
+    (1) 陣列條件 - 條件查詢
+    SELECT * FROM users WHERE status='active' AND age='25'
 
-    SELECT
-        ProductID,
-        ProductName,
-        CategoryName
-    FROM
-        Products
-        INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+    (2) 字串條件 - 自訂 WHERE
+    SELECT * FROM users WHERE age > 18 ORDER BY name
+
+    (3) 陣列條件 + 額外子句
+    SELECT * FROM users WHERE status='active' ORDER BY created_at DESC LIMIT 5
+
+    (1)陣列條件查詢
+    - all(['status' => 'active', 'age' => 25])
+    // 檢查第一個參數
+    - isset($arg[0])  // true
+    - is_array($arg[0])  // true，是陣列
+
+    // 檢查第二個參數
+    - isset($arg[1])  // false，沒有第二個參數
+    - 回傳：兩個參數以上
+    [
+        ['id' => 1, 'name' => 'John', 'age' => '25'],
+        ['id' => 2, 'name' => 'Alice', 'age' => '26'],
+        ['id' => 3, 'name' => 'Bob', 'age' => '27']
+    ]    
+    
+    - 回傳：只有第一個參數
+    [
+        ['id' => 5, 'name' => 'Charlie', 'age' => 25]
+    ]
+
+    
+    (2)字串條件（自訂 WHERE）
+    - all(" WHERE age > 18 ORDER BY name ASC")
+
+    // 檢查第一個參數
+    - isset($arg[0])  // true
+    - is_array($arg[0])  // 檢查第一個參數，是字串
+
+    // 檢查第二個參數
+    - isset($arg[1])  // false
+    - 回傳：年齡大於18的使用者，按姓名 排序
+    [
+        ['id' => 2, 'name' => 'Alice', 'age' => 25],
+        ['id' => 3, 'name' => 'Bob', 'age' => 30],
+        ['id' => 1, 'name' => 'John', 'age' => 28]
+    ]
+
+    (3)陣列條件 + 額外子句
+    - all(['status' => 'active'], " ORDER BY created_at DESC LIMIT 5")
+    // 處理第一個參數（陣列）
+    - isset($arg[0])  // true
+    - is_array($arg[0])  // true
+    $sql = $sql . " where " . join(" and ", $tmp);
+    // 結果：select * from users  where `status`='active'
+
+    // 處理第二個參數（額外子句）
+    - isset($arg[1])  // true
+    $sql .= $arg[1];  // 加上 " ORDER BY created_at DESC LIMIT 5"
+
+    // 最終 SQL 字串
+    select * from users  where `status`='active' ORDER BY created_at DESC LIMIT 5
+
+    // 回傳：二維關聯陣列：最新的5個活躍使用者
+    [
+        ['id' => 10, 'name' => 'Emma', 'status' => 'active', 'created_at' => '2024-01-20'],
+        ['id' => 8, 'name' => 'David', 'status' => 'active', 'created_at' => '2024-01-19'],
+        // ... 其他3筆記錄
+    ]
+
+    // all() vs find() 差異
+    all(...$arg) 回傳多筆記錄（二維陣列） / 可變(不定)參數0-2個 / 範圍查詢 / fetchAll()
+    find($id) 回傳單筆記錄（一維陣列） / 固定1個參數 / 精確查找 / fetch()
+
+
 
      */
     function all(...$arg) {
-        // 步驟1：建立查詢語句
-        // 查詢 基本語句，選取資料表所有欄位
+        // 步驟1：建立查詢語句 選取資料表所有欄位
         // $this->table = 資料表名稱  'title'或ad...
-        // 輸出字串  $sql = "select * from title"
+        // 基礎 SQL：  $sql = "select * from title"
         $sql = "select * from $this->table";
 
 
         // 步驟3：處理第一個參數
-        // isset()  檢查是否成立 有傳入資料
+        // isset()  檢查是否有傳入資料 再開始執行 才不會報錯 
         if (isset($arg[0])) {
 
-            // 步驟4：is_array() 如果有資料 且 第一個參數是陣列
+            // 步驟4：陣列條件：第一個參數是陣列
             if (is_array($arg[0])) {
 
 
-                // 步驟2：arraytosql() a2s() 將陣列 轉為 SQL字串
+                // 步驟2：/a2s() 轉換陣列條件+join()：將陣列 轉為 SQL字串
+                // 假設回傳：['`status`=\'active\'', '`age`=\'25\'']
                 $tmp = $this->arraytosql($arg[0]);
 
+                // join() 結果：`status`='active' and `age`=25
                 $sql = $sql . " where " . join(" and ", $tmp);
                 // 拚接 sql語句
                 // 留意 (點.)運算子  WHERE前後有空格
-                // AND拼接 WHERE 條件字串
+                // AND 拼接 WHERE 條件字串
                 // 將語法字串及參數帶入 取得一個完整的SQL句子
 
                 // join() 是 PHP 函數，將陣列元素 串接成字串
@@ -301,14 +373,17 @@ class DB
                 // select * from users . where `id`='1' AND `name`='John'
 
 
-                // 如果第一個參數不是陣列，則直接附加到SQL語句後
+                // 字串條件：如果第一個參數不是陣列/是字串，直接附加到SQL語句後
+                // all(" WHERE age > 18 ORDER BY name ASC")
+                // is_array($arg[0])  // 檢查第一個參數，是字串
+                // 直接加上 " WHERE age > 18 ORDER BY name ASC"
             } else {
                 $sql .= $arg[0];
                 // $sql = $sql . $arg[0];
                 // 將原本 $sql 變數內容保留，並在後面 加上新內容
                 // 例如 $sql .= " where id=1"
                 // $sql = "select * from title .  where `id`='1'
-                // 程式假設使用者傳入完整 SQL 片段，不用再加"where"
+                // 程式假設使用者傳入完整 SQL 片段，已包含"where"
             }
         }
 
@@ -325,8 +400,9 @@ class DB
         // 步驟5：處理第二個參數
         1. 如果有第二個參數，則附加到SQL語句 where之後
         例如：$sql .= " order by id desc"
-        2. 第二參數 可為條件句-兩者之間BETWEEN  特殊指定IN 
-        或 限制句 如 排序ORDER BY 或 限制筆數LIMIT
+        2. 第二參數
+        有四種：條件句-兩者之間BETWEEN  特殊指定IN 
+        或 限制句 如 排序ORDER BY 或 限制筆數DESC LIMIT
         例如：$arg[1] = " order by id desc"
         例如：$sql = "select * from title order by id desc"
         */
@@ -354,7 +430,7 @@ class DB
         $sql = "select count(*) from $this->table ";
 
         // 處理第一個參數 
-        // isset()  檢查是否成立 有/無傳入資料 ㄧ
+        // isset()  檢查是否成立 有/無傳入資料
         if (isset($arg[0])) {
 
             // is_array() 如果第一個參數是陣列
@@ -396,13 +472,6 @@ class DB
      * find($id)：固定參數 → 參數一定存在，只需檢查參數的內容/類型
      * SQL 關鍵字不區分大小寫，所以完全可以統一改成小寫
 
-    // 記憶法：先想 SQL，再拆解邏輯 
-    「先建基礎，再判斷，最後執行」
-    「SQL 字串 → 條件判斷 → 資料庫查詢 → 結果回傳」
-
-    1. 先寫出 SQL指令語句
-
-    
     // 原始寫法 改成 where放到$sql基礎語句
     function find($id)
     {
@@ -418,10 +487,53 @@ class DB
         return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
     }
 
+    // 記憶法：「目標導向/從結果倒推」、SQL優先思考法
+    先想 各種最終SQL → 再拆解邏輯 
+    先建基礎  → 再判斷    → 最後執行
+    SQL字串   → 條件判斷  → 資料庫查詢 → 結果回傳
+
+    1. 先寫 基礎SQL：最終輸出的 SQL指令語句
+    $SQL = "SELECT * FROM table WHERE
+    2. 判斷條件類型：單一值 vs 陣列
+    (1)單一值：加上 id='值'
+    -- 單一ID查詢： id ='123'  find(123)
+    1. SELECT * FROM users WHERE id='123'
+    2. $sql .= "`id`='$id'";
+    3. 回傳資料
+    php
+    [
+        'id' => 123,
+        'name' => 'John',
+    ]
+
+    (2)陣列：轉換成 條件1 AND 條件2
+    -- 多條件查詢
+    id = 
+    [
+        'name' => 'John',
+        'status' => 'active'
+    ]
+
+    1. find(['name' => 'John', 'age' => 25])
+    2. "SELECT * FROM table WHERE name='John' AND age=25";
+    3. a2s()轉換 + JOIN 處理
+    4. 產生where後面字串 name='John' AND age=25
+    條件子句裡面的參數1、參數2，才用and連接。其他參數大多用逗號，連接，例如find(id))
+    $tmp = ['name' => 'John', 'age' => 25]
+    5. 回傳資料
+    php
+    [
+        'id' => 456,
+        'name' => 'John',
+        'age' => '25',
+        'created_at' => '2024-01-10'
+    ]
+
+
     */
     function find($id)
     {
-        $sql = "select * from $this->table where ";  // 回傳：字串
+        $sql = "select * from $this->table where ";
 
         // 如果 $id 是陣列
         if (is_array($id)) {
@@ -433,7 +545,7 @@ class DB
             // 拚接 sql語句
             $sql .= join(" and ", $tmp);
 
-            // 如果 $id 不是陣列  是單一值
+            // 如果 $id 不是陣列/是單一值/數值
         } else {
 
             // 拚接 sql語句 注意空格
@@ -493,6 +605,7 @@ class DB
 
             // 組合 SET 部分 拚接 SQL 語句
             // join()結果：`id`='123' , `name`='John' , `age`='30'
+            // 條件子句裡面的參數1、參數2，才用and連接。其他參數大多用逗號，連接，例如save() find()
             // 加上 WHERE 條件  where 前面有空格
             $sql .= join(" , ", $tmp) . " where `id`= '{$array['id']}'";
 

@@ -132,7 +132,7 @@ class DB
             $tmp = $this->arraytosql($id);
             $sql .= join(" and ", $tmp);
         } else {
-            $sql .= "`id` = '$id'";  //加上空格讓 = 更易讀
+            $sql .= "`id` = '$id'";
         }
         //echo $sql;
         return $this->pdo->exec($sql);

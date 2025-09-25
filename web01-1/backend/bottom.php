@@ -7,8 +7,14 @@
         <tr class="yel">
           <td width="50%">頁尾版權：</td>
           <td width="50%">
+            <!-- 步驟2：進站總人數顯示在前台
+            資料庫撈出來秀在畫面上
+            加上 < ?=$Bottom->find(1)['bottom'] ;?>  
+            複製16行 貼到後台跟前台主頁-212行backend.php、index.php
+            -->
             <?php
-            $row = ${ucfirst($do)}->find(1);
+            $row = $Bottom->find(1);
+            // $row = ${ucfirst($do)}->find(1);
             // dd($row)
             ?>
 
@@ -62,7 +68,7 @@
 1. 15行 修改資料表名稱 bottom
 2. api如果寫正確 測試即可成功
 
----------------
+-------------------
 // 步驟1：第7行
 // 由上而下修改
 1. <p>標題：頁尾版權管理

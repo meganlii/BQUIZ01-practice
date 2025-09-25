@@ -511,7 +511,7 @@ class DB
     id = 
     [
         'name' => 'John',
-        'status' => 'active'
+        'age' => 25
     ]
 
     1. find(['name' => 'John', 'age' => 25])

@@ -23,26 +23,36 @@
   </div>
  </div>
 
- <!-- 步驟2 刪除iframe -->
- <!-- <iframe style="display:none;" name="back" id="back"></iframe> -->
+<!-- 步驟2 刪除iframe -->
+<!-- <iframe style="display:none;" name="back" id="back"></iframe> -->
 
- <div id="main">
+<div id="main">
+<!-- 步驟C
+1. 用某個圖片路徑use/ 但F12報錯找不到
+2. &#39是單引號的意思
+3. 36行路徑更改為 image/  < ?=  ;?>
+4. $Title->find(['sh'=>1])
+-->
   <a title="" href="./home_files/home.htm">
-   <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
-   <!--標題-->
+  <div class="ti" 
+  style="background:url(&#39;use/&#39;); background-size:cover;">
+  </div>
+  <!--標題-->
+  
   </a>
+
   <div id="ms">
-   <div id="lf" style="float:left;">
+    <div id="lf" style="float:left;">
 
     <!-- 主選單 空白 沒有東西 -->
     <div id="menuput" class="dbor">
-     <!--主選單放此-->
-     <span class="t botli">主選單區</span>
+    <!--主選單放此-->
+    <span class="t botli">主選單區</span>
     </div>
     <!-- 主選單 end -->
 
     <!--
-    步驟12：完成進站總人數及頁尾版權顯示功能
+    步驟A：完成進站總人數及頁尾版權顯示功能
     數字1改成 < ?=$Total->find(1)['total'] ;?>
     記得頁首加上< ?php include_once "./api/db.php"; ?>
     -->
@@ -152,7 +162,7 @@
   <div style="clear:both;"></div>
   <div style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
     <!-- 頁尾版權區
-    步驟13：完成進站總人數及頁尾版權顯示功能
+    步驟B：完成進站總人數及頁尾版權顯示功能
     加上 < ?=$Bottom->find(1)['bottom'] ;?>
     -->
     <!-- <span class="t" style="line-height:123px;"></span> -->

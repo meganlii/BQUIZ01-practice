@@ -15,11 +15,19 @@
                 [id] => 1
                 [total] => 200
             )
-            ${ucfirst($do)}->find(1)['total'] 
+            
+            $Total->find(1)['total'] //  等同${ucfirst($do)}->find(1)['total'] 
+            $row = $Total->find(1);
+            value="<?= $row['total']; ?>"
 
-            // 步驟1
-            1. 得到上方$row陣列 再加上key['total'] 得到 value=200 
-            2. 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['id']
+            // 步驟1： PHP 鏈式操作與陣列存取語法
+            1. Total->find(1) 回傳一個關聯陣列 ['total']對回傳結果進行陣列存取/從陣列中取出'total'鍵的值  得到 value=200 
+            對 find() 回傳結果的陣列存取
+            $Total->find(1)    ['total']
+                    ↑方法呼叫↑  ↑陣列存取↑
+
+
+            2. 也可分開寫：將得到的陣列結果 另設變數$row 對應下方 $row['total']
             3. find(1) 等同 ($_POST['id'])
 
             首頁有帶$do用不太到，因為有七八個頁面個別寫比較清楚

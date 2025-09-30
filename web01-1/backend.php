@@ -123,8 +123,7 @@
           </tbody>
         </table>
 
-        <!-- 
-        步驟5 分離右半部區域
+        <!-- 步驟5 分離右半部區域
         1. < ?php include './backend/title.php'; ?>
         註解沒標示好 使php include失效
         2. 左方選取不同選單 載入對應頁面 ?do=title
@@ -201,13 +200,14 @@
 
     </div>
     <div style="clear:both;"></div>
+    
+    <!-- 頁尾版權區
+    步驟13：完成進站總人數及頁尾版權顯示功能
+    加上 < ?=$Bottom->find(1)['bottom'] ;?>
+    -->
     <div
       style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
 
-      <!-- 頁尾版權區
-      步驟13：完成進站總人數及頁尾版權顯示功能
-      加上 < ?=$Bottom->find(1)['bottom'] ;?>
-      -->
       <!-- <span class="t" style="line-height:123px;"></span> -->
       <span class="t" style="line-height:123px;"><?=$Bottom->find(1)['bottom'];?></span>
     </div>

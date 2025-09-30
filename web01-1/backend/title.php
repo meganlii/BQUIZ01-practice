@@ -74,7 +74,7 @@
 /*
 // 位置 ./backend/title.php 後台右半部版型區 
 // 此頁 include 到 後台./backend.php-149行 可吃到db.php資料
-// 有兩個<table>
+// 一個<form>表單內，有兩個<table>
 
 // 路徑 屬於./當前目錄  web01-1目錄  以backend.php角度來看  
 // 所以<form> action="./api/edit_title.php"  用./  不是../

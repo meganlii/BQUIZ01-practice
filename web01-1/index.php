@@ -1,4 +1,8 @@
 <?php include_once "./api/db.php"; ?>
+<!-- 10/1  34行 步驟C 開始看 -->
+
+
+
 <!DOCTYPE html
  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0040)http://127.0.0.1/test/exercise/collage/? -->
@@ -27,20 +31,28 @@
 <!-- <iframe style="display:none;" name="back" id="back"></iframe> -->
 
 <div id="main">
-<!-- 步驟C
-1. 用某個圖片路徑use/ 但F12報錯找不到
-2. &#39是單引號的意思
-3. 36行路徑更改為 image/  < ?=  ;?>
+
+<!-- 一、網站標題區 <header>  -->
+<!-- 步驟C：網站標題區 顯示圖片
+1. style="background:url('use/';)
+- 用bg + 圖片url路徑：use/ ，F12-console報錯找不到圖片
+- 修正圖片路徑：把圖片放在正確url路徑
+- 改用image也可 <img src="" alt="">
+2. &#39 單引號的意思
+3. 36行 路徑更改為 'image/'  < ?=  ;?>
 4. $Title->find(['sh'=>1])
 -->
   <a title="" href="./home_files/home.htm">
-  <div class="ti" 
-  style="background:url(&#39;use/&#39;); background-size:cover;">
-  </div>
-  <!--標題-->
+  <!-- <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div> -->
+  <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
+  <!-- 網站標題區 <header>-->
   
   </a>
 
+<!-- 一、網站標題區 <header> end -->
+
+<!-- 二、ctn-left -->
+<!-- cl-top -->
   <div id="ms">
     <div id="lf" style="float:left;">
 
@@ -51,6 +63,7 @@
     </div>
     <!-- 主選單 end -->
 
+<!-- cl-end -->
     <!--
     步驟A：完成進站總人數及頁尾版權顯示功能
     數字1改成 < ?=$Total->find(1)['total'] ;?>
@@ -58,15 +71,18 @@
     -->
     <!-- <span class="t">進站總人數 :1 </span> -->    
     <div class="dbor" style="margin:3px; width:95%; height:20%; line-height:100px;">
-     <span class="t">進站總人數：<?=$Total->find(1)['total'];?> </span>
+    <span class="t">進站總人數：<?=$Total->find(1)['total'];?> </span>
     </div>
-   </div>
-   <div class="di"
+  </div>
+
+  <div class="di"
     style="height:540px; border:#999 1px solid; width:53.2%; margin:2px 0px 0px 0px; float:left; position:relative; left:20px;">
     <marquee scrolldelay="120" direction="left" style="position:absolute; width:100%; height:40px;">
     </marquee>
+    
     <div style="height:32px; display:block;"></div>
     <!--正中央-->
+    
     <script>
     var lin = new Array();
     var now = 0;
@@ -83,11 +99,18 @@
       now = 0;
     }
     </script>
+
+<!-- 三、ctn-middle -->
+<!-- cm-top -->
     <div style="width:100%; padding:2px; height:290px;">
      <div id="mwww" loop="true" style="width:100%; height:100%;">
       <div style="width:99%; height:100%; position:relative;" class="cent">沒有資料</div>
      </div>
     </div>
+    
+    
+
+<!-- cm-end -->
     <div
      style="width:95%; padding:2px; height:190px; margin-top:10px; padding:5px 10px 5px 10px; border:#0C3 dashed 3px; position:relative;">
      <span class="t botli">最新消息區
@@ -111,6 +134,7 @@
      )
      </script>
     </div>
+
    </div>
    <div id="alt"
     style="position: absolute; width: 350px; min-height: 100px; word-break:break-all; text-align:justify;  background-color: rgb(255, 255, 204); top: 50px; left: 400px; z-index: 99; display: none; padding: 5px; border: 3px double rgb(255, 153, 0); background-position: initial initial; background-repeat: initial initial;">
@@ -130,14 +154,21 @@
     }
    )
    </script>
-   <div class="di di ad" style="height:540px; width:23%; padding:0px; margin-left:22px; float:left; ">
+
+<!-- 四、ctn-right -->
+  <div class="di di ad" style="height:540px; width:23%; padding:0px; margin-left:22px; float:left; ">
+
+<!-- cr-top -->
     <!--右邊-->
     <button style="width:100%; margin-left:auto; margin-right:auto; margin-top:2px; height:50px;"
-     onclick="lo(&#39;?do=admin&#39;)">管理登入</button>
+    onclick="lo(&#39;?do=admin&#39;)">管理登入
+    </button>
+
+<!-- cr-end -->
     <div style="width:89%; height:480px;" class="dbor">
-     <span class="t botli">校園映象區</span>
-     <script>
-     var nowpage = 0,
+    <span class="t botli">校園映象區</span>
+    <script>
+    var nowpage = 0,
       num = 0;
 
      function pp(x) {
@@ -160,6 +191,8 @@
    </div>
   </div>
   <div style="clear:both;"></div>
+
+<!-- 五、<footer> -->
   <div style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
     <!-- 頁尾版權區
     步驟B：完成進站總人數及頁尾版權顯示功能
@@ -168,7 +201,8 @@
     <!-- <span class="t" style="line-height:123px;"></span> -->
    <span class="t" style="line-height:123px;"><?=$Bottom->find(1)['bottom'];?></span>
   </div>
- </div>
+
+</div>
 
 </body>
 

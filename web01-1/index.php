@@ -32,24 +32,32 @@
 
 <div id="main">
 
-<!-- 一、網站標題區 <header>  -->
-<!-- 步驟C：網站標題區 顯示圖片
+<!-- 一、標題區 <header>  -->
+<!-- 步驟C：標題區 顯示圖片
 1. style="background:url('use/';)
-- 用bg + 圖片url路徑：use/ ，F12-console報錯找不到圖片
-- 修正圖片路徑：把圖片放在正確url路徑
+- 用bg-size:cover怕被盜圖：圖片url路徑：use/
+- F12-console報錯找不到圖片：修正圖片路徑：把圖片放在正確url路徑
 - 改用image也可 <img src="" alt="">
 2. &#39 單引號的意思
-3. 36行 路徑更改為 'image/'  < ?=  ;?>
-4. $Title->find(['sh'=>1])
+3. 47行 路徑更改為 'images/'  < ?=  ;?> php語法
+< ?=$Title->find(['sh'=>1]) ;?>
+4. $Title->find(['sh'=>1])['img'] 條件設為陣列[]
+5. 顯示替代文字：出現破圖或下載失敗會出現在畫面的文字。加上alt=""
+- 手冊描述不清楚，只說"顯示"
+- 48行 應改用 提示文字 游標移到圖片時，會顯示提示文字：title="" 
+常用於<name> 現今較少使用
+- 複製 $Title->find(['sh'=>1])['img'] 改為 $Title->find(['sh'=>1])['text']
+- 修改連結 回到首頁 index.php
+6. 複製54-58整個<a></a> 到 backend.php
 -->
-  <a title="" href="./home_files/home.htm">
-  <!-- <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div> -->
-  <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
-  <!-- 網站標題區 <header>-->
-  
+  <!-- <a title="提示文字" href="./home_files/home.htm"> -->
+  <a title="<?=$Title->find(['sh'=>1])['text'];?>" href="./index.php">
+      <!-- <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div> -->
+      <div class="ti" style="background:url(&#39;images/<?=$Title->find(['sh'=>1])['img'];?>&#39;); background-size:cover;"></div>
+      <!-- 標題區 <header>-->
   </a>
 
-<!-- 一、網站標題區 <header> end -->
+<!-- 一、標題區 <header> end -->
 
 <!-- 二、ctn-left -->
 <!-- cl-top -->

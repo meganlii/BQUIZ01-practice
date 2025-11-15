@@ -40,10 +40,15 @@
   <!-- 步驟4 刪除 iframe區 -->
   <!-- <iframe style="display:none;" name="back" id="back"></iframe> -->
   <div id="main">
-    <a title="" href="?">
-      <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
-      <!--標題-->
-    </a>
+
+  <!-- 從index.php 複製54-58行整個<a></a> 到 backend.php -->
+  <a title="<?=$Title->find(['sh'=>1])['text'];?>" href="./index.php">
+      <!-- <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div> -->
+      <div class="ti" style="background:url(&#39;images/<?=$Title->find(['sh'=>1])['img'];?>&#39;); background-size:cover;"></div>
+      <!-- 標題區 <header>-->
+  </a>
+
+
     <div id="ms">
       <div id="lf" style="float:left;">
 

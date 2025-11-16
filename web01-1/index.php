@@ -48,7 +48,7 @@
 常用於<name> 現今較少使用
 - 複製 $Title->find(['sh'=>1])['img'] 改為 $Title->find(['sh'=>1])['text']
 - 修改連結 回到首頁 index.php
-6. 複製54-58整個<a></a> 到 backend.php
+6. 複製54-58行整個<a></a> 到 backend.php
 -->
   <!-- <a title="提示文字" href="./home_files/home.htm"> -->
   <a title="<?=$Title->find(['sh'=>1])['text'];?>" href="./index.php">

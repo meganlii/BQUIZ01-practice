@@ -42,7 +42,13 @@
   <div id="main">
 
   <!-- 從index.php 複製54-58行整個<a></a> 到 backend.php -->
+  <!-- PHP鏈式操作模式：一維陣列回傳 + 陣列存取  $Title->find(['sh'=>1])['text']
+  1.find(['sh'=>1])   一維陣列回傳 ['id' => 1, 'text' => '...', 'sh' => 1]
+  2.['text'] 取出 text 欄位
+  3.輸出字串 
+  -->
   <a title="<?=$Title->find(['sh'=>1])['text'];?>" href="./index.php">
+      
       <!-- <div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div> -->
       <div class="ti" style="background:url(&#39;images/<?=$Title->find(['sh'=>1])['img'];?>&#39;); background-size:cover;"></div>
       <!-- 標題區 <header>-->
